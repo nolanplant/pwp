@@ -81,19 +81,29 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Header extends Component {
+const translateData = (data) => {
+  const cleanData = data.map((item)=>{
+    item.title = item.rendered ? item.rendered.title : Strings.WINERY;
+    item.thumb = 'https://i0.wp.com/www.prioritywinepass.com/wp-content/uploads/2017/03/durantandbooth-tastingsalonempty.jpg?resize=150%2C150&ssl=1'
+    item.description = item.maplist_description 
+    item.addess = item.maplist_address
+    return item;
+  })
+  return cleanData;
+}
+
+export default class LocationScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
       currentPage:0,
       maxPages: 1,
-      dataSource: ['hello', 'there', 'whats', 'up'],
-      dataSourceFull: []
+      dataSource: []
     }
   }
 
   componentDidMount(){
-    fetch(`https://prioritywinepass.com/wp-json/wp/v2/maplists?map_location_categories=${this.props.id || 441}`, {
+    fetch(`https://prioritywinepass.com/wp-json/wp/v2/maplists?map_location_categories=${this.props.route.id}`, {
       method: 'GET'
     })
     .then((response) => response.json())
@@ -119,12 +129,16 @@ export default class Header extends Component {
             </TouchableHighlight>
           </View>
         </View>
+        <Text style={{textAlign: 'center'}}>{Strings.SWIPE_LEFT_TO_FAVORITE}</Text>
         <SwipeListView
           style={styles.list}
           dataSource={ds.cloneWithRows(this.state.dataSource)}
           renderRow={ data => (
               <View style={styles.rowFront}>
-                <Text>I am {data} in a SwipeListView</Text>
+                <Image source={data.source} height="50" width="50" />
+                <Text>{data.title}</Text>
+                <Text>{data.description}</Text>
+                <Text>{data.addess}</Text>
               </View>
           )}
           renderHiddenRow={ data => (

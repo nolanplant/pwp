@@ -33,5 +33,7 @@ export default Strings = {
     VIEW_LOCATION_DETAIL: 'View Location Detail',
     FAVORITE: 'Favorite',
     ALL: 'All',
-    FAVORITES: 'Favorites'
+    FAVORITES: 'Favorites',
+    WINERY: 'Winery',
+    SWIPE_LEFT_TO_FAVORITE: 'Swipe Left To Favorite'
 }
