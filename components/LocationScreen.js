@@ -95,13 +95,13 @@ const translateData = (data) => {
 export default class LocationScreen extends Component {
   constructor(props){
     super(props);
+    this.goBack = this.goBack.bind(this);
     this.state = {
       currentPage:0,
       maxPages: 1,
       dataSource: []
     }
   }
-
   componentDidMount(){
     fetch(`https://prioritywinepass.com/wp-json/wp/v2/maplists?map_location_categories=${this.props.route.id}`, {
       method: 'GET'
@@ -111,13 +111,20 @@ export default class LocationScreen extends Component {
       this.setState({ dataSource: this.state.dataSource.concat(translateData(data)) })
     });
   }
+  goBack(){
+    this.props.parentNav.pop();
+  }
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={styles.base}>
         <View style={styles.header}>
-          <SvgUri width="15" height="15" style={styles.back} source={require('../images/home.svg')}  />
-          <Text style={styles.titleText}>{this.props.route.title}</Text>
+            <TouchableHighlight  onPress={this.goBack}>
+              <View>
+                <SvgUri width="15" height="15" style={styles.back} source={require('../images/home.svg')} />
+              </View>
+            </TouchableHighlight>
+            <Text style={styles.titleText}>{this.props.route.title}</Text>
         </View>
         <View style={styles.topButtons}>
           <View style={{flex:1, flexDirection:'row', alignItems: 'stretch'}}>
@@ -149,7 +156,6 @@ export default class LocationScreen extends Component {
             </View>
           )}
           rightOpenValue={-75}
-          onEndReached={() => alert('yay')}
         />
       </View>
     );
