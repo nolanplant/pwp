@@ -52,7 +52,7 @@ export default class WineMapView extends Component {
           }
         });
       },
-      (error) => console.error(error),
+      (error) => console.warn(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     fetch('https://staging2.prioritywinepass.com/wp-json/wp/v2/maplists', {

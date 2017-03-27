@@ -11,14 +11,26 @@ export default class PriorityWinePass extends Component {
   constructor(props){
     super(props);
     this.renderFullScene = this.renderFullScene.bind(this);
+    this.state = {
+      token: null
+    }
   }
   renderFullScene(route, navigator){
     const { name, id } = route;
     switch (name) {
       case HOME:
-        return (<AppHome parentNav={navigator} route={route} />);
+        return (
+          <AppHome 
+            parentNav={navigator}
+            token={this.props.token}  
+            route={route} />);
       case LOCATION_DETAIL:
-        return (<LocationScreen parentNav={navigator} id={id} route={route} />);  
+        return (
+          <LocationScreen 
+            parentNav={navigator} 
+            id={id}
+            token={this.props.token} 
+            route={route} />);  
       default:
         return (<AppHome parentNav={navigator} />); 
     }    

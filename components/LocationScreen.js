@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Strings from '../constants/Strings';
 import SvgUri from 'react-native-svg-uri';
+import {BASE_ROUTE, FIXTURES } from '../constants';
+import { getSubRoute } from '../utils';
 import {
   AppRegistry,
   StyleSheet,
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
   },
   rowFront: {
     alignItems: 'center',
+    flexDirection: 'row',
     backgroundColor: '#ffffff',
     borderBottomColor: '#dedede',
     borderBottomWidth: 1,
@@ -83,36 +86,66 @@ const styles = StyleSheet.create({
 
 const translateData = (data) => {
   const cleanData = data.map((item)=>{
-    item.title = item.rendered ? item.rendered.title : Strings.WINERY;
-    item.thumb = 'https://i0.wp.com/www.prioritywinepass.com/wp-content/uploads/2017/03/durantandbooth-tastingsalonempty.jpg?resize=150%2C150&ssl=1'
+    item.title = item.rendered ? item.rendered.title : (item.slug || Strings.WINERY);
+    item.thumb = FIXTURES.IMAGE_URL; //todo: make this pull actual image
     item.description = item.maplist_description 
-    item.addess = item.maplist_address
+    item.address = item.maplist_address
     return item;
   })
   return cleanData;
 }
 
+
+
 export default class LocationScreen extends Component {
   constructor(props){
     super(props);
     this.goBack = this.goBack.bind(this);
+    this.fetchNext = this.fetchNext.bind(this);
     this.state = {
       currentPage:0,
-      maxPages: 1,
-      dataSource: []
+      pageLen: null,
+      maxPages: null,
+      dataSource: [],
+      fetching: false
     }
   }
   componentDidMount(){
-    fetch(`https://prioritywinepass.com/wp-json/wp/v2/maplists?map_location_categories=${this.props.route.id}`, {
-      method: 'GET'
-    })
-    .then((response) => response.json())
-    .then((data)=>{
-      this.setState({ dataSource: this.state.dataSource.concat(translateData(data)) })
-    });
+    //todo: add paging
+    this.fetchNext()
   }
   goBack(){
     this.props.parentNav.pop();
+  }
+  fetchNext(){
+    const { currentPage, maxPages } = this.state;
+    if(!maxPages || currentPage < maxPages){
+      const path = getSubRoute('maplists', {
+        map_location_categories: this.props.id,
+        page: currentPage + 1
+      });
+      //todo: add proper error handling  
+      fetch(path, {
+        method: 'GET'
+      }).then((data)=>data.json())
+      .then((data)=>{
+        const cleaned = translateData(data);
+        if(currentPage === 0){
+          this.setState({pageLen: cleaned.length})
+        }
+        // set max page when we get a shorter response
+        // keep track of this bc we dont know maxPages from Server yet
+        if(cleaned.length < this.state.pageLen){
+          this.setState({maxPages: currentPage })
+        }
+        
+        this.setState({ 
+          dataSource: this.state.dataSource.concat(cleaned),
+          currentPage: currentPage + 1 // need to add max page check here
+        })
+      });
+    }
+   
   }
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -121,7 +154,7 @@ export default class LocationScreen extends Component {
         <View style={styles.header}>
             <TouchableHighlight  onPress={this.goBack}>
               <View>
-                <SvgUri width="15" height="15" style={styles.back} source={require('../images/home.svg')} />
+                <SvgUri width="15" height="15" style={styles.back} source={require('../images/left-arrow.svg')} />
               </View>
             </TouchableHighlight>
             <Text style={styles.titleText}>{this.props.route.title}</Text>
@@ -142,10 +175,12 @@ export default class LocationScreen extends Component {
           dataSource={ds.cloneWithRows(this.state.dataSource)}
           renderRow={ data => (
               <View style={styles.rowFront}>
-                <Image source={data.source} height="50" width="50" />
-                <Text>{data.title}</Text>
-                <Text>{data.description}</Text>
-                <Text>{data.addess}</Text>
+                <Image source={{uri:data.thumb}} style={{width: 50, height: 50, margin: 10 }} />
+                <View style={{flex: 1, flexDirection:'column'}}>
+                <Text style={{fontWeight:'bold', color:'#666'}} numberOfLines={1}>{data.title}</Text>
+                <Text style={{color:'#666'}} numberOfLines={1} >{data.description}</Text>
+                <Text style={{color:'#bababa'}} numberOfLines={1} >{data.address}</Text>
+                </View>
               </View>
           )}
           renderHiddenRow={ data => (
@@ -156,6 +191,8 @@ export default class LocationScreen extends Component {
             </View>
           )}
           rightOpenValue={-75}
+          enableEmptySections={true}
+          onEndReached={this.fetchNext}
         />
       </View>
     );

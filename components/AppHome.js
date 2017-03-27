@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import MainMenu from './MainMenu';
-import { LOCATIONS, MAP, USERS, LOCATION_DETAIL } from '../constants';
+import { LOCATIONS, MAP, USER, LOCATION_DETAIL } from '../constants';
 import LocationsView from './LocationsView';
 import WineMapView from './WineMapView';
+import Login from './Login';
 
 import Drawer from 'react-native-drawer';
 
@@ -45,8 +46,8 @@ export default class AppHome extends Component {
         return (<LocationsView handleBottomNavClick={this.handleBottomNavClick} parentNav={this.props.parentNav} />);
       case MAP:
         return (<WineMapView />);
-      case USERS:
-        return (<MainMenu />);
+      case USER:
+        return this.props.token ? (<Login />) : (<Login />);
       default:
         return (<LocationsView />);
     }      

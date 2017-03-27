@@ -35,5 +35,9 @@ export default Strings = {
     ALL: 'All',
     FAVORITES: 'Favorites',
     WINERY: 'Winery',
-    SWIPE_LEFT_TO_FAVORITE: 'Swipe Left To Favorite'
+    SWIPE_LEFT_TO_FAVORITE: 'Swipe Left To Favorite',
+    USERNAME: 'Username',
+    PASSWORD: 'Password',
+    LOGIN: 'Login',
+    INVALID_CREDENTIALS: 'Invalid Username or Password'
 }
