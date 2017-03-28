@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Strings from '../constants/Strings';
 import {BASE_ROUTE} from '../constants';
-import {getAuthRoute} from '../utils';
+import {getAuthRoute, getSubRoute} from '../utils';
 import {
   AppRegistry,
   StyleSheet,
@@ -64,8 +64,15 @@ export default class Login extends Component {
       })
     }).then((data) => data.json())
     .then( ( response ) => {
-      console.log(response.data, 'this hsoul have the token')
-      debugger
+      
+      fetch( `https://prioritywinepass.com/wc-api/v3/customers/email/${response.user_email}`, {
+        method:'GET', 
+       'headers': {
+          'Authorization':`Bearer ${response.token}`
+        }
+      })
+        .then((data) => data.json())
+        .then( ( response ) => { debugger})
       //this.props.setToken(response);
     }).catch(( error ) => {
       debugger

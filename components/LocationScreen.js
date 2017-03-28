@@ -86,10 +86,33 @@ const styles = StyleSheet.create({
 
 const translateData = (data) => {
   const cleanData = data.map((item)=>{
-    item.title = item.rendered ? item.rendered.title : (item.slug || Strings.WINERY);
-    item.thumb = FIXTURES.IMAGE_URL; //todo: make this pull actual image
-    item.description = item.maplist_description 
+    item.title = item.title ? item.title.rendered : (item.slug || Strings.WINERY);
+    const reg = /data-medium-file=\"(.*?)\"/g;
+    const srcRaw = reg.exec(item.content.rendered);
+    let src;
+    // todo: clean this up
+    if(srcRaw && srcRaw.length === 2){
+      src = srcRaw[1];
+    }else {
+      const reg2 = /\ssrc=\"(.*?)\"/g;
+      const srcRaw2 = reg2.exec(item.content.rendered);
+      src = srcRaw2 && srcRaw2.length === 2 ? srcRaw2[1] : '';
+    }
+    item.thumb = src; 
+    //this is gross clean this up (possible use html parsing library or cleanerer regex)
+    let cleaned = item.maplist_description.replace(/<\/ul>/g, '')
+    cleaned = cleaned.replace(/<ul>/g,'')
+    cleaned = cleaned.replace(/<li>/g, '')
+    cleaned = cleaned.replace(/<\/li>/g, '')
+    cleaned = cleaned.replace(/<i>/g, '')
+    cleaned = cleaned.replace(/<\/i>/g, '')
+    cleaned = cleaned.replace(/<b>/g, '')
+    cleaned = cleaned.replace(/<\/b>/g, '')
+    cleaned = cleaned.replace(/<br\/>/g, '')
+    cleaned = cleaned.replace(/<br\s\/>/g, '')
+    item.description = cleaned.trim();
     item.address = item.maplist_address
+    //debugger
     return item;
   })
   return cleanData;
