@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Strings from '../constants/Strings';
-import {BASE_ROUTE} from '../constants';
-import {getAuthRoute, getSubRoute, getWooRoute } from '../utils';
+import Strings from '../../constants/Strings';
+import {BASE_ROUTE} from '../../constants';
+import {getAuthRoute, getSubRoute, getWooRoute } from '../../utils';
 import {
   AppRegistry,
   StyleSheet,
@@ -36,10 +36,27 @@ const styles = StyleSheet.create({
     height:40,
     borderColor: '#DDD',
     'borderWidth': 1
+  },
+  icon: {
+    width: 26,
+    height: 26,
   }
 });
 
-export default class Login extends Component {
+export default class Profile extends Component {
+  static navigationOptions = {
+    tabBar: {
+      // Note: By default the icon is only shown on iOS. Search the showIcon option below.
+      icon: ({ focused }) => {
+        return (
+          <Image 
+            style={styles.icon}
+            source={focused ? require('../../images/user_highlighted.png') : require('../../images/user.png')}
+          />);
+      },  
+     
+    }
+  }
   constructor(props){
     super(props);
     this.sendLogin = this.sendLogin.bind(this);
@@ -67,7 +84,6 @@ export default class Login extends Component {
 
       const token = response.token;
       const sepPath = getWooRoute('orders')//getSubRoute('maplists', {posts_per_page:99})
-      debugger
       console.log(sepPath)
       fetch( sepPath, {
         method:'GET', 

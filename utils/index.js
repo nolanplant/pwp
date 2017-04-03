@@ -1,4 +1,4 @@
-import {BASE_ROUTE, AUTH_ROUTE } from '../constants';
+import {BASE_ROUTE, AUTH_ROUTE, WOO_ROUTE } from '../constants';
 export const hashToQueryString = (queryItems) => {
   queryItems = queryItems || {};
   let queryStr = Object.keys(queryItems).reduce((acc, value)=>{
@@ -15,4 +15,8 @@ export const getSubRoute = (subroute, params) =>{
 
 export const getAuthRoute = (params) =>{
   return `${AUTH_ROUTE}${hashToQueryString(params)}`;
+}
+
+export const getWooRoute = (subroute, params) =>{
+  return `${WOO_ROUTE}/${subroute}${hashToQueryString(params)}`;
 }
