@@ -123,8 +123,9 @@ export default class Profile extends Component {
             style={styles.input}
             placeholder={Strings.USERNAME}
             onChangeText={(username) => this.setState({username})}
-            editable = {true}
-            maxLength = {200}
+            editable={true}
+            maxLength={200}
+            autoCapitalize={'none'}
           />
           <TextInput
             style={styles.input}
@@ -132,6 +133,8 @@ export default class Profile extends Component {
             onChangeText={(password) => this.setState({password})}
             editable={true}
             maxLength={200}
+            secureTextEntry={true}
+            autoCapitalize={'none'}
           />
           </View>
           <TouchableHighlight style={styles.loginButton} onPress={this.sendLogin}>

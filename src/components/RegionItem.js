@@ -15,11 +15,11 @@ const getStyles = ({isFirst, isLast}) => {
     locationItem: {
       flex: 1,
       alignItems: 'stretch',
-      borderTopWidth: isFirst ? 8 : 4,
+      borderTopWidth: isFirst ? 68 : 4,
       borderBottomWidth:isLast ? 8 : 4,
       borderLeftWidth: 8,
       borderRightWidth: 8,
-      borderColor: 'white'
+      borderColor: 'rgb(238, 238, 238)'
     },
     image: {
       justifyContent: 'center',
@@ -32,10 +32,10 @@ const getStyles = ({isFirst, isLast}) => {
       fontSize: 24,
       fontWeight: 'bold',
       textAlign: 'center',
-      color: 'white'
+      color: 'rgb(238, 238, 238)'
     },
     subText:{
-      color: 'white'
+      color: 'rgb(238, 238, 238)'
     },
     textContain:{
       flex: 1,

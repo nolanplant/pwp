@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
 import RegionsList from '../components/RegionsList';
-import WineMapView from '../components/WineMapView';
+import WineMapContainer from './WineMapContainer';
 import Profile from '../components/Profile';
 
 const TabNavigatorConfig = {
@@ -24,7 +24,7 @@ export default AppTabs = TabNavigator({
   },
 
   WineMap: {
-    screen: WineMapView,
+    screen: WineMapContainer,
     path: 'wine_map'
   },
 

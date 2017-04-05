@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import SvgUri from 'react-native-svg-uri';
+import { toggleDrawer } from '../actions/homeActions';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -30,12 +32,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MenuIcon extends Component {
+class MenuIcon extends Component {
   render() {
     return (
       <TouchableHighlight
         style={styles.header} 
-        onPress={this.props.onMenuClick}
+        onPress={this.props.toggleDrawer}
         >
         <View style={styles.menuItemView}>
           <SvgUri width="20" height="20" style={styles.menu} source={require('../../images/menu-button.svg')} />
@@ -44,3 +46,6 @@ export default class MenuIcon extends Component {
     );
   }
 }
+
+
+export default MenuIcon;

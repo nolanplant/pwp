@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 
 import { loginReducer } from './loginReducer';
-import { parentReducer } from './parentReducer';
-import { childReducer } from './childReducer';
+import { homeReducer } from './homeReducer';
+import { mapReducer } from './mapReducer';
 // import { appReducer } from './appReducer';
 
 const rootReducer = combineReducers({
     loginReducer,
-    parentReducer,
-    childReducer
+    mapReducer,
+    homeReducer
 });
 
 export default rootReducer;

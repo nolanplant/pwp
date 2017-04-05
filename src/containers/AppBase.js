@@ -12,4 +12,6 @@ export default AppBase = StackNavigator({
     path: 'region/:name',
     screen: WineriesByRegion,
   }
+}, {
+  headerMode: 'screen'
 });
