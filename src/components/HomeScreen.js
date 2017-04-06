@@ -1,17 +1,30 @@
 import React, {Component} from 'react';
-import AppTabs from '../containers/AppTabs';
+import AppTabContainer from '../containers/AppTabContainer';
 import Drawer from 'react-native-drawer';
 import MainMenu from './MainMenu';
 import { connect } from 'react-redux';
 import { toggleDrawer } from '../actions/homeActions';
 import Header from './Header';
-
+import { NavigationActions } from 'react-navigation';
 
 class HomeScreen extends Component {
   static navigationOptions = {
     header: {
       visible: false
     }
+  }
+  constructor(props){
+    super(props);
+    this.goToHome = this.goToHome.bind(this);
+    this.toggleDrawer = this.toggleDrawer.bind(this);
+  }
+  goToHome(){
+   this.props.dispatch(NavigationActions.navigate({
+    routeName: 'Home'
+   }))
+  }
+  toggleDrawer(){
+    this.props.dispatch(toggleDrawer())
   }
   render() {
     return (
@@ -30,14 +43,15 @@ class HomeScreen extends Component {
         }}
         onCloseStart={this.props.toggleDrawer}
       >
-        <Header onMenuClick={this.props.toggleDrawer}/>
-        <AppTabs />
+        <Header onHomeClick={this.goToHome} onMenuClick={this.toggleDrawer}/>
+        <AppTabContainer stackNav={this.props.navigation} />
       </Drawer>
     );
   }
 }
 
 function mapStateToProps(state) {
+    
     const {
       isDrawerOpen
     } = state.homeReducer;
@@ -46,10 +60,13 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = {
-  toggleDrawer
+const mapDispatchToProps = (dispatch)=> {
+  return {
+  toggleDrawer,
+  dispatch
+  }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);
 

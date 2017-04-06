@@ -43,7 +43,7 @@ export default class RegionsList extends Component {
             <RegionItem 
               isFirst={index===0} 
               isLast={index===LOCATION_LIST.length-1}
-              parentNav={this.props.parentNav} 
+              stackNav={this.props.screenProps.stackNav} 
               key={index} 
               {...loc} />
           );

@@ -7,6 +7,7 @@ import {
   View,
   TouchableHighlight
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 import {LOCATION_DETAIL} from '../../constants'
 
@@ -51,11 +52,8 @@ export default class LocationItem extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(){
-    // this.props.parentNav.push({
-    //   name: LOCATION_DETAIL,
-    //   id: this.props.id,
-    //   title: this.props.title
-    // })
+    console.log(this.props.stackNav.navigate.toString())
+    this.props.stackNav.navigate('RegionList', {title: this.props.title, id: this.props.id})
   }
   render(){
     const styles = getStyles(this.props);

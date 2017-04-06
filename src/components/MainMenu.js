@@ -3,7 +3,7 @@ import SvgUri from 'react-native-svg-uri';
 import Strings from '../../constants/Strings';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions/loginActions';
-
+import { goToLoginPage } from '../actions/homeActions';
 import {
   AppRegistry,
   StyleSheet,
@@ -60,9 +60,11 @@ class MainMenu extends Component {
     this.loginHandler = this.loginHandler.bind(this);
   }
   loginHandler(){
-    const { isLoggedIn, logoutUser } = this.props;
+    const { isLoggedIn, logoutUser, goToLoginPage } = this.props;
     if(isLoggedIn){
       logoutUser();
+    } else {
+      goToLoginPage();
     }
   }
   render() {
@@ -120,7 +122,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  logoutUser
+  logoutUser,
+  goToLoginPage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

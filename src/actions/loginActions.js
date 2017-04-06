@@ -54,6 +54,8 @@ function tokenNotStored(){
   }
 }
 
+
+
 function translateResponse(response){
   const {
     user_email: email,

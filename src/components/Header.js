@@ -56,7 +56,7 @@ export default class Header extends Component {
       <View style={styles.header}>
         <TouchableHighlight
           style={styles.homeButton} 
-          onPress={()=>{console.log('hello')}}
+          onPress={this.props.onHomeClick}
           >
         <Image style={styles.mainIcon} source={require('../../images/main-logo.png')} />
         </TouchableHighlight>

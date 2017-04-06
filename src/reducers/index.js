@@ -3,12 +3,13 @@ import { combineReducers } from 'redux';
 import { loginReducer } from './loginReducer';
 import { homeReducer } from './homeReducer';
 import { mapReducer } from './mapReducer';
-// import { appReducer } from './appReducer';
+import { navReducer } from './navReducer';
 
 const rootReducer = combineReducers({
     loginReducer,
     mapReducer,
-    homeReducer
+    homeReducer,
+    nav: navReducer
 });
 
 export default rootReducer;
