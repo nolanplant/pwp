@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import SvgUri from 'react-native-svg-uri';
 import Strings from '../../constants/Strings';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/loginActions';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -51,7 +54,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MainMenu extends Component {
+class MainMenu extends Component {
+  constructor(props){
+    super(props);
+    this.loginHandler = this.loginHandler.bind(this);
+  }
+  loginHandler(){
+    const { isLoggedIn, logoutUser } = this.props;
+    if(isLoggedIn){
+      logoutUser();
+    }
+  }
   render() {
     return (
       <View style={styles.main}>
@@ -81,10 +94,14 @@ export default class MainMenu extends Component {
             <Text style={styles.menuText}>{Strings.BUY_RENEW}</Text>
           </View>
         <View style={styles.loginContain} >
-          <TouchableHighlight style={styles.loginWrap}>
+          <TouchableHighlight style={styles.loginWrap} onPress={this.loginHandler}>
             <View style={styles.menuItemView}>
               <SvgUri width="15" height="15" style={styles.footer} source={require('../../images/user.svg')} />
-              <Text style={styles.loginText}>{Strings.LOGIN}</Text>
+              <Text style={styles.loginText}>
+              {
+                this.props.isLoggedIn ? Strings.LOGOUT : Strings.LOGIN
+              }
+              </Text>
             </View>
           </TouchableHighlight>  
         </View>
@@ -92,3 +109,18 @@ export default class MainMenu extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const {
+    isLoggedIn
+  } = state.loginReducer;
+  return {
+    isLoggedIn
+  };
+}
+
+const mapDispatchToProps = {
+  logoutUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainMenu);

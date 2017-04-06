@@ -2,13 +2,20 @@ import React, {Component} from 'react';
 import {ScrollView} from 'react-native';
 import { LOCATION_LIST } from '../../data/locations';
 import RegionItem from './RegionItem';
-import {Image, StyleSheet} from 'react-native';
+import {Image, View, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   icon: {
     width: 26,
     height: 26,
   },
+  base: {
+    flex:1
+  },
+  topMenuBg: {
+    backgroundColor: '#eeeeee',
+    height: 65
+  }
 });
 
 export default class RegionsList extends Component {
@@ -27,6 +34,8 @@ export default class RegionsList extends Component {
   }
   render(){
     return (
+      <View style={styles.base}>
+      <View style={styles.topMenuBg}/>
       <ScrollView>
       {  
         LOCATION_LIST.map((loc, index)=>{
@@ -40,6 +49,8 @@ export default class RegionsList extends Component {
           );
         })
       }
-      </ScrollView>);
+      </ScrollView>
+      </View>
+      );
   }
 }        

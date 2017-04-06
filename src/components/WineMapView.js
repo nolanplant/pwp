@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import SvgUri from 'react-native-svg-uri';
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE }from 'react-native-maps';
 import Strings from '../../constants/Strings';
-//import fetch from 'fetch';
+import { mapStyles } from '../../data/mapStyles';
 
 import {
   AppRegistry,
@@ -19,6 +19,8 @@ export default class WineMapView extends Component {
       <MapView
         region={this.props.initialPosition}
         style={{flex:1}}
+        // customMapStyle={mapStyles}
+        // provider={PROVIDER_GOOGLE}
         >
       { this.props.locations.map((marker, index) => {
           return (

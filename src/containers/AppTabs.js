@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
 import RegionsList from '../components/RegionsList';
 import WineMapContainer from './WineMapContainer';
-import Profile from '../components/Profile';
+import UserPageContainer from './UserPageContainer';
 
 const TabNavigatorConfig = {
   tabBarPosition: 'bottom',
@@ -29,7 +29,7 @@ export default AppTabs = TabNavigator({
   },
 
   Profile: {
-    screen: Profile,
+    screen: UserPageContainer,
     path: 'profile'
   }
 },

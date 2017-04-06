@@ -6,14 +6,12 @@ import { connect } from 'react-redux';
 import { toggleDrawer } from '../actions/homeActions';
 import Header from './Header';
 
+
 class HomeScreen extends Component {
   static navigationOptions = {
     header: {
       visible: false
     }
-  }
-  constructor(props){
-    super(props);
   }
   render() {
     return (

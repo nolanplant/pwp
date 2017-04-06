@@ -40,6 +40,8 @@ function doneReceivingLocations(){
   }
 }
 
+
+
 //todo:  clean this up
 const translateData = (data)=> {
   return data.map((loc, index)=>{
@@ -79,7 +81,6 @@ export function fetchWineLocations() {
   return (dispatch, getState) => {
     const { mapReducer } = getState();
     const { page, currPageLen } = mapReducer;
-    console.log('calling fetch ', {page, currPageLen})
     dispatch(requestLocations())
     // fetch small batch to start (then fetch larger)
     const firstFetch = 15;

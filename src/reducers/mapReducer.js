@@ -24,23 +24,26 @@ const defaultData = {
 export function mapReducer(state = defaultData, action) {
   switch (action.type) {
     case REQUEST_LOCATIONS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isRequesting: true
-      });
+      };
     case RECEIVE_LOCATIONS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         locations: state.locations.concat(action.locations),
         currPageLen: action.locations.length
-      });
+      };
     case SET_PAGE:
       return {
         ...state,
         page: action.page
       };   
     case DONE_RECEIVING_LOCATIONS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isRequesting: false
-      });
+      };
     case SET_USER_LOCATION:
       const { initialPosition } = state;
       const {latitude, longitude} = action;

@@ -15,7 +15,7 @@ const getStyles = ({isFirst, isLast}) => {
     locationItem: {
       flex: 1,
       alignItems: 'stretch',
-      borderTopWidth: isFirst ? 68 : 4,
+      borderTopWidth: isFirst ? 8 : 4,
       borderBottomWidth:isLast ? 8 : 4,
       borderLeftWidth: 8,
       borderRightWidth: 8,
@@ -51,11 +51,11 @@ export default class LocationItem extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(){
-    this.props.parentNav.push({
-      name: LOCATION_DETAIL,
-      id: this.props.id,
-      title: this.props.title
-    })
+    // this.props.parentNav.push({
+    //   name: LOCATION_DETAIL,
+    //   id: this.props.id,
+    //   title: this.props.title
+    // })
   }
   render(){
     const styles = getStyles(this.props);
