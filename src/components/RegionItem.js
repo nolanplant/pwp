@@ -53,7 +53,7 @@ export default class LocationItem extends Component {
   }
   handleClick() {
     console.log(this.props.stackNav.navigate.toString());
-    this.props.stackNav.navigate("RegionList", { title: this.props.title, id: this.props.id });
+    this.props.stackNav.navigate("RegionList", { title: this.props.title, wineRegionId: this.props.id });
   }
   render() {
     const styles = getStyles(this.props);
