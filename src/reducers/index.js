@@ -1,15 +1,15 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import { loginReducer } from './loginReducer';
-import { homeReducer } from './homeReducer';
-import { mapReducer } from './mapReducer';
-import { navReducer } from './navReducer';
+import loginReducer from "./loginReducer";
+import homeReducer from "./homeReducer";
+import mapReducer from "./mapReducer";
+import navReducer from "./navReducer";
 
 const rootReducer = combineReducers({
-    loginReducer,
-    mapReducer,
-    homeReducer,
-    nav: navReducer
+  loginReducer,
+  mapReducer,
+  homeReducer,
+  navReducer
 });
 
 export default rootReducer;

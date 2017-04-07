@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import Strings from '../../constants/Strings';
-import {BASE_ROUTE} from '../../constants';
-import {getAuthRoute, getSubRoute, getWooRoute } from '../../utils';
-import Spinner from 'react-native-loading-spinner-overlay';
+import React, { Component } from "react";
+import Strings from "../../constants/Strings";
+import { BASE_ROUTE } from "../../constants";
+import { getAuthRoute, getSubRoute, getWooRoute } from "../../utils";
+import Spinner from "react-native-loading-spinner-overlay";
 
 
 import {
@@ -14,54 +14,54 @@ import {
   TextInput,
   TouchableHighlight,
   ActivityIndicator
-} from 'react-native';
+} from "react-native";
 
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    'backgroundColor':'#ffffff'
+    justifyContent: "center",
+    alignItems: "center",
+    "backgroundColor": "#ffffff"
   },
-  loginText:{
-    textAlign: 'center'
+  loginText: {
+    textAlign: "center"
   },
-  loginButton:{
-    backgroundColor: 'orange',
+  loginButton: {
+    backgroundColor: "orange",
     height: 30,
     width: 100,
     borderRadius: 10,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   input: {
     padding: 5,
-    width:200,
-    marginBottom:10,
-    height:40,
-    borderColor: '#DDD',
-    'borderWidth': 1
+    width: 200,
+    marginBottom: 10,
+    height: 40,
+    borderColor: "#DDD",
+    "borderWidth": 1
   },
   centering: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 8,
   }
 });
 
 export default class Login extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.sendLogin = this.sendLogin.bind(this);
     this.state = {
       username: null,
       password: null
-    }
+    };
   }
-  sendLogin(){
+  sendLogin() {
     const { username, password } = this.state;
-    if(username && password){
+    if (username && password) {
       const { isLoggingIn, loginUser } = this.props;
-      !isLoggingIn && loginUser({username, password});
+      !isLoggingIn && loginUser({ username, password });
     }
   }
   render() {
@@ -69,34 +69,34 @@ export default class Login extends Component {
       <View style={styles.base}>
         <ActivityIndicator
           animating={this.props.isLoggingIn}
-          style={[styles.centering, {height: 80}]}
+          style={[styles.centering, { height: 80 }]}
           size="large"
         />
         <View>
           <TextInput
             style={styles.input}
             placeholder={Strings.USERNAME}
-            onChangeText={(username) => this.setState({username})}
-            editable={true}
+            onChangeText={(username) => this.setState({ username })}
+            editable
             maxLength={200}
             autoCapitalize={'none'}
           />
           <TextInput
             style={styles.input}
             placeholder={Strings.PASSWORD}
-            onChangeText={(password) => this.setState({password})}
-            editable={true}
+            onChangeText={(password) => this.setState({ password })}
+            editable
             maxLength={200}
-            secureTextEntry={true}
+            secureTextEntry
             autoCapitalize={'none'}
           />
         </View>
         <TouchableHighlight style={styles.loginButton} onPress={this.sendLogin}>
           <Text style={styles.loginText}>{ Strings.LOGIN }</Text>
         </TouchableHighlight>
-        <Text style={{ color:'red', marginTop:10 }} >
-          { 
-            this.props.invalidLogin && Strings.INVALID_LOGIN 
+        <Text style={{ color: "red", marginTop: 10 }} >
+          {
+            this.props.invalidLogin && Strings.INVALID_LOGIN
           }
         </Text>
       </View>
