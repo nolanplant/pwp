@@ -14,7 +14,7 @@ const defaultData = {
   wineries: [],
   isFetching: false,
   wineRegionId: null,
-  winerRegionTitle: null
+  wineRegionTitle: null
 }
 
 export default function wineriesReducer(state = defaultData, action) {
@@ -46,10 +46,15 @@ export default function wineriesReducer(state = defaultData, action) {
         pageLength: action.pageLength
       };
     case SET_WINE_REGION_DETAILS:
+      const {wineRegionTitle, wineRegionId} = action;
+      if(wineRegionId === state.wineRegionId){
+        return state;
+      }
       return {
-        ...state,
-        wineRegionId: action.wineRegionId,
-        winerRegionTitle: action.winerRegionTitle
+        ...defaultData, // reset the store when the winery changes
+        wineRegionId,
+        wineRegionTitle,
+
       }       
     default:
       return state;
