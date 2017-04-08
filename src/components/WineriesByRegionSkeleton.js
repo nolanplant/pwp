@@ -6,7 +6,7 @@ const {height, width} = Dimensions.get('window');
 
 const WinerySkeleton = () => (
   <Image source={require('../../images/skeleton-wine.png')}
-    style={{width: width, height:110, borderColor:'white', borderWidth:2, opacity:0.35}}
+    style={{width: width - 20, height:100, borderColor:'white', borderWidth:2, opacity:0.35}}
   />
 );
 
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex:3
-    //pointerEvents:'none'
   }
 });
 

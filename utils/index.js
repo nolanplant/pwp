@@ -9,14 +9,6 @@ export const hashToQueryString = (queryItems) => {
 }
 
 
-export const getSubRoute = (subroute, params) =>{
-  return `${BASE_ROUTE}/${subroute}${hashToQueryString(params)}`;
-}
-
-export const getAuthRoute = (params) =>{
-  return `${AUTH_ROUTE}${hashToQueryString(params)}`;
-}
-
-export const getWooRoute = (subroute, params) =>{
-  return `${WOO_ROUTE}/${subroute}${hashToQueryString(params)}`;
-}
+export const getSubRoute = (subroute, params) => `${BASE_ROUTE}/${subroute}${hashToQueryString(params)}`;
+export const getAuthRoute = (params) => `${AUTH_ROUTE}${hashToQueryString(params)}`;
+export const getWooRoute = (subroute, params) => `${WOO_ROUTE}/${subroute}${hashToQueryString(params)}`;

@@ -44,8 +44,7 @@ class WineriesByRegionContainer extends Component {
 const mapStateToProps = (state) => {
   const {
     isFetching,
-    wineries,
-    currentPage
+    wineries
   } = state.wineriesReducer;
   return {
     wineries,

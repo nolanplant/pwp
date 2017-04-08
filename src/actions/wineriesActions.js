@@ -1,4 +1,4 @@
-import { 
+ import { 
   GET,
   REQUESTING_WINERIES,
   RECEIVING_WINERIES, 
@@ -7,7 +7,8 @@ import {
   SET_WINERY_CURRENT_PAGE,
   SET_WINE_REGION_DETAILS
 } from '../constants';
-import { getSubRoute } from '../../utils'
+import { getSubRoute, parseHtmlEntities  } from '../../utils';
+import he from 'he';
 
 export const setWineRegionDetails = ({wineRegionId, title}) => ({
   type: SET_WINE_REGION_DETAILS,
@@ -41,36 +42,27 @@ const setCurrentPage = (currentPage) => ({
 
 const translateData = (data) => {
   const cleanData = data.map((item) => {
-    item.title = item.title ? item.title.rendered : (item.slug || Strings.WINERY);
-    const reg = /data-medium-file=\"(.*?)\"/g;
-    const srcRaw = reg.exec(item.content.rendered);
-    let src;
-    // todo: clean this up
-    if (srcRaw && srcRaw.length === 2) {
-      src = srcRaw[1];
-    } else {
-      const reg2 = /\ssrc=\"(.*?)\"/g;
-      const srcRaw2 = reg2.exec(item.content.rendered);
-      src = srcRaw2 && srcRaw2.length === 2 ? srcRaw2[1] : "";
-    }
-    item.thumb = src;
+    item.title = item.title ? he.decode(item.title.rendered) : (item.slug || Strings.WINERY);
+    item.images = getImagesSrcs(item.content.rendered, 6);
+    item.thumb = item.images[0];
     // this is gross clean this up (possible use html parsing library or cleanerer regex)
-    let cleaned = item.maplist_description.replace(/<\/ul>/g, "");
-    cleaned = cleaned.replace(/<ul>/g, "");
-    cleaned = cleaned.replace(/<li>/g, "");
-    cleaned = cleaned.replace(/<\/li>/g, "");
-    cleaned = cleaned.replace(/<i>/g, "");
-    cleaned = cleaned.replace(/<\/i>/g, "");
-    cleaned = cleaned.replace(/<b>/g, "");
-    cleaned = cleaned.replace(/<\/b>/g, "");
-    cleaned = cleaned.replace(/<br\/>/g, "");
-    cleaned = cleaned.replace(/<br\s\/>/g, "");
-    item.description = cleaned.trim();
-    item.address = item.maplist_address;
+    let cleaned = item.maplist_description.replace(/<[^>]*>/g, "").trim();
+    item.description = he.decode(cleaned);
+    item.address = he.decode(item.maplist_address);
     return item;
   });
   return cleanData;
 };
+
+const getImagesSrcs = (str, maxImages) => {
+  const imagesSrcs = [];
+  const srcReg = /data-medium-file=\"(.*?)\"/g;
+  for (let i = 0, match = srcReg.exec(str); i < maxImages && match !== null; i++) {
+    imagesSrcs.push(match[1]);
+    match = srcReg.exec(str);
+  }
+  return imagesSrcs;
+}
 
 export function fetchWineries(){
   return (dispatch, getState) => {
