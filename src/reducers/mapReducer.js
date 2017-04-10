@@ -9,7 +9,7 @@ import {
   ERROR_LOADING_LOCATIONS } from "../constants";
 
 const defaultData = {
-  isRequesting: false,
+  isRequesting: false,  
   locations: [],
   page: 1,
   currPageLen: null,
@@ -33,7 +33,7 @@ export default function mapReducer(state = defaultData, action) {
       ...state,
       locations: state.locations.concat(action.locations),
       currPageLen: action.locations.length
-    };
+    };  
   case SET_PAGE:
     return {
       ...state,
@@ -46,11 +46,12 @@ export default function mapReducer(state = defaultData, action) {
     };
   case SET_USER_LOCATION:
     const { initialPosition } = state;
-    const { latitude, longitude } = action;
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = action;
     return {
       ...state,
       initialPosition: {
-        ...initialPosition,
+        latitudeDelta,
+        longitudeDelta,
         longitude,
         latitude
       }

@@ -19,13 +19,14 @@ export default class WineMapView extends Component {
       <MapView
         region={this.props.initialPosition}
         style={{ flex: 1 }}
+        onRegionChangeComplete={this.props.setCurrentLocation}
       >
       { this.props.locations.map((marker, index) => {
         return (
             <MapView.Marker
               coordinate={marker.latlng}
               key={index}
-            >
+              >
               <Image source={require("../../images/pin.png")}
                 style={{
                   justifyContent: "center",

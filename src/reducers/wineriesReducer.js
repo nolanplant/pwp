@@ -4,7 +4,8 @@ import {
   SET_WINERY_CURRENT_PAGE,
   REQUESTING_WINERIES,
   RECEIVING_WINERIES, 
-  SET_WINE_REGION_DETAILS
+  SET_WINE_REGION_DETAILS,
+  RECEIVE_WINERY_DATA
 } from '../constants';
 
 const defaultData = {
@@ -14,7 +15,8 @@ const defaultData = {
   wineries: [],
   isFetching: false,
   wineRegionId: null,
-  wineRegionTitle: null
+  wineRegionTitle: null,
+  currentWinery: null
 }
 
 export default function wineriesReducer(state = defaultData, action) {
@@ -55,7 +57,12 @@ export default function wineriesReducer(state = defaultData, action) {
         wineRegionId,
         wineRegionTitle,
 
-      }       
+      }
+    case RECEIVE_WINERY_DATA:
+      return {
+        ...state,
+        currentWinery: action.currentWinery
+      }         
     default:
       return state;
   }

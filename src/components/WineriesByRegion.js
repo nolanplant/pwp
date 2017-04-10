@@ -51,6 +51,7 @@ class WineryListItem extends Component {
   onSelectWinery(){
     const {onSelectWinery, data} = this.props;
     onSelectWinery(data);
+
   }
   render(){
     const { data } = this.props;
@@ -84,8 +85,12 @@ export default class WineriesByRegion extends Component {
         />) 
   }
   openWinery(details){
-    const { title } = details;
-    this.props.navigation.navigate("WineryDetail", { title, details });
+    const { title, id } = details;
+    const { navigation, fetchMoreWineryDetails } = this.props;
+    navigation.navigate("WineryDetail", { title, details });
+    if(!this.props.currentWinery || this.props.currentWinery.id !== id){
+      fetchMoreWineryDetails(id)
+    }
   }
   render() {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {View, Text, Image, TouchableHighlight, Dimensions } from 'react-native';
 import WineriesByRegionSkeleton from '../components/WineriesByRegionSkeleton';
 import WineriesByRegion from '../components/WineriesByRegion';
-import {fetchWineries, setWineRegionDetails } from '../actions/wineriesActions';
+import {fetchWineries, setWineRegionDetails, fetchMoreWineryDetails} from '../actions/wineriesActions';
 
 
 class WineriesByRegionContainer extends Component {
@@ -44,17 +44,20 @@ class WineriesByRegionContainer extends Component {
 const mapStateToProps = (state) => {
   const {
     isFetching,
-    wineries
+    wineries,
+    currentWinery
   } = state.wineriesReducer;
   return {
     wineries,
-    isFetching
+    isFetching,
+    currentWinery
   };
 }
 
 const mapDispatchToProps = {
   fetchWineries,
-  setWineRegionDetails
+  setWineRegionDetails,
+  fetchMoreWineryDetails
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineriesByRegionContainer);

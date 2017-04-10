@@ -13,27 +13,28 @@ const styles = StyleSheet.create({
   carouselWrap:{
     width: 375,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor:'green',
+    position:'relative'
   },
   backArrow: {
     flex: 1
   },
   image:{
-    position:"absolute",
-    //resizeMode: 'cover',
-    //width:375
+     position:"absolute",
     top:0,
     left:0,
     right:0,
     bottom:0,
-    flex:1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   imageContain:{
+    position:"relative",
     flex:1,
-    position:'relative',
-    width:375
+    width:375,
+    backgroundColor:'blue'
   },
   description: {
     flex: 1
@@ -70,24 +71,28 @@ class WineryDetail extends Component {
     };
   }
   addWineryImage(source, i){
-    return <View style={styles.imageContain}><Image source={{uri:source}} style={styles.image} key={i}/></View>
+    return (
+      <View style={styles.imageContain} key={i}>
+        <Image source={{uri:source}} style={styles.image} />
+      </View>);
   }
   render() {
     const wineryData = this.props.navigation.state.params.details
+    debugger
     return (
       <View style={styles.base}>
       <View style={styles.carouselWrap} >
-        <Carousel
+        <Carousel width={375}
           hideIndicators={false} 
-          indicatorColor="#ffffff" 
+          indicatorColor={"#ffffff"} 
           indicatorSize={25} 
           indicatorSpace={10} 
-          inactiveIndicatorColor="#dedede" 
-          indicatorOffset={250} 
+          inactiveIndicatorColor={"#dedede"} 
+          indicatorOffset={20} 
           indicatorAtBottom={true}
           animate={true}//this.state.shouldPlay} 
-          // delay={1500} // Set Animation delay between slides
-          // loop={true}
+          delay={2500} // Set Animation delay between slides
+          loop={true}
           >
          {
           wineryData.images.map(this.addWineryImage)
@@ -95,7 +100,8 @@ class WineryDetail extends Component {
         </Carousel>
       </View>
         <View style={styles.description}>
-            <Text >wineryData</Text>
+            <Text >{wineryData.address}</Text>
+            <Text >{"hello"}</Text>
         </View>
       </View>
     );
@@ -104,19 +110,11 @@ class WineryDetail extends Component {
 
 const mapStateToProps = (state) => {
   const {
-    isFetching,
-    wineries
+   currentWinery
   } = state.wineriesReducer;
   return {
-    wineries,
-    isFetching
+    currentWinery
   };
 }
 
-const mapDispatchToProps = {
-  fetchWineries,
-  setWineRegionDetails
-}
-
-//export default connect(mapStateToProps, mapDispatchToProps)(WineriesByRegionContainer);
-export default WineryDetail;
+export default connect(mapStateToProps)(WineryDetail);
