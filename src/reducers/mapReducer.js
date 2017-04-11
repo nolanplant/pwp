@@ -1,12 +1,14 @@
+import MapView from "react-native-maps";
 import {
   REQUEST_LOCATIONS,
   RECEIVE_LOCATIONS,
   CACHE_LOCATIONS,
   GET_CACHED_LOCATIONS,
-  SET_USER_LOCATION,
+  SET_MAP_LOCATION,
   SET_PAGE,
   DONE_RECEIVING_LOCATIONS,
   ERROR_LOADING_LOCATIONS } from "../constants";
+
 
 const defaultData = {
   isRequesting: false,  
@@ -44,17 +46,20 @@ export default function mapReducer(state = defaultData, action) {
       ...state,
       isRequesting: false
     };
-  case SET_USER_LOCATION:
+  case SET_MAP_LOCATION:
     const { initialPosition } = state;
-    const { latitude, longitude, latitudeDelta, longitudeDelta } = action;
+    const { latitude, longitude } = action;
+    let { latitudeDelta, longitudeDelta } = action;
+    latitudeDelta = latitudeDelta || state.latitudeDelta;
+    longitudeDelta = longitudeDelta || state.longitudeDelta;
     return {
       ...state,
-      initialPosition: {
+      initialPosition: new MapView.AnimatedRegion({
         latitudeDelta,
         longitudeDelta,
         longitude,
         latitude
-      }
+      })
     };
   default:
     return state;

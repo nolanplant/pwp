@@ -78,7 +78,6 @@ class WineryDetail extends Component {
   }
   render() {
     const wineryData = this.props.navigation.state.params.details
-    debugger
     return (
       <View style={styles.base}>
       <View style={styles.carouselWrap} >

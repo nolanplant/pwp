@@ -5,7 +5,7 @@ import {
   ERROR_LOADING_LOCATIONS,
   SET_PAGE,
   DONE_RECEIVING_LOCATIONS,
-  SET_USER_LOCATION } from "../constants";
+  SET_MAP_LOCATION } from "../constants";
 import { getSubRoute } from "../../utils";
 import Strings from "../../constants/Strings";
 
@@ -53,10 +53,9 @@ const translateData = (data) => data.map((loc = {}) => ({
   })  
 );
 
-export function setUserLocation({ latitude, longitude, latitudeDelta,
-    longitudeDelta }) {
+export function setMapLocation({ latitude, longitude, latitudeDelta, longitudeDelta }) {
   return {
-    type: SET_USER_LOCATION,
+    type: SET_MAP_LOCATION,
     latitude,
     longitude,
     latitudeDelta,
@@ -71,11 +70,12 @@ export function getUsersLocation() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        dispatch(setUserLocation({ 
+        dispatch(setMapLocation({ 
           latitude, 
           longitude, 
           latitudeDelta: 0.8,
-          longitudeDelta: 0.8 })
+          longitudeDelta: 0.8 
+        })
         );
       },
       (error) => {

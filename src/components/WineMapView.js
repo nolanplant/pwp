@@ -14,9 +14,17 @@ import {
 } from "react-native";
 
 export default class WineMapView extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.initialPosition !== nextProps.initialPosition) {
+      this.props.initialPosition.timing && this.props.initialPosition.timing({
+        ...nextProps.initialPosition,
+        duration: 1000
+      }).start();
+    }
+  }
   render() {
     return (
-      <MapView
+      <MapView.Animated
         region={this.props.initialPosition}
         style={{ flex: 1 }}
         onRegionChangeComplete={this.props.setCurrentLocation}
@@ -26,6 +34,7 @@ export default class WineMapView extends Component {
             <MapView.Marker
               coordinate={marker.latlng}
               key={index}
+              onPress={this.props.onWineryPress.bind(this, marker.latlng)}
               >
               <Image source={require("../../images/pin.png")}
                 style={{
@@ -38,7 +47,7 @@ export default class WineMapView extends Component {
               />
             </MapView.Marker>
           ); })}
-      </MapView>
+      </MapView.Animated>
     );
   }
 }

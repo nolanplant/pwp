@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import WineMapView from '../components/WineMapView';
-import { getUsersLocation, setUserLocation } from '../actions/mapActions';
+import { getUsersLocation, setMapLocation } from '../actions/mapActions';
 
 const styles = StyleSheet.create({
   icon: {
@@ -24,15 +24,29 @@ class WineMapContainer extends Component {
      
     }
   }
+  constructor(props){
+    super(props);
+    this.setWineryLocation = this.setWineryLocation.bind(this);
+  }
   componentDidMount(){
     this.props.getUsersLocation();
+  }
+  setWineryLocation({ latitude, longitude }){
+    const { setMapLocation } = this.props;
+    setMapLocation({ 
+      latitude, 
+      longitude, 
+      latitudeDelta: 0.8,
+      longitudeDelta: 0.8 
+    });
   }
   render() {
     return (
        <WineMapView
         locations={this.props.locations}
         initialPosition={this.props.initialPosition}
-        setCurrentLocation={this.props.setUserLocation}
+        setCurrentLocation={this.props.setMapLocation}
+        onWineryPress={this.setWineryLocation}
        />
     );
   }
@@ -51,7 +65,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   getUsersLocation,
-  setUserLocation
+  setMapLocation
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineMapContainer);
