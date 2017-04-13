@@ -9,18 +9,20 @@ import {
   DONE_RECEIVING_LOCATIONS,
   ERROR_LOADING_LOCATIONS } from "../constants";
 
+const NAPA_COORDS =  {  // napa default
+    latitude: 38.299061,
+    longitude: -122.285738,
+    latitudeDelta: 0.8,
+    longitudeDelta: 0.8
+}
 
 const defaultData = {
   isRequesting: false,  
   locations: [],
   page: 1,
   currPageLen: null,
-  initialPosition: {  // napa default
-    latitude: 38.299061,
-    longitude: -122.285738,
-    latitudeDelta: 0.8,
-    longitudeDelta: 0.8
-  }
+  region: NAPA_COORDS,
+  initialPosition: NAPA_COORDS
 };
 
 export default function mapReducer(state = defaultData, action) {
@@ -47,19 +49,18 @@ export default function mapReducer(state = defaultData, action) {
       isRequesting: false
     };
   case SET_MAP_LOCATION:
-    const { initialPosition } = state;
     const { latitude, longitude } = action;
     let { latitudeDelta, longitudeDelta } = action;
     latitudeDelta = latitudeDelta || state.latitudeDelta;
     longitudeDelta = longitudeDelta || state.longitudeDelta;
     return {
       ...state,
-      initialPosition: new MapView.AnimatedRegion({
+      region: {
         latitudeDelta,
         longitudeDelta,
         longitude,
         latitude
-      })
+      }
     };
   default:
     return state;

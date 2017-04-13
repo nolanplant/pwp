@@ -1,4 +1,5 @@
- import he from "he";
+import he from "he";
+import Strings from '../constants/Strings';
 import {BASE_ROUTE, AUTH_ROUTE, WOO_ROUTE } from '../constants';
 export const hashToQueryString = (queryItems) => {
   queryItems = queryItems || {};
@@ -24,7 +25,11 @@ export const translateData = (data) => data.map((item) => {
     address: he.decode(item.maplist_address),
     description: he.decode(cleaned),
     thumb: images[0],
-    images
+    images,
+    latlng: {
+      latitude: +item.maplist_latitude,
+      longitude: +item.maplist_longitude
+    }
   };
  });
 
@@ -34,6 +39,12 @@ export const translateData = (data) => data.map((item) => {
    for (let i = 0, match = srcReg.exec(str); i < maxImages && match !== null; i++) {
      imagesSrcs.push(match[1]);
      match = srcReg.exec(str);
+   }
+   if(!imagesSrcs.length){
+    //last result just pull first src
+    const srcBare = /src=\"(.*?)\"/g;
+    const src = srcBare.exec(str);
+    src && src[1] && imagesSrcs.push(src[1]); 
    }
    return imagesSrcs;
  };

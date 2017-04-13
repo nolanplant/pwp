@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class WineryListItem extends Component {
+export class WineryListItem extends Component {
   constructor(props){
     super(props)
     this.onSelectWinery = this.onSelectWinery.bind(this);
@@ -56,7 +56,7 @@ class WineryListItem extends Component {
   render(){
     const { data } = this.props;
     return (
-      <TouchableHighlight style={styles.base} onPress={this.onSelectWinery}> 
+      <TouchableHighlight style={this.props.style} onPress={this.onSelectWinery}> 
         <View style={styles.row} >  
           <Image source={{ uri: data.thumb }} style={styles.wineryThumb} />
           <View style={styles.textRow}>
@@ -100,7 +100,10 @@ export default class WineriesByRegion extends Component {
           style={styles.list}
           dataSource={ds.cloneWithRows(this.props.wineries)}
           renderRow={data => (
-            <WineryListItem onSelectWinery={this.openWinery} data={data} />  
+            <WineryListItem
+              style={styles.base} 
+              onSelectWinery={this.openWinery} 
+              data={data} />  
           )}
           renderFooter={this.renderFooter}
           onEndReached={this.props.fetchWineries}

@@ -6,7 +6,7 @@ import {
   SET_PAGE,
   DONE_RECEIVING_LOCATIONS,
   SET_MAP_LOCATION } from "../constants";
-import { getSubRoute } from "../../utils";
+import { getSubRoute, translateData } from "../../utils";
 import Strings from "../../constants/Strings";
 
 function requestLocations() {
@@ -41,17 +41,6 @@ function doneReceivingLocations() {
   };
 }
 
-
-const translateData = (data) => data.map((loc = {}) => ({ 
-    ...loc,
-    latlng: {
-      latitude: +loc.maplist_latitude,
-      longitude: +loc.maplist_longitude
-    },
-    title: loc.title ? loc.title.rendered : Strings.Winery,
-    description: loc.maplist_description && loc.maplist_description.trim()
-  })  
-);
 
 export function setMapLocation({ latitude, longitude, latitudeDelta, longitudeDelta }) {
   return {
