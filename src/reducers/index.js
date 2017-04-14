@@ -4,7 +4,7 @@ import loginReducer from "./loginReducer";
 import homeReducer from "./homeReducer";
 import mapReducer from "./mapReducer";
 import navReducer from "./navReducer";
-import wineriesReducer from './wineriesReducer';
+import wineriesReducer from "./wineriesReducer";
 
 const rootReducer = combineReducers({
   loginReducer,

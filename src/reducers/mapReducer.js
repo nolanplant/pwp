@@ -9,15 +9,15 @@ import {
   DONE_RECEIVING_LOCATIONS,
   ERROR_LOADING_LOCATIONS } from "../constants";
 
-const NAPA_COORDS =  {  // napa default
-    latitude: 38.299061,
-    longitude: -122.285738,
-    latitudeDelta: 0.8,
-    longitudeDelta: 0.8
-}
+const NAPA_COORDS = {  // napa default
+  latitude: 38.299061,
+  longitude: -122.285738,
+  latitudeDelta: 0.8,
+  longitudeDelta: 0.8
+};
 
 const defaultData = {
-  isRequesting: false,  
+  isRequesting: false,
   locations: [],
   page: 1,
   currPageLen: null,
@@ -37,7 +37,7 @@ export default function mapReducer(state = defaultData, action) {
       ...state,
       locations: state.locations.concat(action.locations),
       currPageLen: action.locations.length
-    };  
+    };
   case SET_PAGE:
     return {
       ...state,

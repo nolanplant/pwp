@@ -7,7 +7,6 @@ import {
   DONE_RECEIVING_LOCATIONS,
   SET_MAP_LOCATION } from "../constants";
 import { getSubRoute, translateData } from "../../utils";
-import Strings from "../../constants/Strings";
 
 function requestLocations() {
   return {
@@ -53,22 +52,22 @@ export function setMapLocation({ latitude, longitude, latitudeDelta, longitudeDe
 }
 
 
-
 export function getUsersLocation() {
   return (dispatch) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        dispatch(setMapLocation({ 
-          latitude, 
-          longitude, 
+        dispatch(setMapLocation({
+          latitude,
+          longitude,
           latitudeDelta: 0.8,
-          longitudeDelta: 0.8 
+          longitudeDelta: 0.8
         })
         );
       },
       (error) => {
-        //console.error('error', error);
+
+        // console.error('error', error);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
@@ -78,7 +77,7 @@ export function getUsersLocation() {
 export function fetchWineLocations() {
   return (dispatch, getState) => {
     const { mapReducer } = getState();
-    const { page, currPageLen } = mapReducer;
+    const { page } = mapReducer;
     dispatch(requestLocations());
     // fetch small batch to start (then fetch larger)
     const firstFetch = 15;
@@ -92,11 +91,12 @@ export function fetchWineLocations() {
     })
       .then((response) => response.json())
       .catch(dispatch(errorLoadingLocations()))
-      .then((data) => {
+      .then((raw) => {
         // second call will have duplicate data (todo: clean this up)
+        const data = { ...raw };
         if (page === 2) {
           data = data.slice(firstFetch);
-        } 
+        }
         dispatch(receiveLocations(translateData(data)));
         dispatch(setPage(page + 1));
         if (page <= 2 || data.length >= numberItems) {

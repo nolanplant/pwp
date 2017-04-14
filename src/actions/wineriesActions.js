@@ -40,10 +40,10 @@
    currentPage
  });
 
-const receiveWineryData = (currentWinery) => ({
-  type: RECEIVE_WINERY_DATA,
-  currentWinery
-});
+ const receiveWineryData = (currentWinery) => ({
+   type: RECEIVE_WINERY_DATA,
+   currentWinery
+ });
 
  export function fetchWineries() {
    return (dispatch, getState) => {
@@ -76,15 +76,15 @@ const receiveWineryData = (currentWinery) => ({
    };
  }
 
-export function fetchMoreWineryDetails(id){
-  return (dispatch) => {
-    //clear data before fetching
-    dispatch(receiveWineryData(null));
-    const path = getWineryRoute(id);
-    return fetch(path, {
-      method: GET
-    })
+ export function fetchMoreWineryDetails(id) {
+   return (dispatch) => {
+    // clear data before fetching
+     dispatch(receiveWineryData(null));
+     const path = getWineryRoute(id);
+     return fetch(path, {
+       method: GET
+     })
     .then((response) => response.json())
     .then(data => dispatch(receiveWineryData(data)));
-  }
-}
+   };
+ }
