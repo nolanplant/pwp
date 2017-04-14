@@ -40,5 +40,6 @@ export default Strings = {
     PASSWORD: 'Password',
     LOGIN: 'Login',
     LOGOUT: 'Logout',
-    INVALID_LOGIN: 'Invalid Username or Password'
+    INVALID_LOGIN: 'Invalid Username or Password',
+    DIRECTIONS: 'Directions'
 }
