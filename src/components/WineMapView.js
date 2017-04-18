@@ -10,8 +10,18 @@ import {
   Image,
   View,
   Text,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
+
+const styles = StyleSheet.create({
+  imageView:{
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    height: 40,
+    width: 30
+  }
+});  
 
 class WineMapMarker extends Component {
   constructor(props){
@@ -24,19 +34,14 @@ class WineMapMarker extends Component {
   }
   render(){
     return (
-      <TouchableHighlight
+      <TouchableOpacity
         onPress={this.handlePress}
         >
-        <Image source={require("../../images/pin.png")}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            flex: 1,
-            height: 40,
-            width: 30
-          }}
+        <Image source={ this.props.isSelected ? require("../../images/pin-highlight.png") :
+          require("../../images/pin.png")}
+          style={styles.imageView}
         />
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }
@@ -58,6 +63,7 @@ export default class WineMapView extends Component {
     this.props.selectWinery(wineryData);
   }
   render() {
+
     return (
       <MapView
         region={this.props.region}
@@ -76,6 +82,7 @@ export default class WineMapView extends Component {
              <WineMapMarker 
               wineryData={marker}
               handlePress={this.moveToWinery}
+              isSelected={this.props.selectedWineryTitle === marker.title}
              />
             </MapView.Marker>
           ); })}

@@ -6,6 +6,7 @@ import {
   GET_CACHED_LOCATIONS,
   SET_MAP_LOCATION,
   SET_PAGE,
+  SELECT_WINERY_ON_MAP,
   DONE_RECEIVING_LOCATIONS,
   ERROR_LOADING_LOCATIONS } from "../constants";
 
@@ -21,6 +22,7 @@ const defaultData = {
   locations: [],
   page: 1,
   currPageLen: null,
+  selectedWinery: null,
   region: NAPA_COORDS,
   initialPosition: NAPA_COORDS
 };
@@ -32,6 +34,11 @@ export default function mapReducer(state = defaultData, action) {
       ...state,
       isRequesting: true
     };
+  case SELECT_WINERY_ON_MAP:
+    return {
+      ...state,
+      selectedWinery: action.selectedWinery
+    }; 
   case RECEIVE_LOCATIONS:
     return {
       ...state,

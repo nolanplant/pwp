@@ -5,7 +5,8 @@ import {
   ERROR_LOADING_LOCATIONS,
   SET_PAGE,
   DONE_RECEIVING_LOCATIONS,
-  SET_MAP_LOCATION } from "../constants";
+  SET_MAP_LOCATION,
+  SELECT_WINERY_ON_MAP } from "../constants";
 import { getSubRoute, translateData } from "../../utils";
 
 function requestLocations() {
@@ -38,6 +39,13 @@ function doneReceivingLocations() {
   return {
     type: DONE_RECEIVING_LOCATIONS
   };
+}
+
+export function selectWineryOnMap(selectedWinery){
+  return {
+    type: SELECT_WINERY_ON_MAP,
+    selectedWinery
+  }
 }
 
 
@@ -93,7 +101,7 @@ export function fetchWineLocations() {
       .catch(dispatch(errorLoadingLocations()))
       .then((raw) => {
         // second call will have duplicate data (todo: clean this up)
-        const data = { ...raw };
+        let data = raw.slice();
         if (page === 2) {
           data = data.slice(firstFetch);
         }

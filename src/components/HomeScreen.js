@@ -41,7 +41,7 @@ class HomeScreen extends Component {
         openDrawerOffset={(viewport) => {
           return 100
         }}
-        onCloseStart={this.props.toggleDrawer}
+        onClose={this.props.toggleDrawer}
       >
         <Header onHomeClick={this.goToHome} onMenuClick={this.toggleDrawer}/>
         <AppTabContainer stackNav={this.props.navigation} />

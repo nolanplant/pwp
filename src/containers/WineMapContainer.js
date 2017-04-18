@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import WineMapView from '../components/WineMapView';
-import { getUsersLocation, setMapLocation } from '../actions/mapActions';
+import { getUsersLocation, setMapLocation, selectWineryOnMap } from '../actions/mapActions';
 import { WineryListItem } from '../components/WineriesByRegion';
 import {fetchMoreWineryDetails} from '../actions/wineriesActions';
 
@@ -39,9 +39,6 @@ class WineMapContainer extends Component {
   }
   constructor(props){
     super(props);
-    this.state = {
-      data:null
-    }
     this.setWineryLocation = this.setWineryLocation.bind(this);
     this.openWinery = this.openWinery.bind(this);
   }
@@ -66,6 +63,8 @@ class WineMapContainer extends Component {
     }
   }
   render(){
+    const { selectedWinery } = this.props;
+    const selectedWineryTitle = selectedWinery && selectedWinery.title;
     return (
       <View style={styles.base}>
         <WineMapView style={styles.map}
@@ -74,15 +73,13 @@ class WineMapContainer extends Component {
           region={this.props.region}
           setCurrentLocation={this.props.setMapLocation}
           onWineryPress={this.setWineryLocation}
-          selectWinery={(winery)=>{
-              this.setState({data:winery})
-            } 
-          }
+          selectWinery={this.props.selectWineryOnMap}
+          selectedWineryTitle={selectedWineryTitle}
         />
-        { this.state.data && (
+        { this.props.selectedWinery && (
             <WineryListItem
               style={styles.wineryDetail} 
-              data={this.state.data}
+              data={this.props.selectedWinery}
               onSelectWinery={this.openWinery}
             />
           )  
@@ -96,11 +93,13 @@ function mapStateToProps(state) {
   const {
     locations,
     initialPosition,
+    selectedWinery,
     region
   } = state.mapReducer;
   return {
     locations,
     initialPosition,
+    selectedWinery,
     region
   };
 }
@@ -108,7 +107,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getUsersLocation,
   setMapLocation,
-  fetchMoreWineryDetails
+  fetchMoreWineryDetails,
+  selectWineryOnMap
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineMapContainer);
