@@ -75,6 +75,7 @@ class WineMapContainer extends Component {
           onWineryPress={this.setWineryLocation}
           selectWinery={this.props.selectWineryOnMap}
           selectedWineryTitle={selectedWineryTitle}
+          shouldRenderMarkers={!this.props.isDrawerOpen}
         />
         { this.props.selectedWinery && (
             <WineryListItem
@@ -96,11 +97,16 @@ function mapStateToProps(state) {
     selectedWinery,
     region
   } = state.mapReducer;
+  const {
+      isDrawerOpen
+    } = state.homeReducer;
+  // todo: add selectors  
   return {
     locations,
     initialPosition,
     selectedWinery,
-    region
+    region,
+    isDrawerOpen
   };
 }
 

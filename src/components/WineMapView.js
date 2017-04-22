@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SvgUri from "react-native-svg-uri";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView from "react-native-maps";
 import Strings from "../../constants/Strings";
 import { mapStyles } from "../../data/mapStyles";
 
@@ -73,7 +73,7 @@ export default class WineMapView extends Component {
         ref={mapNode => this.mapNode = mapNode}
         showsMyLocationButton={true}
       >
-      { this.props.locations.map((marker, index) => {
+      { this.props.shouldRenderMarkers && this.props.locations.map((marker, index) => {
         return (
             <MapView.Marker
               coordinate={marker.latlng}
