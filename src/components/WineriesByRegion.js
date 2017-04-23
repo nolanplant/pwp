@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
-  }
+  },
+  spinner: { height: 80 }
 });
 
 export class WineryListItem extends Component {
@@ -80,7 +81,7 @@ export default class WineriesByRegion extends Component {
   renderFooter(){
      return (this.props.isFetching && <ActivityIndicator
           animating={true}
-          style={[styles.centering, { height: 80 }]}
+          style={[styles.centering, styles.spinner]}
           size="large"
         />) 
   }

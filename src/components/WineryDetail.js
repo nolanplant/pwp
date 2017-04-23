@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     right: 0,
     color: 'white',
     fontWeight: 'bold'
-  } 
+  },
+  getDirections: {justifyContent:"center", alignItems: "center"} 
 });
 
 class WineryDetail extends Component {
@@ -161,8 +162,8 @@ class WineryDetail extends Component {
             inactiveIndicatorColor={"#dedede"} 
             indicatorOffset={20} 
             indicatorAtBottom={true}
-            animate={true}//this.state.shouldPlay} 
-            delay={2500} // Set Animation delay between slides
+            animate={true}
+            delay={2500} 
             loop={false}
             >
            {
@@ -182,7 +183,7 @@ class WineryDetail extends Component {
             </View>
             <View style={styles.directionsArea}>
               <TouchableOpacity onPress={this.getDirections}>
-                <View style={{justifyContent:"center", alignItems: "center"}}>
+                <View style={styles.getDirections}>
                   <Image style={styles.imgIcon} source={require('../../images/map-dir.png')} />
                   <Text style={styles.centerText} >{Strings.DIRECTIONS}</Text>
                 </View>  

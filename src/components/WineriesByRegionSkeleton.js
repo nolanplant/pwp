@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex:3
-  }
+  },
+  // baseStyles: ,
+  spinner: { height: 80 }
 });
 
 export default WineryByRegionSkeleton = () => (
@@ -41,7 +43,7 @@ export default WineryByRegionSkeleton = () => (
       >
       <ActivityIndicator
         animating={true}
-        style={[styles.centering, { height: 80 }]}
+        style={[styles.centering, styles.spinner]}
         size="large"
       />
     </View>

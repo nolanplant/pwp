@@ -107,17 +107,17 @@ export function loginUser(params) {
         // todo: handle unable to store case
         const token = response.token;
 
-        // const sepPath = getWooRoute("orders");// getSubRoute('maplists', {posts_per_page:99})
-        // fetch(sepPath, {
-        //   method: "GET",
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json"
-        //   }
-        // })
-        // .then((data) => data.json())
-        // .then((response) => { debugger; });
+        const sepPath = getWooRoute("orders");// getSubRoute('maplists', {posts_per_page:99})
+        fetch(sepPath, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        })
+        .then((data) => data.json())
+        .then((response) => { debugger; });
 
         storeUserToken(response).then(() => {
           dispatch(tokenStored());
@@ -126,6 +126,7 @@ export function loginUser(params) {
           dispatch(tokenNotStored());
         });
       } else {
+        debugger
         dispatch(dispatch(invalidLogin()));
       }
     }).catch((e) => {

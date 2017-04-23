@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     width: 30
-  }
+  },
+  map: { flex: 1 }
 });  
 
 class WineMapMarker extends Component {
@@ -72,7 +73,7 @@ export default class WineMapView extends Component {
         onPress={this.props.onMapPress}
         region={this.props.region}
         initialPosition={this.props.initialPosition}
-        style={{ flex: 1 }}
+        style={styles.map}
         onRegionChangeComplete={this.props.setCurrentLocation}
         ref={mapNode => this.mapNode = mapNode}
         showsMyLocationButton={true}

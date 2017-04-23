@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
-  }
+  },
+  spinner: { height: 80 },
+  errorMsg: { color: "red", marginTop: 10 }
 });
 
 export default class Login extends Component {
@@ -69,7 +71,7 @@ export default class Login extends Component {
       <View style={styles.base}>
         <ActivityIndicator
           animating={this.props.isLoggingIn}
-          style={[styles.centering, { height: 80 }]}
+          style={[styles.centering, styles.spinner]}
           size="large"
         />
         <View>
@@ -94,7 +96,7 @@ export default class Login extends Component {
         <TouchableHighlight style={styles.loginButton} onPress={this.sendLogin}>
           <Text style={styles.loginText}>{ Strings.LOGIN }</Text>
         </TouchableHighlight>
-        <Text style={{ color: "red", marginTop: 10 }} >
+        <Text style={styles.errorMsg} >
           {
             this.props.invalidLogin && Strings.INVALID_LOGIN
           }
