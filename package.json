@@ -6,7 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "dev": "react-native run-ios && ttab 'react-native log-ios'",
-    "rm:babelrc": "(find node_modules -type f -name .babelrc | grep -v /react-native/ | xargs rm) || true"
+    "clean": "(find node_modules -type f -name .babelrc | grep -v /react-native/ | xargs rm) || true"
   },
   "dependencies": {
     "fetch": "^1.1.0",
@@ -15,6 +15,7 @@
     "react-native": "0.42.3",
     "react-native-carousel": "^0.10.0",
     "react-native-drawer": "^2.3.0",
+    "react-native-google-maps-directions": "^1.1.0",
     "react-native-loading-spinner-overlay": "^0.4.4",
     "react-native-maps": "^0.13.1",
     "react-native-svg-uri": "^1.2.0",

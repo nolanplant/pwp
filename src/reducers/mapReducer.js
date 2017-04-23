@@ -5,6 +5,7 @@ import {
   CACHE_LOCATIONS,
   GET_CACHED_LOCATIONS,
   SET_MAP_LOCATION,
+  SET_USERS_LOCATION,
   SET_PAGE,
   SELECT_WINERY_ON_MAP,
   DONE_RECEIVING_LOCATIONS,
@@ -23,6 +24,7 @@ const defaultData = {
   page: 1,
   currPageLen: null,
   selectedWinery: null,
+  usersLocation: null,
   region: NAPA_COORDS,
   initialPosition: NAPA_COORDS
 };
@@ -55,6 +57,11 @@ export default function mapReducer(state = defaultData, action) {
       ...state,
       isRequesting: false
     };
+  case SET_USERS_LOCATION: 
+    return {
+      ...state,
+      usersLocation: action.usersLocation
+    }  
   case SET_MAP_LOCATION:
     const { latitude, longitude } = action;
     let { latitudeDelta, longitudeDelta } = action;

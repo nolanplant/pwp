@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {View, Text, Image, TouchableHighlight, TouchableWithoutFeedback, Dimensions, StyleSheet, ScrollView } from 'react-native';
+import {View, Text, Image, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import WineriesByRegionSkeleton from '../components/WineriesByRegionSkeleton';
 import WineriesByRegion from '../components/WineriesByRegion';
 import {fetchWineries, setWineRegionDetails } from '../actions/wineriesActions';
 import Carousel from 'react-native-carousel';
 import Strings from '../../constants/Strings';
+import { getDirectionsToWinery } from '../actions/mapActions';
+// import getDirections from 'react-native-google-maps-directions'
 
 const styles = StyleSheet.create({
   base:{
@@ -131,15 +133,18 @@ class WineryDetail extends Component {
   };
   constructor(props){
     super(props);
-    this.state = {
-      shouldPlay: true
-    };
+    this.getDirections = this.getDirections.bind(this);
   }
   addWineryImage(source, i){
     return (
       <View  style={styles.imageContain} key={i}>
         <Image source={{uri:source}} style={styles.image} />
       </View>);
+  }
+  getDirections(){
+    const {navigation, usersLocation, getDirectionsToWinery } = this.props;
+    const wineryData = navigation.state.params.details;
+    getDirectionsToWinery(wineryData.latlng, usersLocation);
   }
   render() {
     const wineryData = this.props.navigation.state.params.details
@@ -176,8 +181,12 @@ class WineryDetail extends Component {
               <Text style={styles.centerText} >555-5555</Text>
             </View>
             <View style={styles.directionsArea}>
-              <Image style={styles.imgIcon} source={require('../../images/map-dir.png')} />
-              <Text style={styles.centerText} >{Strings.DIRECTIONS}</Text>
+              <TouchableOpacity onPress={this.getDirections}>
+                <View style={{justifyContent:"center", alignItems: "center"}}>
+                  <Image style={styles.imgIcon} source={require('../../images/map-dir.png')} />
+                  <Text style={styles.centerText} >{Strings.DIRECTIONS}</Text>
+                </View>  
+              </TouchableOpacity>  
             </View>
           </View>
         </View>
@@ -192,9 +201,18 @@ const mapStateToProps = (state) => {
   const {
    currentWinery
   } = state.wineriesReducer;
+  const {
+    usersLocation
+  } = state.mapReducer;
+  //todo: add selector here
   return {
-    currentWinery
+    currentWinery,
+    usersLocation
   };
 }
 
-export default connect(mapStateToProps)(WineryDetail);
+const mapDispatchToProps = {
+  getDirectionsToWinery
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WineryDetail);
