@@ -40,6 +40,7 @@ class WineMapContainer extends Component {
   constructor(props){
     super(props);
     this.setWineryLocation = this.setWineryLocation.bind(this);
+    this.clearSelectedWinery = this.clearSelectedWinery.bind(this);
     this.openWinery = this.openWinery.bind(this);
   }
   componentDidMount(){
@@ -53,6 +54,9 @@ class WineMapContainer extends Component {
       latitudeDelta: 0.8,
       longitudeDelta: 0.8 
     });
+  }
+  clearSelectedWinery(){
+    this.props.selectWineryOnMap(null)
   }
   openWinery(details){
     const { title, id } = details;
@@ -75,7 +79,8 @@ class WineMapContainer extends Component {
           onWineryPress={this.setWineryLocation}
           selectWinery={this.props.selectWineryOnMap}
           selectedWineryTitle={selectedWineryTitle}
-          shouldRenderMarkers={!this.props.isDrawerOpen}
+          shouldRenderMarkers={true}
+          onMapPress={this.clearSelectedWinery}
         />
         { this.props.selectedWinery && (
             <WineryListItem
@@ -97,16 +102,12 @@ function mapStateToProps(state) {
     selectedWinery,
     region
   } = state.mapReducer;
-  const {
-      isDrawerOpen
-    } = state.homeReducer;
-  // todo: add selectors  
+
   return {
     locations,
     initialPosition,
     selectedWinery,
-    region,
-    isDrawerOpen
+    region
   };
 }
 

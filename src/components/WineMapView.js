@@ -62,10 +62,14 @@ export default class WineMapView extends Component {
     }, 300);
     this.props.selectWinery(wineryData);
   }
+  stopPropagation(e){
+    e.stopPropagation();
+  }
   render() {
 
     return (
       <MapView
+        onPress={this.props.onMapPress}
         region={this.props.region}
         initialPosition={this.props.initialPosition}
         style={{ flex: 1 }}
@@ -78,6 +82,7 @@ export default class WineMapView extends Component {
             <MapView.Marker
               coordinate={marker.latlng}
               key={index}
+              onPress={this.stopPropagation}
               >
              <WineMapMarker 
               wineryData={marker}
