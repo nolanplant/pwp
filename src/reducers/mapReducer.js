@@ -2,6 +2,7 @@ import MapView from "react-native-maps";
 import {
   REQUEST_LOCATIONS,
   RECEIVE_LOCATIONS,
+  FILTER_LOCATIONS,
   CACHE_LOCATIONS,
   GET_CACHED_LOCATIONS,
   SET_MAP_LOCATION,
@@ -10,6 +11,8 @@ import {
   SELECT_WINERY_ON_MAP,
   DONE_RECEIVING_LOCATIONS,
   ERROR_LOADING_LOCATIONS } from "../constants";
+
+import { boundsContains, getBounds } from '../../utils';
 
 const NAPA_COORDS = {  // napa default
   latitude: 38.299061,
@@ -21,6 +24,7 @@ const NAPA_COORDS = {  // napa default
 const defaultData = {
   isRequesting: false,
   locations: [],
+  locationsRaw: [],
   page: 1,
   currPageLen: null,
   selectedWinery: null,
@@ -42,9 +46,11 @@ export default function mapReducer(state = defaultData, action) {
       selectedWinery: action.selectedWinery
     }; 
   case RECEIVE_LOCATIONS:
+    const locations = action.locations;
+    console.log({locations, stateLoc: state.locations, stateRawLoc: state.locationsRaw})
     return {
       ...state,
-      locations: state.locations.concat(action.locations),
+      locationsRaw: state.locationsRaw.concat(action.locations),
       currPageLen: action.locations.length
     };
   case SET_PAGE:
@@ -76,6 +82,17 @@ export default function mapReducer(state = defaultData, action) {
         latitude
       }
     };
+  case FILTER_LOCATIONS:
+    if(state.region){
+      const bounds = getBounds(state.region);
+      console.log(state)
+      return {
+        ...state,
+        locations: state.locationsRaw.filter((location)=>{
+          return boundsContains(bounds, location.latlng);
+        })
+      }
+    }
   default:
     return state;
   }

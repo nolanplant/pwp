@@ -49,3 +49,33 @@ export const translateData = (data) => data.map((item) => {
    return imagesSrcs;
  };
 
+export function debounce(callback, wait, context = this) {
+  let timeout = null 
+  let callbackArgs = null
+  
+  const later = () => callback.apply(context, callbackArgs)
+  
+  return function() {
+    callbackArgs = arguments
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
+
+export const boundsContains = (bounds, point) => (
+(point.latitude >= bounds.sw.latitude) && 
+(point.latitude <= bounds.ne.latitude) && 
+(point.longitude >= bounds.sw.longitude) && 
+(point.longitude <= bounds.ne.longitude)
+);
+
+export const getBounds = ({ longitude, latitude, longitudeDelta, latitudeDelta}, padding=0.1) => ({
+  sw: { 
+    longitude: longitude - (longitudeDelta * (0.5 + padding)),
+    latitude: latitude - (latitudeDelta * (0.5 + padding))
+  },
+  ne: {
+    longitude: longitude + (longitudeDelta * (0.5 + padding)),
+    latitude: latitude + (latitudeDelta * (0.5 + padding))
+  }
+});

@@ -2,6 +2,7 @@ import {
   GET,
   REQUEST_LOCATIONS,
   RECEIVE_LOCATIONS,
+  FILTER_LOCATIONS,
   ERROR_LOADING_LOCATIONS,
   SET_PAGE,
   DONE_RECEIVING_LOCATIONS,
@@ -51,7 +52,7 @@ export function selectWineryOnMap(selectedWinery){
 }
 
 
-export function setMapLocation({ latitude, longitude, latitudeDelta, longitudeDelta }) {
+export function setLocation({ latitude, longitude, latitudeDelta, longitudeDelta }) {
   return {
     type: SET_MAP_LOCATION,
     latitude,
@@ -61,11 +62,21 @@ export function setMapLocation({ latitude, longitude, latitudeDelta, longitudeDe
   };
 }
 
+export const setMapLocation = (location) => {
+  return (dispatch) => {
+    dispatch(setLocation(location));
+    dispatch(filterLocations());
+  }
+}
+
 export const setUsersLocation = (usersLocation) => ({
   type: SET_USERS_LOCATION,
   usersLocation
 });
 
+export const filterLocations = () => ({
+  type: FILTER_LOCATIONS
+});
 
 export function getUsersLocation(cb) {
   return (dispatch) => {
@@ -75,7 +86,8 @@ export function getUsersLocation(cb) {
         const userLocation = {
           latitude,
           longitude
-        }  
+        }
+        
         dispatch(setMapLocation({
             ...userLocation,
             latitudeDelta: 0.8,
@@ -87,7 +99,6 @@ export function getUsersLocation(cb) {
         cb && cb(userLocation);
       },
       (error) => {
-
         // console.error('error', error);
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }

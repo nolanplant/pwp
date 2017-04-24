@@ -73,7 +73,7 @@ class WineMapContainer extends Component {
       <View style={styles.base}>
         <WineMapView style={styles.map}
           locations={this.props.locations}
-          initialPosition={this.props.initialPosition}
+          initialPosition={this.props.region}
           region={this.props.region}
           setCurrentLocation={this.props.setMapLocation}
           onWineryPress={this.setWineryLocation}
@@ -102,7 +102,7 @@ function mapStateToProps(state) {
     selectedWinery,
     region
   } = state.mapReducer;
-
+  
   return {
     locations,
     initialPosition,
