@@ -47,6 +47,8 @@
 		C921B2C9C06D4486B578F7B7 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1571F77DF1EE483190CE6089 /* Foundation.ttf */; };
 		D22C25F3C5744AEE8938A5AA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB61E3F855494149AFFA1B0F /* EvilIcons.ttf */; };
 		E415AFB84BC44D9DB259F7AD /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BAFBB8044E14023AC606299 /* Entypo.ttf */; };
+		E6B41B091EAF950C00400C02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		E6B41B261EAF950F00400C02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		E8B125A324604D789A67F247 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31E6A0876AD84EE9B05C70D8 /* MaterialCommunityIcons.ttf */; };
 		F787822D1DFC481D972FCBF7 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44B3E8AFD78D45BD818F2FF7 /* MaterialIcons.ttf */; };
 /* End PBXBuildFile section */
@@ -969,6 +971,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6B41B091EAF950C00400C02 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,6 +1006,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6B41B261EAF950F00400C02 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1171,6 +1175,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 6G9XT35M86;
@@ -1197,6 +1202,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6G9XT35M86;
 				HEADER_SEARCH_PATHS = (
