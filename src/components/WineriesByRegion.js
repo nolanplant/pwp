@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   spinner: { height: 80 }
+
 });
 
 export class WineryListItem extends Component {
