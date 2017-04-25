@@ -47,7 +47,6 @@ export default function mapReducer(state = defaultData, action) {
     }; 
   case RECEIVE_LOCATIONS:
     const locations = action.locations;
-    console.log({locations, stateLoc: state.locations, stateRawLoc: state.locationsRaw})
     return {
       ...state,
       locationsRaw: state.locationsRaw.concat(action.locations),
@@ -85,7 +84,6 @@ export default function mapReducer(state = defaultData, action) {
   case FILTER_LOCATIONS:
     if(state.region){
       const bounds = getBounds(state.region);
-      console.log(state)
       return {
         ...state,
         locations: state.locationsRaw.filter((location)=>{
