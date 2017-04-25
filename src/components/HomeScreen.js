@@ -13,22 +13,10 @@ class HomeScreen extends Component {
       visible: false
     }
   }
-  constructor(props){
-    super(props);
-    this.goToHome = this.goToHome.bind(this);
-    this.toggleDrawer = this.toggleDrawer.bind(this);
-  }
-  goToHome(){
-   this.props.dispatch(NavigationActions.navigate({
-    routeName: 'Home'
-   }))
-  }
-  toggleDrawer(){
-    this.props.dispatch(toggleDrawer())
-  }
   render() {
     return (
        <Drawer
+        type="overlay"
         tapToClose={true}
         open={this.props.isDrawerOpen}
         tweenDuration={150}
@@ -43,7 +31,7 @@ class HomeScreen extends Component {
         }}
         onClose={this.props.toggleDrawer}
       >
-        <Header onHomeClick={this.goToHome} onMenuClick={this.toggleDrawer}/>
+        <Header onHomeClick={this.props.goToHome} onMenuClick={this.props.toggleDrawer}/>
         <AppTabContainer stackNav={this.props.navigation} />
       </Drawer>
     );
@@ -51,7 +39,6 @@ class HomeScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    
     const {
       isDrawerOpen
     } = state.homeReducer;
@@ -60,13 +47,16 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = (dispatch)=> {
-  return {
-  toggleDrawer,
-  dispatch
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  toggleDrawer(){ 
+    dispatch(toggleDrawer()); 
+  },
+  goToHome(){
+    dispatch(NavigationActions.navigate({
+      routeName: 'Home'
+    }));
+  }  
+});
 
-
-export default connect(mapStateToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
