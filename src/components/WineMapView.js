@@ -28,9 +28,19 @@ class WineMapMarker extends Component {
   constructor(props){
     super(props);
     this.handlePress = this.handlePress.bind(this);
+    this.state = {
+      pressed: false
+    }
+  }
+  componentWillUnmount(){
+    clearTimeout(this.timer)
   }
   handlePress(){
     const {handlePress, wineryData} = this.props;
+    this.setState({pressed: true});
+    this.timer = setTimeout(()=>{
+      this.setState({pressed:false})
+    }, 500)
     handlePress(wineryData);
   }
   render(){
@@ -38,7 +48,7 @@ class WineMapMarker extends Component {
       <TouchableOpacity
         onPress={this.handlePress}
         >
-        <Image source={ this.props.isSelected ? require("../../images/pin-highlight.png") :
+        <Image source={ this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
           require("../../images/pin.png")}
           style={styles.imageView}
         />
@@ -88,7 +98,7 @@ export default class WineMapView extends Component {
              <WineMapMarker 
               wineryData={marker}
               handlePress={this.moveToWinery}
-              isSelected={this.props.selectedWineryTitle === marker.title}
+              isSelected={marker.isSelected}
              />
             </MapView.Marker>
           ); })}

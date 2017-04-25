@@ -87,6 +87,8 @@ export default function mapReducer(state = defaultData, action) {
       return {
         ...state,
         locations: state.locationsRaw.filter((location)=>{
+          const { selectedWinery } = state;
+          location.isSelected = selectedWinery && selectedWinery.title === location.title;
           return boundsContains(bounds, location.latlng);
         })
       }
