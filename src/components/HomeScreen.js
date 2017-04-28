@@ -20,7 +20,7 @@ class HomeScreen extends Component {
         tapToClose={true}
         open={this.props.isDrawerOpen}
         tweenDuration={150}
-        content={<MainMenu/>}
+        content={<MainMenu navigation={this.props.navigation} />}
         captureGestures={true}
         side={'right'}
         acceptPan={true}

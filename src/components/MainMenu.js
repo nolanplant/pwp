@@ -58,6 +58,7 @@ class MainMenu extends Component {
   constructor(props) {
     super(props);
     this.loginHandler = this.loginHandler.bind(this);
+    this.pressHowItWorks = this.pressHowItWorks.bind(this);
   }
   loginHandler() {
     const { isLoggedIn, logoutUser, goToLoginPage } = this.props;
@@ -67,13 +68,19 @@ class MainMenu extends Component {
       goToLoginPage();
     }
   }
+  pressHowItWorks(){
+     const { navigation } = this.props;
+     navigation.navigate("MenuItemStaticPage", {screen:"HowItWorks"});
+  }
   render() {
     return (
       <View style={styles.main}>
         <View style={styles.menuHeader} />
           <View style={styles.menuItemView}>
             <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/home.svg")} />
-            <Text style={styles.menuText}>{Strings.HOW_IT_WORKS}</Text>
+            <TouchableHighlight onPress={this.pressHowItWorks}>
+              <Text style={styles.menuText}>{Strings.HOW_IT_WORKS}</Text>
+            </TouchableHighlight>
           </View>
           <View style={styles.menuItemView}>
             <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/location.svg")} />

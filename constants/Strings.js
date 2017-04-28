@@ -41,5 +41,6 @@ export default Strings = {
     LOGIN: 'Login',
     LOGOUT: 'Logout',
     INVALID_LOGIN: 'Invalid Username or Password',
-    DIRECTIONS: 'Directions'
+    DIRECTIONS: 'Directions',
+    ABOUT_PRIORITY_WINEPASS_MESSAGE: 'Priority Wine Pass is a membership program that gets you discounts and elevated experiences at some of the best wineries in California. Learn more at:'
 }
