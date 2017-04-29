@@ -8,8 +8,8 @@ import {
   TOKEN_STORED,
   TOKEN_NOT_STORED,
   TOKEN_REMOVED } from "../constants";
-import { getAuthRoute, getWooRoute } from "../../utils";
-
+import { getAuthRoute } from "../../utils";
+import { getUserProfile } from './profileActions';
 
 function requestLogin() {
   return {
@@ -85,7 +85,7 @@ export function logoutUser() {
   };
 }
 
-export function loginUser(params, getState) {
+export function loginUser(params) {
   return dispatch => {
     dispatch(requestLogin());
     const { username, password } = params;
@@ -104,26 +104,9 @@ export function loginUser(params, getState) {
     .then((response) => {
       if (response.token) {
         dispatch(receiveLogin(translateResponse(response)));
+        // const { user_email:email, token } = response;
+        // dispatch(getUserProfile({email, token}));
         // todo: handle unable to store case
-        const { user_email:email, token } = response;
-        const myOrdersPath = getWooRoute(`customers`, {
-          email,
-          role:'all'
-        });
-        console.log(myOrdersPath)
-        fetch(myOrdersPath, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        })
-        .then((data) => data.json())
-        .then((response) => {  
-          debugger
-        });
-
         storeUserToken(response).then(() => {
           dispatch(tokenStored());
         }).catch((e) => {
@@ -139,3 +122,5 @@ export function loginUser(params, getState) {
     });
   };
 }
+
+

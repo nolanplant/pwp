@@ -1,28 +1,45 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
-import { getUsersLocation } from "../actions/mapActions";
 import Login from "../components/Login";
 import Profile from "../components/Profile";
+import Avatar from "../components/Avatar";
+import {getUserProfile} from '../actions/profileActions';
 
 const styles = StyleSheet.create({
-  profileBase: { flex: 1, justifyContent: "center", alignItems: "center" }
+  profileBase: { flex: 1, justifyContent: "center", alignItems: "center" },
+  image: {
+    height:100,
+    width:100,
+    borderRadius:50
+  }
 });
 
 class ProfileContainer extends Component {
+  componentDidMount(){
+    this.props.getUserProfile();
+  }
   render() {
     return (
       <View style={styles.profileBase}>
-        <Text>LOGGED IN!</Text>
+        <Avatar avatarSrc={this.props.avatarSrc} />
+        <Text>Hello {this.props.displayName}!</Text>
       </View>
     );
   }
 }
 
 function mapStateToProps(state) {
+  const { displayName } = state.loginReducer;
+  const { avatarSrc } = state.profileReducer;
   return {
-
+    displayName: displayName || null,
+    avatarSrc: avatarSrc || null
   };
 }
 
-export default connect(mapStateToProps)(ProfileContainer);
+const mapDispatchToProps = {
+  getUserProfile
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

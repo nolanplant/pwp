@@ -4,6 +4,8 @@ import Strings from "../../constants/Strings";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/loginActions";
 import { goToLoginPage } from "../actions/homeActions";
+import Avatar from "./Avatar";
+
 import {
   AppRegistry,
   StyleSheet,
@@ -18,6 +20,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.85)",//"#303030",
     flex: 1
     // color: '#969696'
+  },
+  avatarContain: {
+    margin: 10,
+    alignItems: 'center'
   },
   menuHeader: {
     height: 70,
@@ -37,6 +43,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center"
+  },
+  welcome: {
+    color: "#b5870f",
+    textAlign:"center"
   },
   loginWrap: {
     backgroundColor: "#b5870f",
@@ -75,6 +85,9 @@ class MainMenu extends Component {
   render() {
     return (
       <View style={styles.main}>
+        <View style={styles.avatarContain}><Avatar avatarSrc={this.props.avatarSrc} />
+        { this.props.displayName && <Text style={styles.welcome}>{Strings.GET_USER_WELCOME_MESSAGE(this.props.displayName)}</Text> }
+        </View>
         <View style={styles.menuHeader} />
           <View style={styles.menuItemView}>
             <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/home.svg")} />
@@ -121,10 +134,18 @@ class MainMenu extends Component {
 
 function mapStateToProps(state) {
   const {
-    isLoggedIn
+    isLoggedIn,
+    displayName
   } = state.loginReducer;
+  console.log('this is the display name: ',displayName, state)
+  const {
+   avatarSrc
+  } = state.profileReducer;
+
   return {
-    isLoggedIn
+    isLoggedIn,
+    avatarSrc,
+    displayName
   };
 }
 

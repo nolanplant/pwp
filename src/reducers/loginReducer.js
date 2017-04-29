@@ -30,11 +30,14 @@ export default function loginReducer(state = defaultData, action) {
       invalidLogin: false
     };
   case RECEIVE_TOKEN:
+    const { token, email, displayName } = action;
     return {
       ...state,
       isLoggedIn: true,
       isLoggingIn: false,
-      token: action.token
+      token,
+      email,
+      displayName
     };
   case INVALID_LOGIN:
     return {
@@ -59,12 +62,14 @@ export default function loginReducer(state = defaultData, action) {
     };
   case TOKEN_STORED:
     return {
+      ...state,
       tokenStored: true,
       isLoggedIn: true,
       tokenFailed: false
     };
   case TOKEN_NOT_STORED:
     return {
+      ...state,
       tokenStored: false,
       tokenFailed: true
     };
