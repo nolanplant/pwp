@@ -3,7 +3,7 @@ import AppTabContainer from '../containers/AppTabContainer';
 import Drawer from 'react-native-drawer';
 import MainMenu from './MainMenu';
 import { connect } from 'react-redux';
-import { toggleDrawer } from '../actions/homeActions';
+import { closeDrawer, openDrawer } from '../actions/homeActions';
 import Header from './Header';
 import { NavigationActions } from 'react-navigation';
 
@@ -29,9 +29,9 @@ class HomeScreen extends Component {
         openDrawerOffset={(viewport) => {
           return 100
         }}
-        onClose={this.props.toggleDrawer}
+        onClose={this.props.closeDrawer}
       >
-        <Header onHomeClick={this.props.goToHome} onMenuClick={this.props.toggleDrawer}/>
+        <Header onHomeClick={this.props.goToHome} onMenuClick={this.props.openDrawer}/>
         <AppTabContainer stackNav={this.props.navigation} />
       </Drawer>
     );
@@ -48,8 +48,11 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleDrawer(){ 
-    dispatch(toggleDrawer()); 
+  openDrawer(){ 
+    dispatch(openDrawer()); 
+  },
+  closeDrawer(){ 
+    dispatch(closeDrawer()); 
   },
   goToHome(){
     dispatch(NavigationActions.navigate({

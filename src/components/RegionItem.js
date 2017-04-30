@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { NavigationActions } from "react-navigation";
 
-import { LOCATION_DETAIL } from "../../constants";
+import { LOCATION_DETAIL } from "../constants";
 
 const getStyles = ({ isFirst, isLast }) => {
   return StyleSheet.create({

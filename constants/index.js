@@ -1,9 +1,9 @@
-export const LOCATIONS = 'LOCATIONS';
-export const MAP = 'MAP';
-export const USER = 'USER';
-export const HOME = 'HOME';
-export const LOCATION_DETAIL = 'LOCATION_DETAIL';
-export const TOGGLE_DRAWER = 'TOGGLE_DRAWER';
+// export const LOCATIONS = 'LOCATIONS';
+// export const MAP = 'MAP';
+// export const USER = 'USER';
+// export const HOME = 'HOME';
+// export const LOCATION_DETAIL = 'LOCATION_DETAIL';
+
 
 //routes
 export const ROOT = 'https://prioritywinepass.com/wp-json'

@@ -1,16 +1,22 @@
-import { TOGGLE_DRAWER } from "../../constants";
+import { CLOSE_DRAWER,
+OPEN_DRAWER } from "../constants";
 const defaultData = {
   isDrawerOpen: false
 };
 
 export default function homeReducer(state = defaultData, action) {
   switch (action.type) {
-  case TOGGLE_DRAWER:
-    return {
-      ...state,
-      isDrawerOpen: !state.isDrawerOpen
-    };
-  default:
-    return state;
+    case OPEN_DRAWER: 
+      return {
+        ...state,
+        isDrawerOpen: true
+      };
+    case CLOSE_DRAWER: 
+      return {
+        ...state,
+        isDrawerOpen: false
+      }  
+    default:
+      return state;
   }
 }
