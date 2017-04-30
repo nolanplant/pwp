@@ -1,19 +1,23 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, PixelRatio } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const styles = StyleSheet.create({
-  image: {
-    height:100,
-    width:100,
-    borderRadius:50
-  }
+const getAvatarSize = (size) => ({
+  height:size,
+  width:size,
+  borderRadius: Math.floor(size / PixelRatio.get())
 });
 
 const Avatar = (props) => {
-  return (props.avatarSrc && 
+  return props.avatarSrc ? 
     <Image 
       source={{uri:props.avatarSrc}} 
-      style={styles.image} />) || null;
+      style={ getAvatarSize(props.size) } 
+      /> :
+    <Icon 
+      name={"user-circle"} 
+      size={props.size} 
+      color="#676768" />
 }
 
 export default Avatar;

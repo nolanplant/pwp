@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { logoutUser } from "../actions/loginActions";
 import { goToLoginPage } from "../actions/homeActions";
 import Avatar from "./Avatar";
+import {menuItems} from '../../constants';
+import MenuItem from './MenuItem';
 
 import {
   AppRegistry,
@@ -17,36 +19,30 @@ import {
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: "rgba(0,0,0,0.85)",//"#303030",
+    backgroundColor: "rgb(53, 53, 54)",//"rgba(0,0,0,0.79)",//"#303030",
     flex: 1
     // color: '#969696'
   },
   avatarContain: {
-    margin: 10,
+    flex:1,
+    marginTop: 30,
+    marginBottom: 20,
     alignItems: 'center'
   },
   menuHeader: {
     height: 70,
     backgroundColor: "#1c1c1c",
   },
-  menuItemView: {
-    flex: 1,
-    flexDirection: "row",
-    paddingLeft: 20,
-    alignItems: "center"
-  },
-  menuText: {
-    color: "#969696",
-    marginLeft: 8
-  },
   loginContain: {
     flex: 1,
+    marginTop:10,
     flexDirection: "row",
     justifyContent: "center"
   },
   welcome: {
     color: "#b5870f",
-    textAlign:"center"
+    textAlign:"center",
+    marginTop:10
   },
   loginWrap: {
     backgroundColor: "#b5870f",
@@ -59,16 +55,33 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20
   },
+  loginWrapLoggediN: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor:"transparent"
+  },
   loginText: {
     color: "white"
+  },
+  loginTextLoggedIn:{
+    color:"#676768"
+  },
+  loginButtonView: {
+    flex:1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
+
 
 class MainMenu extends Component {
   constructor(props) {
     super(props);
     this.loginHandler = this.loginHandler.bind(this);
-    this.pressHowItWorks = this.pressHowItWorks.bind(this);
   }
   loginHandler() {
     const { isLoggedIn, logoutUser, goToLoginPage } = this.props;
@@ -78,48 +91,25 @@ class MainMenu extends Component {
       goToLoginPage();
     }
   }
-  pressHowItWorks(){
-     const { navigation } = this.props;
-     navigation.navigate("MenuItemStaticPage", {screen:"HowItWorks"});
-  }
   render() {
     return (
       <View style={styles.main}>
-        <View style={styles.avatarContain}><Avatar avatarSrc={this.props.avatarSrc} />
-        { this.props.displayName && <Text style={styles.welcome}>{Strings.GET_USER_WELCOME_MESSAGE(this.props.displayName)}</Text> }
+        <View style={styles.avatarContain}>
+          <Avatar size={70} avatarSrc={this.props.avatarSrc} /> 
+          { this.props.displayName && <Text style={styles.welcome}>{Strings.GET_USER_WELCOME_MESSAGE(this.props.displayName)}</Text> }
         </View>
-        <View style={styles.menuHeader} />
-          <View style={styles.menuItemView}>
-            <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/home.svg")} />
-            <TouchableHighlight onPress={this.pressHowItWorks}>
-              <Text style={styles.menuText}>{Strings.HOW_IT_WORKS}</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.menuItemView}>
-            <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/location.svg")} />
-            <Text style={styles.menuText}>{Strings.MY_ACCOUNT}</Text>
-          </View>
-          <View style={styles.menuItemView}>
-            <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/user.svg")} />
-            <Text style={styles.menuText}>{Strings.CONCIERGE}</Text>
-          </View>
-          <View style={styles.menuItemView}>
-            <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/user.svg")} />
-            <Text style={styles.menuText}>{Strings.BLOG}</Text>
-          </View>
-          <View style={styles.menuItemView}>
-            <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/user.svg")} />
-            <Text style={styles.menuText}>{Strings.FAQ}</Text>
-          </View>
-          <View style={styles.menuItemView}>
-            <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/user.svg")} />
-            <Text style={styles.menuText}>{Strings.BUY_RENEW}</Text>
-          </View>
+        {
+          menuItems && menuItems.map((props, index) => {
+            return (<MenuItem {...props} navigation={this.props.navigation} key={index} />)
+          })
+        }
         <View style={styles.loginContain} >
-          <TouchableHighlight style={styles.loginWrap} onPress={this.loginHandler}>
-            <View style={styles.menuItemView}>
-              <SvgUri width="15" height="15" style={styles.footer} source={require("../../images/user.svg")} />
-              <Text style={styles.loginText}>
+          <TouchableHighlight 
+            style={this.props.isLoggedIn ? styles.loginWrapLoggediN : styles.loginWrap} 
+            onPress={this.loginHandler}
+            >
+            <View style={styles.loginButtonView}>
+              <Text style={this.props.isLoggedIn ? styles.loginTextLoggedIn : styles.loginText}>
               {
                 this.props.isLoggedIn ? Strings.LOGOUT : Strings.LOGIN
               }
@@ -137,7 +127,6 @@ function mapStateToProps(state) {
     isLoggedIn,
     displayName
   } = state.loginReducer;
-  console.log('this is the display name: ',displayName, state)
   const {
    avatarSrc
   } = state.profileReducer;

@@ -30,6 +30,7 @@ export const getUserProfile = () => {
     })
     .then((data) => data.json())
     .then((response) => {
+      debugger
       dispatch(receiveProfile(response));  
     });
   }

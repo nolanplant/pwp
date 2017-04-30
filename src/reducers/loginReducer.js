@@ -46,14 +46,6 @@ export default function loginReducer(state = defaultData, action) {
       isLoggingIn: false,
       invalidLogin: true
     };
-  case LOGOUT:
-    return {
-      ...state,
-      isLoggedIn: false,
-      isLoggingIn: false,
-      invalidLogin: false,
-      token: null
-    };
   case TOKEN_REMOVED:
     return {
       ...state,
@@ -73,6 +65,8 @@ export default function loginReducer(state = defaultData, action) {
       tokenStored: false,
       tokenFailed: true
     };
+  case LOGOUT:
+    return defaultData;
   default:
     return state;
   }

@@ -1,6 +1,7 @@
 import{
   REQUEST_PROFILE,
-  RECEIVE_PROFILE
+  RECEIVE_PROFILE,
+  LOGOUT
 } from '../constants';
 
 const defaultData = {
@@ -32,7 +33,9 @@ export default function homeReducer(state = defaultData, action) {
       ...state,
       ...profileData,
       isFetching: false
-    };  
+    };
+  case LOGOUT:
+   return defaultData;
   default:
     return state;
   }
