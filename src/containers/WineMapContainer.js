@@ -5,6 +5,8 @@ import WineMapView from '../components/WineMapView';
 import { getUsersLocation, setMapLocation, selectWineryOnMap } from '../actions/mapActions';
 import { WineryListItem } from '../components/WineriesByRegion';
 import {fetchMoreWineryDetails} from '../actions/wineriesActions';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const styles = StyleSheet.create({
   base:{
@@ -29,9 +31,10 @@ class WineMapContainer extends Component {
     tabBar: {
       icon: ({ focused }) => {
         return (
-          <Image 
-            style={styles.icon}
-            source={focused ? require('../../images/map_highlighted.png') : require('../../images/map.png')}
+          <Icon
+            name={"map-marker"}
+            color={focused ? '#b88d2c' : '#999c9e'}
+            size={20}
           />);
       },  
      

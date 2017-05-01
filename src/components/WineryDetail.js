@@ -7,6 +7,8 @@ import {fetchWineries, setWineRegionDetails } from '../actions/wineriesActions';
 import Carousel from 'react-native-carousel';
 import Strings from '../../constants/Strings';
 import { getDirectionsToWinery } from '../actions/mapActions';
+import { callNumber } from '../../utils';
+import Icon from 'react-native-vector-icons/FontAwesome';
 // import getDirections from 'react-native-google-maps-directions'
 
 const styles = StyleSheet.create({
@@ -20,7 +22,10 @@ const styles = StyleSheet.create({
     position:'relative'
   },
   backArrow: {
-    flex: 1
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft:10
   },
   address:{
     margin:10,
@@ -49,7 +54,8 @@ const styles = StyleSheet.create({
   },
   descriptionArea: {
     flex: 1,
-    justifyContent:'center',
+    alignItems:'center',
+    // justifyContent:'center',
     padding:10,
     backgroundColor: 'white'
   },
@@ -58,7 +64,9 @@ const styles = StyleSheet.create({
     color:'#cccccc'
   },
   rowArea:{
+    flex:1,
     justifyContent:'center',
+    alignItems:'center',
     flexDirection:'row',
     backgroundColor:'white',
     marginTop:10,
@@ -76,20 +84,24 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center'
   },
-  imgIcon: {
-    height:25,
-    width:25
+  numberArea:{
+    flex:1,
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center'
   },
   aboutUs:{
+    flex:1,
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop:15,
     paddingBottom:10,
     color:'#999c9e',
     fontWeight:'bold',
-    fontSize:12
+    fontSize:14
   },
   title:{
+    flex:1,
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop:30,
@@ -122,19 +134,22 @@ class WineryDetail extends Component {
         backgroundColor: '#b88d2c'
       },
       left: (
-        <TouchableHighlight 
+        <TouchableOpacity 
           onPress={ ()=>{ goBack() } }
+          style={styles.backArrow}
           >
-          <Image
-            style={styles.backArrow}
-            source={require('../../images/back-arrow.png')}
+          <Icon
+            name="chevron-left"
+            color="white"
+            size={18}
           />
-        </TouchableHighlight>)
+        </TouchableOpacity>)
     })
   };
   constructor(props){
     super(props);
     this.getDirections = this.getDirections.bind(this);
+    this.callNumber = this.callNumber.bind(this);
   }
   addWineryImage(source, i){
     return (
@@ -144,8 +159,19 @@ class WineryDetail extends Component {
   }
   getDirections(){
     const {navigation, usersLocation, getDirectionsToWinery } = this.props;
+    // todo: clean this up possibly use current winery here
     const wineryData = navigation.state.params.details;
-    getDirectionsToWinery(wineryData.latlng, usersLocation);
+    debugger
+    getDirectionsToWinery(currentWinery.latlng, usersLocation);
+  }
+  callNumber(){
+    const {navigation } = this.props;
+    // current winery ?
+    const wineryData = navigation.state.params.details;
+    const { number } = wineryData;
+    if(number){
+      callNumber(number);
+    }
   }
   render() {
     const wineryData = this.props.navigation.state.params.details
@@ -177,18 +203,25 @@ class WineryDetail extends Component {
           <Text style={[styles.centerText, styles.address]} >{wineryData.address}</Text>
           <Text style={[styles.centerText,styles.blurb]} >{wineryData.description}</Text>
           <View style={styles.rowArea}>
-            <View style={styles.phoneArea}>
-              <Image style={styles.imgIcon} source={require('../../images/phone.png')} />
-              <Text style={styles.centerText} >555-5555</Text>
+
+            <View style={styles.numberArea}>
+            <TouchableOpacity onPress={this.callNumber}>
+              <View style={styles.phoneArea}>
+                <Icon name="phone" size={16} color="#999c9e" />
+                <Text style={styles.centerText}>{wineryData.number || "XXX-XXXX"}</Text>
+              </View>
+            </TouchableOpacity>
             </View>
+            
             <View style={styles.directionsArea}>
               <TouchableOpacity onPress={this.getDirections}>
                 <View style={styles.getDirections}>
-                  <Image style={styles.imgIcon} source={require('../../images/map-dir.png')} />
+                  <Icon name="map-o" size={16} color="#999c9e" />
                   <Text style={styles.centerText} >{Strings.DIRECTIONS}</Text>
                 </View>  
               </TouchableOpacity>  
             </View>
+
           </View>
         </View>
         <Text style={styles.title} >{wineryData.title}</Text>

@@ -1,6 +1,8 @@
 import he from "he";
 import Strings from '../constants/Strings';
 import {BASE_ROUTE, AUTH_ROUTE, WOO_ROUTE } from '../constants';
+import { Linking, Platform } from 'react-native';
+
 export const hashToQueryString = (queryItems) => {
   queryItems = queryItems || {};
   let queryStr = Object.keys(queryItems).reduce((acc, value)=>{
@@ -79,3 +81,18 @@ export const getBounds = ({ longitude, latitude, longitudeDelta, latitudeDelta},
     latitude: latitude + (latitudeDelta * (0.5 + padding))
   }
 });
+
+export const callNumber = (number)=> {
+  const prompt = Platform.OS !== 'android' ? 'prompt' : '';
+  const numberLink = `tel${prompt}:${number}`;
+  Linking.canOpenURL(numberLink).then(supported => {
+    if(!supported) {
+      console.log('Can\'t handle number: ' + numberLink);
+    } else {
+      Linking.openURL(numberLink)
+      .catch(err => {
+        // intentionally left blank if user cancels request
+      });
+    }
+  }).catch(err => console.warn('An unexpected error happened', err));
+};

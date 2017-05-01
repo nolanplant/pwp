@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { loginUser } from '../actions/loginActions';
 import Login from '../components/Login';
 import ProfileContainer from './ProfileContainer';
+import Icon from 'react-native-vector-icons/FontAwesome';
+ 
 
 const styles = StyleSheet.create({
   icon: {
@@ -17,9 +19,10 @@ class UserPageContainer extends Component {
     tabBar: {
       icon: ({ focused }) => {
         return (
-          <Image 
-            style={styles.icon}
-            source={focused ? require('../../images/user_highlighted.png') : require('../../images/user.png')}
+          <Icon
+            name={"user"}
+            color={focused ? '#b88d2c' : '#999c9e'}
+            size={20}
           />);
       },  
      

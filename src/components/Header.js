@@ -6,8 +6,10 @@ import {
   Image,
   View,
   TouchableHighlight,
+  TouchableOpacity,
   Dimensions,
 } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 let { width, height } = Dimensions.get("window");
 
@@ -23,7 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "rgba(0,0,0,0)"
+    backgroundColor: "rgba(0,0,0,0)",
+    flex:1
   },
   homeButton: {
     borderRadius: 50,
@@ -37,14 +40,8 @@ const styles = StyleSheet.create({
     width: 40
   },
   menuButton: {
-    marginRight: 15,
-    marginTop: 20,
-    height: 45,
-    width: 45,
-  },
-  menu: {
-    top: 0,
-    left: 0,
+    marginTop:15,
+    paddingTop:15,
     height: 45,
     width: 45
   }
@@ -60,12 +57,12 @@ export default class Header extends Component {
         >
         <Image style={styles.mainIcon} source={require("../../images/main-logo.png")} />
         </TouchableHighlight>
-        <TouchableHighlight
+        <TouchableOpacity
           style={styles.menuButton}
           onPress={this.props.onMenuClick}
         >
-          <Image style={styles.menu} source={require("../../images/menu.png")} />
-        </TouchableHighlight>
+          <Icon name="bars"  size={24} />
+        </TouchableOpacity>
       </View>
     );
   }

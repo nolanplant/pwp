@@ -3,6 +3,7 @@ import {ScrollView} from 'react-native';
 import { LOCATION_LIST } from '../../data/locations';
 import RegionItem from './RegionItem';
 import {Image, View, StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo';
 
 const styles = StyleSheet.create({
   icon: {
@@ -24,9 +25,10 @@ export default class RegionsList extends Component {
       // Note: By default the icon is only shown on iOS. Search the showIcon option below.
       icon: ({ focused }) => {
         return (
-          <Image 
-            style={styles.icon}
-            source={focused ? require('../../images/home_highlighted.png') : require('../../images/home.png')}
+          <Icon
+            name={"home"}
+            color={focused ? '#b88d2c' : '#999c9e'}
+            size={20}
           />);
       },  
      
