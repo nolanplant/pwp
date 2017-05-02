@@ -76,13 +76,11 @@ class WineMapContainer extends Component {
       <View style={styles.base}>
         <WineMapView style={styles.map}
           locations={this.props.locations}
-          initialPosition={this.props.region}
           region={this.props.region}
           setCurrentLocation={this.props.setMapLocation}
           onWineryPress={this.setWineryLocation}
           selectWinery={this.props.selectWineryOnMap}
           selectedWineryTitle={selectedWineryTitle}
-          shouldRenderMarkers={true}
           onMapPress={this.clearSelectedWinery}
         />
         { this.props.selectedWinery && (

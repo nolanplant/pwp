@@ -7,7 +7,9 @@ import {fetchWineries, setWineRegionDetails } from '../actions/wineriesActions';
 import Carousel from 'react-native-carousel';
 import Strings from '../../constants/Strings';
 import { getDirectionsToWinery } from '../actions/mapActions';
-// import getDirections from 'react-native-google-maps-directions'
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const styles = StyleSheet.create({
   base:{
@@ -20,6 +22,12 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     bottom:0
+  },
+  backArrow: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft:10
   },
   pwp:{
     marginTop:20,
@@ -73,14 +81,16 @@ class MenuItemStaticPage extends Component {
         backgroundColor: '#8d8d8d'
       },
       left: (
-        <TouchableHighlight 
+        <TouchableOpacity 
           onPress={ ()=>{ goBack() } }
+          style={styles.backArrow}
           >
-          <Image
-            style={styles.backArrow}
-            source={require('../../images/back-arrow-white.png')}
+          <Icon
+            name="chevron-left"
+            color="white"
+            size={18}
           />
-        </TouchableHighlight>)
+        </TouchableOpacity>)
     })
   };
   addWineryImage(source, i){

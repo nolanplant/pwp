@@ -161,7 +161,6 @@ class WineryDetail extends Component {
     const {navigation, usersLocation, getDirectionsToWinery } = this.props;
     // todo: clean this up possibly use current winery here
     const wineryData = navigation.state.params.details;
-    debugger
     getDirectionsToWinery(currentWinery.latlng, usersLocation);
   }
   callNumber(){
@@ -180,7 +179,8 @@ class WineryDetail extends Component {
 
         <View style={styles.carouselWrap} >
 
-          <Carousel width={375}
+          <Carousel 
+            width={375}
             hideIndicators={false} 
             indicatorColor={"#ffffff"} 
             indicatorSize={25} 

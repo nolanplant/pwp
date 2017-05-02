@@ -9,7 +9,8 @@ const defaultData = {
   avatarSrc: null, 
   profileFirstName: null, 
   profileLastName: null,
-  username: null
+  username: null,
+  userId: null
 };
 
 const translateProfileResponse = raw => ({
@@ -18,6 +19,7 @@ const translateProfileResponse = raw => ({
   profileFirstName: raw.first_name || (raw.billing && raw.billing.first_name) || null,
   profileLastName: raw.last_name || (raw.billing && raw.billing.last_name) || null,
   username: raw.username,
+  userId: raw.id
 });
 
 export default function homeReducer(state = defaultData, action) {

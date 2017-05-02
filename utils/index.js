@@ -71,7 +71,7 @@ export const boundsContains = (bounds, point) => (
 (point.longitude <= bounds.ne.longitude)
 );
 
-export const getBounds = ({ longitude, latitude, longitudeDelta, latitudeDelta}, padding=1) => ({
+export const getBounds = ({ longitude, latitude, longitudeDelta, latitudeDelta}, padding=.01) => ({
   sw: { 
     longitude: longitude - (longitudeDelta * (0.5 + padding)),
     latitude: latitude - (latitudeDelta * (0.5 + padding))

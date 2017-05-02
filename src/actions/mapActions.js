@@ -80,6 +80,7 @@ export const filterLocations = () => ({
 
 export function getUsersLocation(cb) {
   return (dispatch) => {
+    debugger
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;

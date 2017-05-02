@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {View, Text, Image, TouchableHighlight, Dimensions } from 'react-native';
+import {View, Text, Image, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
 import WineriesByRegionSkeleton from '../components/WineriesByRegionSkeleton';
 import WineriesByRegion from '../components/WineriesByRegion';
 import {fetchWineries, setWineRegionDetails, fetchMoreWineryDetails} from '../actions/wineriesActions';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+const styles = StyleSheet.create({
+  backArrow: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft:10
+  }
+});
 
 class WineriesByRegionContainer extends Component {
   static navigationOptions = {
@@ -19,13 +28,16 @@ class WineriesByRegionContainer extends Component {
         backgroundColor: 'rgb(68, 68, 68)'
       },
       left: (
-        <TouchableHighlight 
-          onPress={ ()=>{ goBack(); } }
+        <TouchableOpacity 
+          onPress={ ()=>{ goBack() } }
+          style={styles.backArrow}
           >
-          <Image
-            source={require('../../images/back-arrow-white.png')}
+          <Icon
+            name="chevron-left"
+            color="white"
+            size={18}
           />
-        </TouchableHighlight>)
+        </TouchableOpacity>)
     })
   };
   componentDidMount(){

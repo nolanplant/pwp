@@ -10,7 +10,7 @@ import {
   Image,
   View,
   Text,
-  TouchableOpacity
+  TouchableWithoutFeedback
 } from "react-native";
 
 const styles = StyleSheet.create({
@@ -45,14 +45,14 @@ class WineMapMarker extends Component {
   }
   render(){
     return (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
         onPress={this.handlePress}
         >
         <Image source={ this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
           require("../../images/pin.png")}
           style={styles.imageView}
         />
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -77,7 +77,7 @@ export default class WineMapView extends Component {
     e.stopPropagation();
   }
   render() {
-
+    
     return (
       <MapView
         onPress={this.props.onMapPress}
@@ -88,7 +88,7 @@ export default class WineMapView extends Component {
         ref={mapNode => this.mapNode = mapNode}
         showsMyLocationButton={true}
       >
-      { this.props.shouldRenderMarkers && this.props.locations.map((marker, index) => {
+      { this.props.locations.map((marker, index) => {
         return (
             <MapView.Marker
               coordinate={marker.latlng}
