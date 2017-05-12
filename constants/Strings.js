@@ -36,7 +36,7 @@ export default Strings = {
     FAVORITES: 'Favorites',
     WINERY: 'Winery',
     SWIPE_LEFT_TO_FAVORITE: 'Swipe Left To Favorite',
-    USERNAME: 'Username',
+    USERNAME: 'Username/Email',
     PASSWORD: 'Password',
     LOGIN: 'Login',
     LOGOUT: 'Logout',

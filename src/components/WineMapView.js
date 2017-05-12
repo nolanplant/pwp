@@ -92,7 +92,7 @@ export default class WineMapView extends Component {
         return (
             <MapView.Marker
               coordinate={marker.latlng}
-              key={index}
+              key={marker.id}
               onPress={this.stopPropagation}
               >
              <WineMapMarker 
