@@ -7,7 +7,7 @@ import {fetchWineries, setWineRegionDetails } from '../actions/wineriesActions';
 import Carousel from 'react-native-carousel';
 import Strings from '../../constants/Strings';
 import { getDirectionsToWinery } from '../actions/mapActions';
-import { callNumber } from '../../utils';
+import {   } from '../../utils';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import getDirections from 'react-native-google-maps-directions'
 
@@ -161,7 +161,7 @@ class WineryDetail extends Component {
     const {navigation, usersLocation, getDirectionsToWinery } = this.props;
     // todo: clean this up possibly use current winery here
     const wineryData = navigation.state.params.details;
-    getDirectionsToWinery(currentWinery.latlng, usersLocation);
+    getDirectionsToWinery(wineryData.latlng, usersLocation);
   }
   callNumber(){
     const {navigation } = this.props;
@@ -169,7 +169,7 @@ class WineryDetail extends Component {
     const wineryData = navigation.state.params.details;
     const { number } = wineryData;
     if(number){
-      callNumber(number);
+       (number);
     }
   }
   render() {
@@ -196,7 +196,7 @@ class WineryDetail extends Component {
             wineryData.images.map(this.addWineryImage)
            }
           </Carousel>
-          <Text style={styles.value}>$100 VALUE</Text>
+          <Text style={styles.value}>{`$${Math.round(+wineryData.maplist_val)} VALUE`}</Text>
         </View>
 
         <View style={styles.descriptionArea}>
@@ -205,10 +205,10 @@ class WineryDetail extends Component {
           <View style={styles.rowArea}>
 
             <View style={styles.numberArea}>
-            <TouchableOpacity onPress={this.callNumber}>
+            <TouchableOpacity onPress={this. }>
               <View style={styles.phoneArea}>
                 <Icon name="phone" size={16} color="#999c9e" />
-                <Text style={styles.centerText}>{wineryData.number || "XXX-XXXX"}</Text>
+                <Text style={styles.centerText}>{wineryData.maplist_telephone}</Text>
               </View>
             </TouchableOpacity>
             </View>
