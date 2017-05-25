@@ -41,7 +41,7 @@ buck-out/
 \.buckd/
 *.keystore
 
-wcInfo.js
+config.js
 
 # fastlane
 #
