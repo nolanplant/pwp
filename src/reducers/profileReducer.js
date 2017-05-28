@@ -10,8 +10,11 @@ const defaultData = {
   profileFirstName: null, 
   profileLastName: null,
   username: null,
+  address: null,
   userId: null
 };
+
+const translateShipping = raw => `${raw.address_1} ${raw.address_2}, ${raw.city}, ${raw.state} ${raw.postcode}`
 
 const translateProfileResponse = raw => ({
   avatarSrc: raw.avatar_url,
@@ -19,6 +22,7 @@ const translateProfileResponse = raw => ({
   profileFirstName: raw.first_name || (raw.billing && raw.billing.first_name) || null,
   profileLastName: raw.last_name || (raw.billing && raw.billing.last_name) || null,
   username: raw.username,
+  address: translateShipping(raw.shipping),
   userId: raw.id
 });
 

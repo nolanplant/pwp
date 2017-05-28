@@ -42,6 +42,12 @@ export default Strings = {
     LOGOUT: 'Logout',
     INVALID_LOGIN: 'Invalid Username or Password',
     DIRECTIONS: 'Directions',
+    FULL_NAME: 'Full Name',
+    USERNAME: 'Username',
+    EMAIL: 'Email',
+    ADDRESS: 'Address',
+    ORDERS: 'Orders',
+    MY_ACCOUNT: 'My Account',
     ABOUT_PRIORITY_WINEPASS_MESSAGE: 'Priority Wine Pass is a membership program that gets you discounts and elevated experiences at some of the best wineries in California. Learn more at:',
     GET_USER_WELCOME_MESSAGE(username){
         return username ? `Welcome back ${username}!` : 'Welcome back!';

@@ -1,6 +1,7 @@
 import { getWooRoute, getOrdersRoute } from "../../utils";
 import{REQUEST_PROFILE,
 RECEIVE_PROFILE} from '../constants';
+import WooCommerceAPI from '../../utils/WooCommerceAPI';
 
 const requestProfile = () => ({
   type:REQUEST_PROFILE
@@ -24,20 +25,9 @@ export const getUserProfile = () => {
     dispatch(requestProfile)
     const state = getState();
     const { token, email } = state.loginReducer;
-    const headers = getHeaders(token);
-    const myProfilePath = getWooRoute(`customers`, {
-      email,
-      role:'all' //todo remove this after testing
-    });
-
-    fetch(myProfilePath, {
-      ...headers,
-      method: "GET"
-    })
-    .then((data) => data.json())
-    .then((response) => {
-      dispatch(receiveProfile(response));
-      dispatch(getUserOrders())  
+    WooCommerceAPI.get('customers', {email})
+      .then((response) => {
+       dispatch(receiveProfile(response));   
     });
   }
 }

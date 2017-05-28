@@ -40,7 +40,7 @@ function WooCommerceAPI(opt) {
 WooCommerceAPI.prototype._setDefaultsOptions = function (opt) {
     this.url = opt.url;
     this.wpAPI = opt.wpAPI || false;
-    this.wpAPIPrefix = opt.wpAPIPrefix || 'wp-json';
+    // this.wpAPIPrefix = opt.wpAPIPrefix || 'wp-json';
     this.version = opt.version || 'v3';
     this.isSsl = /^https/i.test(this.url);
     this.consumerKey = opt.consumerKey;
@@ -96,9 +96,7 @@ WooCommerceAPI.prototype._normalizeQueryString = function (url) {
  */
 WooCommerceAPI.prototype._getUrl = function (endpoint) {
     var url = '/' === this.url.slice(-1) ? this.url : this.url + '/';
-    var api = this.wpAPI ? this.wpAPIPrefix + '/' : 'wp-json/';
-
-    url = url + api + this.version + '/' + endpoint;
+    url = url + this.version + '/' + endpoint;
 
     // Include port.
     if ('' !== this.port) {
@@ -109,6 +107,8 @@ WooCommerceAPI.prototype._getUrl = function (endpoint) {
     if (!this.isSsl) {
         return this._normalizeQueryString(url);
     }
+
+    console.log('the url is: ', url) 
 
     return url;
 };
@@ -158,8 +158,7 @@ WooCommerceAPI.prototype.join = function (obj, separator) {
  * @return {Object}
  */
 WooCommerceAPI.prototype._request = function (method, endpoint, data, callback) {
-    var url = this._getUrl(endpoint);
-
+    var url = this._getUrl(endpoint);   
     var params = {
         url: url,
         method: method,

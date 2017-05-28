@@ -104,8 +104,7 @@ export function loginUser(params) {
     .then((response) => {
       if (response.token) {
         dispatch(receiveLogin(translateResponse(response)));
-        // const { user_email:email, token } = response;
-        // dispatch(getUserProfile({email, token}));
+       
         // todo: handle unable to store case
         storeUserToken(response).then(() => {
           dispatch(tokenStored());
@@ -113,6 +112,7 @@ export function loginUser(params) {
           console.error("something when wrong with storgae", e);
           dispatch(tokenNotStored());
         });
+
       } else {
         dispatch(dispatch(invalidLogin()));
       }

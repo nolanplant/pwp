@@ -7,7 +7,7 @@ import {fetchWineries, setWineRegionDetails } from '../actions/wineriesActions';
 import Carousel from 'react-native-carousel';
 import Strings from '../../constants/Strings';
 import { getDirectionsToWinery } from '../actions/mapActions';
-import {   } from '../../utils';
+import { callNumber } from '../../utils';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // import getDirections from 'react-native-google-maps-directions'
 
@@ -169,7 +169,7 @@ class WineryDetail extends Component {
     const wineryData = navigation.state.params.details;
     const { number } = wineryData;
     if(number){
-       (number);
+      callNumber(number);
     }
   }
   render() {
@@ -205,7 +205,7 @@ class WineryDetail extends Component {
           <View style={styles.rowArea}>
 
             <View style={styles.numberArea}>
-            <TouchableOpacity onPress={this. }>
+            <TouchableOpacity onPress={this.callNumber}>
               <View style={styles.phoneArea}>
                 <Icon name="phone" size={16} color="#999c9e" />
                 <Text style={styles.centerText}>{wineryData.maplist_telephone}</Text>

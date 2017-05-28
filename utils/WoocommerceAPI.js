@@ -1,6 +1,6 @@
 import WooCommerce from "./WooCommerce";
 import {ROOT} from '../constants';
-import config from './config';
+import config from '../config';
 
 var WooCommerceAPI = new WooCommerce({
     url: ROOT,
