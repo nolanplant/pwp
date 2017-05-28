@@ -9,7 +9,7 @@ import {
   TOKEN_NOT_STORED,
   TOKEN_REMOVED } from "../constants";
 import { getAuthRoute } from "../../utils";
-import { getUserProfile } from './profileActions';
+import { getUserProfile } from "./profileActions";
 
 function requestLogin() {
   return {
@@ -104,7 +104,7 @@ export function loginUser(params) {
     .then((response) => {
       if (response.token) {
         dispatch(receiveLogin(translateResponse(response)));
-       
+
         // todo: handle unable to store case
         storeUserToken(response).then(() => {
           dispatch(tokenStored());
@@ -112,7 +112,6 @@ export function loginUser(params) {
           console.error("something when wrong with storgae", e);
           dispatch(tokenNotStored());
         });
-
       } else {
         dispatch(dispatch(invalidLogin()));
       }
@@ -122,5 +121,4 @@ export function loginUser(params) {
     });
   };
 }
-
 

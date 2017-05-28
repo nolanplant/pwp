@@ -4,58 +4,60 @@ import { connect } from "react-redux";
 import Login from "../components/Login";
 // import Profile from "../components/Profile";
 import Avatar from "../components/Avatar";
-import {getUserProfile} from '../actions/profileActions';
-import Strings from '../../constants/Strings';
+import { getUserProfile } from "../actions/profileActions";
+import Strings from "../../constants/Strings";
+import Orders from "../components/Orders";
 
 const styles = StyleSheet.create({
   profileBase: { flex: 1, padding: 20 },
   header: {
     marginTop: 60,
     marginBottom: 20,
-    flex: 1, 
-    justifyContent: "center", 
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
   },
   heading: {
-    flex:1,
-    color: 'grey',
+    flex: 1,
+    color: "grey",
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
-  profDetails:{
-    flex:1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+  profDetails: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
-  subHeader:{
-    color: '#bebebe',
+  subHeader: {
+    color: "#bebebe",
     fontSize: 12,
     marginTop: 2
   },
-  rowItem:{
-    flex:1
+  rowItem: {
+    flex: 1
   },
   rowItemText: {
-    color: 'grey',
-    margin: 8,
-    fontWeight: 'bold'
+    color: "grey",
+    marginTop: 8,
+    marginBottom: 8,
+    fontWeight: "bold"
   },
-  spinner: { 
-    height: 80, 
+  spinner: {
+    height: 80,
     alignItems: "center",
     justifyContent: "center",
-    padding: 8 
+    padding: 8
   },
   orderArea: {
     flex: 1,
-    marginTop:20,
-    justifyContent:'center',
-    alignItems:'center',
+    marginTop: 20,
+    justifyContent: "center",
+    alignItems: "center",
   }
 });
 
 class ProfileContainer extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.getUserProfile();
   }
   render() {
@@ -70,32 +72,32 @@ class ProfileContainer extends Component {
             <View style={styles.rowItem}>
               <Text style={styles.subHeader}>{Strings.FULL_NAME}</Text>
               <Text style={styles.rowItemText}>{this.props.displayName}</Text>
-            </View>  
+            </View>
             <View style={styles.rowItem}>
               <Text style={styles.subHeader}>{Strings.EMAIL}</Text>
               <Text style={styles.rowItemText}>{this.props.email}</Text>
             </View>
-          
+
             <View style={styles.rowItem}>
               <Text style={styles.subHeader}>{Strings.USERNAME}</Text>
               <Text style={styles.rowItemText}>{this.props.username || "-"}</Text>
             </View>
-    
+
             <View style={styles.rowItem}>
               <Text style={styles.subHeader}>{Strings.ADDRESS}</Text>
               <Text style={styles.rowItemText}>{this.props.address || "-"}</Text>
             </View>
           </View>
           <View style={styles.orderArea}>
-            <Text style={ styles.heading} >{Strings.ORDERS}</Text> 
-            { this.props.orders ? <Text>Them orders</Text> : <ActivityIndicator
-                animating={true}
-                style={styles.spinner}
-                size="large"
-                />
+            <Text style={styles.heading} >{Strings.ORDERS}</Text>
+          </View>
+             { this.props.orders.length ? <Orders orders={this.props.orders} /> : <ActivityIndicator
+              animating
+              style={styles.spinner}
+              size="large"
+            />
               }
-          </View>  
-        </View>  
+        </View>
       </ScrollView>
     );
   }
@@ -104,21 +106,23 @@ class ProfileContainer extends Component {
 function mapStateToProps(state) {
   const { displayName, email } = state.loginReducer;
 
-  const { 
-    avatarSrc, 
+  const {
+    avatarSrc,
     username,
+    orders,
     address } = state.profileReducer;
   return {
     displayName,
-    avatarSrc, 
-    username, 
+    avatarSrc,
+    username,
     address,
+    orders,
     email
   };
 }
 
 const mapDispatchToProps = {
   getUserProfile
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

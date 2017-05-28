@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 const styles = StyleSheet.create({
-  imageView:{
+  imageView: {
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
@@ -22,33 +22,33 @@ const styles = StyleSheet.create({
     width: 30
   },
   map: { flex: 1 }
-});  
+});
 
 class WineMapMarker extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
     this.state = {
       pressed: false
-    }
+    };
   }
-  componentWillUnmount(){
-    clearTimeout(this.timer)
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
-  handlePress(){
-    const {handlePress, wineryData} = this.props;
-    this.setState({pressed: true});
-    this.timer = setTimeout(()=>{
-      this.setState({pressed:false})
-    }, 500)
+  handlePress() {
+    const { handlePress, wineryData } = this.props;
+    this.setState({ pressed: true });
+    this.timer = setTimeout(() => {
+      this.setState({ pressed: false });
+    }, 500);
     handlePress(wineryData);
   }
-  render(){
+  render() {
     return (
       <TouchableWithoutFeedback
         onPress={this.handlePress}
-        >
-        <Image source={ this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
+      >
+        <Image source={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
           require("../../images/pin.png")}
           style={styles.imageView}
         />
@@ -58,26 +58,25 @@ class WineMapMarker extends Component {
 }
 
 export default class WineMapView extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.moveToWinery = this.moveToWinery.bind(this);
   }
-  moveToWinery(wineryData){
+  moveToWinery(wineryData) {
     const { region } = this.props;
     const { latitudeDelta, longitudeDelta } = region;
     const { latlng } = wineryData;
     this.mapNode.animateToRegion({
-      ...latlng, 
-      latitudeDelta, 
-      longitudeDelta 
+      ...latlng,
+      latitudeDelta,
+      longitudeDelta
     }, 300);
     this.props.selectWinery(wineryData);
   }
-  stopPropagation(e){
+  stopPropagation(e) {
     e.stopPropagation();
   }
   render() {
-    
     return (
       <MapView
         onPress={this.props.onMapPress}
@@ -86,7 +85,7 @@ export default class WineMapView extends Component {
         style={styles.map}
         onRegionChangeComplete={this.props.setCurrentLocation}
         ref={mapNode => this.mapNode = mapNode}
-        showsMyLocationButton={true}
+        showsMyLocationButton
       >
       { this.props.locations.map((marker, index) => {
         return (
@@ -94,11 +93,11 @@ export default class WineMapView extends Component {
               coordinate={marker.latlng}
               key={marker.id}
               onPress={this.stopPropagation}
-              >
-             <WineMapMarker 
-              wineryData={marker}
-              handlePress={this.moveToWinery}
-              isSelected={marker.isSelected}
+            >
+             <WineMapMarker
+               wineryData={marker}
+               handlePress={this.moveToWinery}
+               isSelected={marker.isSelected}
              />
             </MapView.Marker>
           ); })}
@@ -106,5 +105,4 @@ export default class WineMapView extends Component {
     );
   }
 }
-
 

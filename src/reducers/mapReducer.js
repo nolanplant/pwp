@@ -12,7 +12,7 @@ import {
   DONE_RECEIVING_LOCATIONS,
   ERROR_LOADING_LOCATIONS } from "../constants";
 
-import { boundsContains, getBounds } from '../../utils';
+import { boundsContains, getBounds } from "../../utils";
 
 const NAPA_COORDS = {  // napa default
   latitude: 38.299061,
@@ -44,7 +44,7 @@ export default function mapReducer(state = defaultData, action) {
     return {
       ...state,
       selectedWinery: action.selectedWinery
-    }; 
+    };
   case RECEIVE_LOCATIONS:
     const locations = action.locations;
     return {
@@ -62,11 +62,11 @@ export default function mapReducer(state = defaultData, action) {
       ...state,
       isRequesting: false
     };
-  case SET_USERS_LOCATION: 
+  case SET_USERS_LOCATION:
     return {
       ...state,
       usersLocation: action.usersLocation
-    }  
+    };
   case SET_MAP_LOCATION:
     const { latitude, longitude } = action;
     let { latitudeDelta, longitudeDelta } = action;
@@ -82,16 +82,16 @@ export default function mapReducer(state = defaultData, action) {
       }
     };
   case FILTER_LOCATIONS:
-    if(state.region){
+    if (state.region) {
       const bounds = getBounds(state.region);
       return {
         ...state,
-        locations: state.locationsRaw.filter((location)=>{
+        locations: state.locationsRaw.filter((location) => {
           const { selectedWinery } = state;
           location.isSelected = selectedWinery && selectedWinery.title === location.title;
           return boundsContains(bounds, location.latlng);
         })
-      }
+      };
     }
   default:
     return state;

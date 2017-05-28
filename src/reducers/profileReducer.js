@@ -1,20 +1,23 @@
-import{
+import moment from 'moment';
+import {
   REQUEST_PROFILE,
   RECEIVE_PROFILE,
+  RECEIVE_ORDERS,
   LOGOUT
-} from '../constants';
+} from "../constants";
 
 const defaultData = {
   isFetching: false,
-  avatarSrc: null, 
-  profileFirstName: null, 
+  avatarSrc: null,
+  profileFirstName: null,
   profileLastName: null,
   username: null,
   address: null,
-  userId: null
+  userId: null,
+  orders: []
 };
 
-const translateShipping = raw => `${raw.address_1} ${raw.address_2}, ${raw.city}, ${raw.state} ${raw.postcode}`
+const translateShipping = raw => `${raw.address_1}${raw.address_2 && raw.address_2.trim() ? ` ${raw.address_2}` : ""}, ${raw.city}, ${raw.state} ${raw.postcode}`;
 
 const translateProfileResponse = raw => ({
   avatarSrc: raw.avatar_url,
@@ -25,6 +28,17 @@ const translateProfileResponse = raw => ({
   address: translateShipping(raw.shipping),
   userId: raw.id
 });
+
+const translateLineItemResponse = raw => raw.map((item) => ({
+  orderDetail: item.name,
+  orderItemId: item.id
+}));
+
+const translateOrderResponse = raw => raw.map(item => ({
+  lineItems: translateLineItemResponse(item.line_items),
+  orderNumber: item.number,
+  orderDate:moment(item.date_completed, "YYYY-MM-DD").format("MMMM Do, YYYY")
+}))
 
 export default function homeReducer(state = defaultData, action) {
   switch (action.type) {
@@ -40,8 +54,13 @@ export default function homeReducer(state = defaultData, action) {
       ...profileData,
       isFetching: false
     };
+  case RECEIVE_ORDERS:
+    return {
+      ...state,
+      orders: translateOrderResponse(action.orders)
+    };
   case LOGOUT:
-   return defaultData;
+    return defaultData;
   default:
     return state;
   }

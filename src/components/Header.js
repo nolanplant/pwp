@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 let { width, height } = Dimensions.get("window");
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "rgba(0,0,0,0)",
-    flex:1
+    flex: 1
   },
   homeButton: {
     borderRadius: 50,
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     width: 40
   },
   menuButton: {
-    marginTop:15,
-    paddingTop:15,
+    marginTop: 15,
+    paddingTop: 15,
     height: 45,
     width: 45
   }
@@ -61,7 +61,7 @@ export default class Header extends Component {
           style={styles.menuButton}
           onPress={this.props.onMenuClick}
         >
-          <Icon name="bars"  size={24} />
+          <Icon name="bars" size={24} />
         </TouchableOpacity>
       </View>
     );

@@ -14,9 +14,9 @@ import {
   Text
 } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
-const imageSize = 88
+const imageSize = 88;
 const styles = StyleSheet.create({
-   base: {
+  base: {
     flex: 1,
   },
   row: {
@@ -26,15 +26,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 115,
     paddingLeft: 12,
-    paddingRight:12
+    paddingRight: 12
   },
-   list: {
+  list: {
     flex: 1
   },
-  wineryThumb: { width: imageSize, height: imageSize, borderRadius: imageSize/2, backgroundColor:"#acabab" },
-  textRow: { flex: 1, flexDirection: "column", marginLeft:10 },
-  title: { fontWeight: "bold", color: "#b88d2c", fontSize:18 },
-  address:{ color: "#acabab" },
+  wineryThumb: { width: imageSize, height: imageSize, borderRadius: imageSize / 2, backgroundColor: "#acabab" },
+  textRow: { flex: 1, flexDirection: "column", marginLeft: 10 },
+  title: { fontWeight: "bold", color: "#b88d2c", fontSize: 18 },
+  address: { color: "#acabab" },
   description: { color: "#acabab" },
   centering: {
     alignItems: "center",
@@ -46,20 +46,19 @@ const styles = StyleSheet.create({
 });
 
 export class WineryListItem extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.onSelectWinery = this.onSelectWinery.bind(this);
   }
-  onSelectWinery(){
-    const {onSelectWinery, data} = this.props;
+  onSelectWinery() {
+    const { onSelectWinery, data } = this.props;
     onSelectWinery(data);
-
   }
-  render(){
+  render() {
     const { data } = this.props;
     return (
-      <TouchableHighlight style={this.props.style} onPress={this.onSelectWinery}> 
-        <View style={styles.row} >  
+      <TouchableHighlight style={this.props.style} onPress={this.onSelectWinery}>
+        <View style={styles.row} >
           <Image source={{ uri: data.thumb }} style={styles.wineryThumb} />
           <View style={styles.textRow}>
             <Text style={styles.title} numberOfLines={1}>{data.title}</Text>
@@ -74,24 +73,24 @@ export class WineryListItem extends Component {
 
 
 export default class WineriesByRegion extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.renderFooter = this.renderFooter.bind(this);
     this.openWinery = this.openWinery.bind(this);
   }
-  renderFooter(){
-     return (this.props.isFetching && <ActivityIndicator
-          animating={true}
-          style={[styles.centering, styles.spinner]}
-          size="large"
-        />) 
+  renderFooter() {
+    return (this.props.isFetching && <ActivityIndicator
+      animating
+      style={[styles.centering, styles.spinner]}
+      size="large"
+    />);
   }
-  openWinery(details){
+  openWinery(details) {
     const { title, id } = details;
     const { navigation, fetchMoreWineryDetails } = this.props;
     navigation.navigate("WineryDetail", { title, details });
-    if(!this.props.currentWinery || this.props.currentWinery.id !== id){
-      fetchMoreWineryDetails(id)
+    if (!this.props.currentWinery || this.props.currentWinery.id !== id) {
+      fetchMoreWineryDetails(id);
     }
   }
   render() {
@@ -103,9 +102,10 @@ export default class WineriesByRegion extends Component {
           dataSource={ds.cloneWithRows(this.props.wineries)}
           renderRow={data => (
             <WineryListItem
-              style={styles.base} 
-              onSelectWinery={this.openWinery} 
-              data={data} />  
+              style={styles.base}
+              onSelectWinery={this.openWinery}
+              data={data}
+            />
           )}
           renderFooter={this.renderFooter}
           onEndReached={this.props.fetchWineries}

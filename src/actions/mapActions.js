@@ -10,7 +10,7 @@ import {
   SET_USERS_LOCATION,
   SELECT_WINERY_ON_MAP } from "../constants";
 import { getSubRoute, translateData } from "../../utils";
-import getDirections from 'react-native-google-maps-directions';
+import getDirections from "react-native-google-maps-directions";
 
 function requestLocations() {
   return {
@@ -44,11 +44,11 @@ function doneReceivingLocations() {
   };
 }
 
-export function selectWineryOnMap(selectedWinery){
+export function selectWineryOnMap(selectedWinery) {
   return {
     type: SELECT_WINERY_ON_MAP,
     selectedWinery
-  }
+  };
 }
 
 
@@ -66,8 +66,8 @@ export const setMapLocation = (location) => {
   return (dispatch) => {
     dispatch(setLocation(location));
     dispatch(filterLocations());
-  }
-}
+  };
+};
 
 export const setUsersLocation = (usersLocation) => ({
   type: SET_USERS_LOCATION,
@@ -86,13 +86,13 @@ export function getUsersLocation(cb) {
         const userLocation = {
           latitude,
           longitude
-        }
-        
+        };
+
         dispatch(setMapLocation({
-            ...userLocation,
-            latitudeDelta: 0.8,
-            longitudeDelta: 0.8
-          })
+          ...userLocation,
+          latitudeDelta: 0.8,
+          longitudeDelta: 0.8
+        })
         );
 
         dispatch(setUsersLocation(userLocation));
@@ -140,24 +140,24 @@ export function fetchWineLocations() {
   };
 }
 
-export function getDirectionsToWinery(to, from){
+export function getDirectionsToWinery(to, from) {
   return (dispatch) => {
-    if(!to){ 
+    if (!to) {
       console.error("no winery location");
     }
-    if(from){
+    if (from) {
       getDirections(formatDirectionAttributes(to, from));
     } else {
       dispatch(getUsersLocation((newFrom) => {
         const directions = formatDirectionAttributes(to, newFrom);
         getDirections(directions);
       }));
-    } 
-  }
+    }
+  };
 }
 
 const formatDirectionAttributes = (to, from) => ({
-  source: from, 
+  source: from,
   destination: to,
   params: [
     {

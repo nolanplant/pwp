@@ -24,7 +24,7 @@ class UserPageContainer extends Component {
             color={focused ? '#b88d2c' : '#999c9e'}
             size={20}
           />);
-      },  
+      }  
      
     }
   }

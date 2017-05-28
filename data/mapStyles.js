@@ -1,4 +1,4 @@
-export const mapStyles =  [
+export const mapStyles = [
   {
     "featureType": "all",
     "stylers": [
@@ -45,4 +45,4 @@ export const mapStyles =  [
       }
     ]
   }
-]
+];

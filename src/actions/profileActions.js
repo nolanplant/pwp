@@ -1,10 +1,11 @@
 import { getWooRoute, getOrdersRoute } from "../../utils";
-import{REQUEST_PROFILE,
-RECEIVE_PROFILE} from '../constants';
-import WooCommerceAPI from '../../utils/WooCommerceAPI';
+import { REQUEST_PROFILE,
+RECEIVE_PROFILE,
+RECEIVE_ORDERS } from "../constants";
+import WooCommerceAPI from "../../utils/WooCommerceAPI";
 
 const requestProfile = () => ({
-  type:REQUEST_PROFILE
+  type: REQUEST_PROFILE
 });
 
 const receiveProfile = (profileRaw) => ({
@@ -12,43 +13,41 @@ const receiveProfile = (profileRaw) => ({
   profileRaw
 });
 
-const getHeaders = (token)=> ({
+const getHeaders = (token) => ({
   headers: {
     Authorization: `Bearer ${token}`,
     Accept: "application/json",
     "Content-Type": "application/json"
   }
-})
+});
 
-export const getUserProfile = () => {
-  return (dispatch, getState) => {
-    dispatch(requestProfile)
-    const state = getState();
-    const { token, email } = state.loginReducer;
-    WooCommerceAPI.get('customers', {email})
-      .then((response) => {
-       dispatch(receiveProfile(response));   
-    });
-  }
-}
+const receiveOrders = (orders) => ({
+  type: RECEIVE_ORDERS,
+  orders
+});
 
 export const getUserOrders = () => {
   return (dispatch, getState) => {
     const state = getState();
-    const { token, email } = state.loginReducer;
     const { userId } = state.profileReducer;
-    const headers = getHeaders(token);
-    const ordersPath = getWooRoute(`orders`, {
+    WooCommerceAPI.get("orders", {
       customer: userId
-    })
-    fetch(ordersPath, {
-      ...headers,
-      method: "GET"
-    })
-    .then(data => data.json())
-    .then((response)=>{
-      debugger
-    })
-  }
-}
+    }).then((response) => {
+      dispatch(receiveOrders(response));
+    });
+  };
+};
+
+export const getUserProfile = () => {
+  return (dispatch, getState) => {
+    dispatch(requestProfile);
+    const state = getState();
+    const { token, email } = state.loginReducer;
+    WooCommerceAPI.get("customers", { email })
+      .then((response) => {
+        dispatch(receiveProfile(response));
+        dispatch(getUserOrders());
+      });
+  };
+};
 

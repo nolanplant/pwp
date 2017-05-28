@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Strings from "../../constants/Strings";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import {
   StyleSheet,
@@ -22,36 +22,36 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderBottomColor: "#969696",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginTop:5,
-    paddingBottom:1,
-    paddingTop:1,
-    marginLeft:20,
-    marginRight:20
+    marginTop: 5,
+    paddingBottom: 1,
+    paddingTop: 1,
+    marginLeft: 20,
+    marginRight: 20
   },
   menuText: {
     color: "#969696",
     fontWeight: "bold"
   },
-  icon:{
+  icon: {
     color: "#676768",
   }
 });
 
 export default class MainItem extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.action = this.action.bind(this);
   }
-  action(){
+  action() {
     const { link, screen, navigation } = this.props;
-    if(link){
-      Linking.openURL(link)
+    if (link) {
+      Linking.openURL(link);
     }
-    if(screen){
-      navigation.navigate("MenuItemStaticPage", {screen});
+    if (screen) {
+      navigation.navigate("MenuItemStaticPage", { screen });
     }
   }
-  render(){
+  render() {
     return (
       <View style={styles.base}>
         <TouchableHighlight style={styles.base} onPress={this.action}>

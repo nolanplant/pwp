@@ -1,5 +1,5 @@
-import React from 'react';
-import PriorityWinePass from './src/index';
-import { AppRegistry } from 'react-native';
+import React from "react";
+import PriorityWinePass from "./src/index";
+import { AppRegistry } from "react-native";
 
-AppRegistry.registerComponent('PriorityWinePass', () => PriorityWinePass);
+AppRegistry.registerComponent("PriorityWinePass", () => PriorityWinePass);

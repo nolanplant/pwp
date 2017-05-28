@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff"
   },
   background: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   loginText: {
     textAlign: "center"
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
   },
-  inputBg:{
+  inputBg: {
     // width:200,
     // height:40,
     // marginBottom:10,
@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
 });
 
 const getStyles = (invalidLogin) => ({
-    color: "rgba(255,0,0,0.75)", 
-    backgroundColor: 'transparent',
-    marginBottom:20,
-    opacity: invalidLogin ? 1 : 0  
-})
+  color: "rgba(255,0,0,0.75)",
+  backgroundColor: "transparent",
+  marginBottom: 20,
+  opacity: invalidLogin ? 1 : 0
+});
 
 export default class Login extends Component {
   constructor(props) {
@@ -96,7 +96,7 @@ export default class Login extends Component {
     return (
       <View style={styles.base}>
         <View style={styles.background} >
-          <Image source={require('../../images/background-image.png')} style={styles.backgroundImage} />
+          <Image source={require("../../images/background-image.png")} style={styles.backgroundImage} />
         </View>
         <ActivityIndicator
           animating={this.props.isLoggingIn}
@@ -136,7 +136,7 @@ export default class Login extends Component {
         <TouchableHighlight style={styles.loginButton} onPress={this.sendLogin}>
           <Text style={styles.loginText}>{ Strings.LOGIN }</Text>
         </TouchableHighlight>
-       
+
       </View>
     );
   }

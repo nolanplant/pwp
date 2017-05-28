@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { logoutUser } from "../actions/loginActions";
 import { goToLoginPage } from "../actions/homeActions";
 import Avatar from "./Avatar";
-import {menuItems} from '../../constants';
-import MenuItem from './MenuItem';
+import { menuItems } from "../../constants";
+import MenuItem from "./MenuItem";
 
 import {
   AppRegistry,
@@ -19,15 +19,15 @@ import {
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: "rgb(53, 53, 54)",//"rgba(0,0,0,0.79)",//"#303030",
+    backgroundColor: "rgb(53, 53, 54)", // "rgba(0,0,0,0.79)",//"#303030",
     flex: 1
     // color: '#969696'
   },
   avatarContain: {
-    flex:1,
+    flex: 1,
     marginTop: 30,
     marginBottom: 20,
-    alignItems: 'center'
+    alignItems: "center"
   },
   menuHeader: {
     height: 70,
@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
   },
   loginContain: {
     flex: 1,
-    marginTop:10,
+    marginTop: 10,
     flexDirection: "row",
     justifyContent: "center"
   },
   welcome: {
     color: "#b5870f",
-    textAlign:"center",
-    marginTop:10
+    textAlign: "center",
+    marginTop: 10
   },
   loginWrap: {
     backgroundColor: "#b5870f",
@@ -62,16 +62,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   loginText: {
     color: "white"
   },
-  loginTextLoggedIn:{
-    color:"#676768"
+  loginTextLoggedIn: {
+    color: "#676768"
   },
   loginButtonView: {
-    flex:1,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center"
   }
@@ -95,19 +95,19 @@ class MainMenu extends Component {
     return (
       <View style={styles.main}>
         <View style={styles.avatarContain}>
-          <Avatar size={70} avatarSrc={this.props.avatarSrc} /> 
+          <Avatar size={70} avatarSrc={this.props.avatarSrc} />
           { this.props.displayName && <Text style={styles.welcome}>{Strings.GET_USER_WELCOME_MESSAGE(this.props.displayName)}</Text> }
         </View>
         {
           menuItems && menuItems.map((props, index) => {
-            return (<MenuItem {...props} navigation={this.props.navigation} key={index} />)
+            return (<MenuItem {...props} navigation={this.props.navigation} key={index} />);
           })
         }
         <View style={styles.loginContain} >
-          <TouchableHighlight 
-            style={this.props.isLoggedIn ? styles.loginWrapLoggediN : styles.loginWrap} 
+          <TouchableHighlight
+            style={this.props.isLoggedIn ? styles.loginWrapLoggediN : styles.loginWrap}
             onPress={this.loginHandler}
-            >
+          >
             <View style={styles.loginButtonView}>
               <Text style={this.props.isLoggedIn ? styles.loginTextLoggedIn : styles.loginText}>
               {

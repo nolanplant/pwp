@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Strings from '../constants/Strings';
-import {BASE_ROUTE} from '../constants';
-import {getAuthRoute, getSubRoute, getWooRoute } from '../utils';
+import React, { Component } from "react";
+import Strings from "../constants/Strings";
+import { BASE_ROUTE } from "../constants";
+import { getAuthRoute, getSubRoute, getWooRoute } from "../utils";
 import {
   AppRegistry,
   StyleSheet,
@@ -10,90 +10,87 @@ import {
   Text,
   TextInput,
   TouchableHighlight
-} from 'react-native';
+} from "react-native";
 
 const styles = StyleSheet.create({
   base: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    'backgroundColor':'#ffffff'
+    justifyContent: "center",
+    alignItems: "center",
+    "backgroundColor": "#ffffff"
   },
-  loginText:{
-    textAlign: 'center'
+  loginText: {
+    textAlign: "center"
   },
-  loginButton:{
-    backgroundColor: 'orange',
+  loginButton: {
+    backgroundColor: "orange",
     height: 30,
     width: 100,
     borderRadius: 10,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   input: {
     padding: 5,
-    width:200,
-    marginBottom:10,
-    height:40,
-    borderColor: '#DDD',
-    'borderWidth': 1
+    width: 200,
+    marginBottom: 10,
+    height: 40,
+    borderColor: "#DDD",
+    "borderWidth": 1
   }
 });
 
 export default class Login extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.sendLogin = this.sendLogin.bind(this);
     this.state = {
       username: null,
       password: null,
       error: null
-    }
+    };
   }
-  sendLogin(){
-    const {username, password} = this.state;
+  sendLogin() {
+    const { username, password } = this.state;
     const path = getAuthRoute();
     fetch(path, {
-      method: 'POST',
+      method: "POST",
       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json',
-       },
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-         password: password,
-         username: username,
+        password,
+        username,
       })
     }).then((data) => data.json())
-    .then( ( response ) => {
-
+    .then((response) => {
       const token = response.token;
-      const sepPath = getWooRoute('orders')//getSubRoute('maplists', {posts_per_page:99})
-      debugger
-      console.log(sepPath)
-      fetch( sepPath, {
-        method:'GET', 
-       'headers': {
-          'Authorization':`Bearer ${token}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+      const sepPath = getWooRoute("orders");// getSubRoute('maplists', {posts_per_page:99})
+      debugger;
+      console.log(sepPath);
+      fetch(sepPath, {
+        method: "GET",
+        "headers": {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/json",
+          "Content-Type": "application/json"
         }
       })
       .then((data) => data.json())
-      .then( ( response ) => { debugger})
+      .then((response) => { debugger; });
 
-      const anotherPath = getSubRoute('maplists', {per_page:75})
-      fetch( anotherPath, {
-        method:'GET', 
-       'headers': {
-          'Authorization':`Bearer ${token}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+      const anotherPath = getSubRoute("maplists", { per_page: 75 });
+      fetch(anotherPath, {
+        method: "GET",
+        "headers": {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/json",
+          "Content-Type": "application/json"
         }
       })
       .then((data) => data.json())
-      .then( ( response ) => { debugger})
-
+      .then((response) => { debugger; });
     });
-
   }
 
   render() {
@@ -101,20 +98,20 @@ export default class Login extends Component {
       <View style={styles.base}>
          <View>
          {
-          this.state.error && <Text styles={{flex:1,color:'red'}}>{this.state.error}</Text>
+          this.state.error && <Text styles={{ flex: 1, color: "red" }}>{this.state.error}</Text>
          }
          <TextInput
-            style={styles.input}
-            placeholder={Strings.USERNAME}
-            onChangeText={(username) => this.setState({username})}
-            editable = {true}
-            maxLength = {200}
-          />
+           style={styles.input}
+           placeholder={Strings.USERNAME}
+           onChangeText={(username) => this.setState({ username })}
+           editable
+           maxLength={200}
+         />
           <TextInput
             style={styles.input}
             placeholder={Strings.PASSWORD}
-            onChangeText={(password) => this.setState({password})}
-            editable={true}
+            onChangeText={(password) => this.setState({ password })}
+            editable
             maxLength={200}
           />
           </View>
