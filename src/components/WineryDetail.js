@@ -122,30 +122,6 @@ const styles = StyleSheet.create({
 });
 
 class WineryDetail extends Component {
-  static navigationOptions = {
-    title: ({state}) => `${state.params.title}`,
-    header: ({goBack})=>({ 
-      visible: true,
-      titleColor: '#b88d2c',
-      titleStyle: {
-        color: 'white'
-      },
-      style: {
-        backgroundColor: '#b88d2c'
-      },
-      left: (
-        <TouchableOpacity 
-          onPress={ ()=>{ goBack() } }
-          style={styles.backArrow}
-          >
-          <Icon
-            name="chevron-left"
-            color="white"
-            size={18}
-          />
-        </TouchableOpacity>)
-    })
-  };
   constructor(props){
     super(props);
     this.getDirections = this.getDirections.bind(this);

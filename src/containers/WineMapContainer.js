@@ -27,19 +27,6 @@ const styles = StyleSheet.create({
 });
 
 class WineMapContainer extends Component {
-  static navigationOptions = {
-    tabBar: {
-      icon: ({ focused }) => {
-        return (
-          <Icon
-            name={"map-marker"}
-            color={focused ? '#b88d2c' : '#999c9e'}
-            size={20}
-          />);
-      },  
-     
-    }
-  }
   constructor(props){
     super(props);
     this.setWineryLocation = this.setWineryLocation.bind(this);

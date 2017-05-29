@@ -20,20 +20,6 @@ const styles = StyleSheet.create({
 });
 
 export default class RegionsList extends Component {
-  static navigationOptions = {
-    tabBar: {
-      // Note: By default the icon is only shown on iOS. Search the showIcon option below.
-      icon: ({ focused }) => {
-        return (
-          <Icon
-            name={"home"}
-            color={focused ? '#b88d2c' : '#999c9e'}
-            size={20}
-          />);
-      },  
-     
-    }
-  }
   render(){
     return (
       <View style={styles.base}>

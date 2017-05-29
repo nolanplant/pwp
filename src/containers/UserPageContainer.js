@@ -15,19 +15,6 @@ const styles = StyleSheet.create({
 });
 
 class UserPageContainer extends Component {
-  static navigationOptions = {
-    tabBar: {
-      icon: ({ focused }) => {
-        return (
-          <Icon
-            name={"user"}
-            color={focused ? '#b88d2c' : '#999c9e'}
-            size={20}
-          />);
-      }  
-     
-    }
-  }
   render() {
     return (this.props.isLoggedIn ? 
        <ProfileContainer /> : <Login {...this.props} />

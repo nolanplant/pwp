@@ -69,30 +69,6 @@ const styles = StyleSheet.create({
 });
 
 class MenuItemStaticPage extends Component {
-  static navigationOptions = {
-    title: ({state}) => `${state.params.screen}`,
-    header: ({goBack})=>({ 
-      visible: true,
-      // titleColor: 'white',
-      titleStyle: {
-        color: 'white',
-      },
-      style: {
-        backgroundColor: '#8d8d8d'
-      },
-      left: (
-        <TouchableOpacity 
-          onPress={ ()=>{ goBack() } }
-          style={styles.backArrow}
-          >
-          <Icon
-            name="chevron-left"
-            color="white"
-            size={18}
-          />
-        </TouchableOpacity>)
-    })
-  };
   addWineryImage(source, i){
     return (
       <View  style={styles.imageContain} key={i}>

@@ -16,30 +16,6 @@ const styles = StyleSheet.create({
 });
 
 class WineriesByRegionContainer extends Component {
-  static navigationOptions = {
-    title: ({state}) => `${state.params.title}`,
-    header: ({goBack})=>({ 
-      visible: true,
-      titleColor: 'rgb(184, 141, 44)',
-      titleStyle: {
-        color: 'white'
-      },
-      style: {
-        backgroundColor: 'rgb(68, 68, 68)'
-      },
-      left: (
-        <TouchableOpacity 
-          onPress={ ()=>{ goBack() } }
-          style={styles.backArrow}
-          >
-          <Icon
-            name="chevron-left"
-            color="white"
-            size={18}
-          />
-        </TouchableOpacity>)
-    })
-  };
   componentDidMount(){
     const { params } = this.props.navigation.state
     this.props.setWineRegionDetails(params);

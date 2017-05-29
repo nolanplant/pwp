@@ -8,11 +8,6 @@ import Header from './Header';
 import { NavigationActions } from 'react-navigation';
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    header: {
-      visible: false
-    }
-  }
   render() {
     return (
        <Drawer
