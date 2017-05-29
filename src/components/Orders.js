@@ -20,10 +20,9 @@ const Orders = (props, i) => {
       { props.orders.map((order) => {
         return (
           <OrderItem
+            {...order}
             key={`${order.orderNumber}${i}`}
-            orderDate={order.orderDate}
-            lineItems={order.lineItems}
-            orderNumber={order.orderNumber}
+            handleClick={props.handleClick}
           />);
       })
       }

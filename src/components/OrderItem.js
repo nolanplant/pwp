@@ -15,32 +15,44 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class OrderItem extends Component {
+class OrderLineItem extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
+    const { orderKey, handleClick, orderItemId} = this.props;
+    handleClick({orderItemId, orderKey})
+  }
+  render(){
+    return( 
+      <TouchableHighlight 
+        style={styles.orderItem} 
+        onPress={this.handleClick}
+        >
+        <Text>
+          {this.props.orderDetail}
+        </Text>
+      </TouchableHighlight>);
+  }
+} 
 
-  }
-  render() {
-    return (
-      <TouchableHighlight style={styles.orderItem} onPress={this.handleClick}>
-        <View>
-          <Text>{`${Strings.ORDER_NUMBER}: ${this.props.orderNumber}`}</Text>
-          <Text>{`${Strings.ORDER_DATE}: ${this.props.orderDate}`}</Text>
-          {
-            this.props.lineItems.map((item, i)=>{
-              return (
-                <Text
-                  key={`${item.orderItemId}${i}`}
-                >
-                {item.orderDetail}
-              </Text>)
-            })
-          }
-        </View>
-      </TouchableHighlight>
-    );
-  }
-}
+const OrderItem = (props)=> (
+  <View style={styles.orderItem}>
+    <Text>{`${Strings.ORDER_NUMBER}: ${props.orderNumber}`}</Text>
+    <Text>{`${Strings.ORDER_DATE}: ${props.orderDate}`}</Text>
+    {
+      props.lineItems.map((item, i)=>(
+         <OrderLineItem
+           key={`${item.orderItemId}${i}`}
+           {...props}
+           {...item}
+         />))
+    }
+  </View>
+);
+
+export default OrderItem;
+
+ 
+

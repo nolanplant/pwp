@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Login from "../components/Login";
 // import Profile from "../components/Profile";
 import Avatar from "../components/Avatar";
-import { getUserProfile } from "../actions/profileActions";
+import { getUserProfile, getOrderByNumber } from "../actions/profileActions";
 import Strings from "../../constants/Strings";
 import Orders from "../components/Orders";
 
@@ -91,7 +91,7 @@ class ProfileContainer extends Component {
           <View style={styles.orderArea}>
             <Text style={styles.heading} >{Strings.ORDERS}</Text>
           </View>
-             { this.props.orders.length ? <Orders orders={this.props.orders} /> : <ActivityIndicator
+             { this.props.orders.length ? <Orders orders={this.props.orders} handleClick={this.props.getOrderByNumber} /> : <ActivityIndicator
               animating
               style={styles.spinner}
               size="large"
@@ -122,7 +122,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  getUserProfile
+  getUserProfile,
+  getOrderByNumber
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

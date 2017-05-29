@@ -3,6 +3,8 @@ import { REQUEST_PROFILE,
 RECEIVE_PROFILE,
 RECEIVE_ORDERS } from "../constants";
 import WooCommerceAPI from "../../utils/WooCommerceAPI";
+import {Linking} from 'react-native';
+import {hashToQueryString} from '../../utils';
 
 const requestProfile = () => ({
   type: REQUEST_PROFILE
@@ -26,6 +28,21 @@ const receiveOrders = (orders) => ({
   orders
 });
 
+export const getOrderByNumber = ({orderItemId, orderKey}) => {
+  return (dispatch, getState) => {
+      const state = getState();
+      const { email } = state.loginReducer;
+      const queryString = hashToQueryString({
+        download_file: 8,
+        order: orderKey,
+        email,
+        key:'woo_vou_pdf_1',
+        item_id: orderItemId
+      })
+      Linking.openURL(`https://www.prioritywinepass.com/${queryString}`)
+  }
+}
+
 export const getUserOrders = () => {
   return (dispatch, getState) => {
     const state = getState();
@@ -33,6 +50,7 @@ export const getUserOrders = () => {
     WooCommerceAPI.get("orders", {
       customer: userId
     }).then((response) => {
+      debugger
       dispatch(receiveOrders(response));
     });
   };
@@ -42,7 +60,7 @@ export const getUserProfile = () => {
   return (dispatch, getState) => {
     dispatch(requestProfile);
     const state = getState();
-    const { token, email } = state.loginReducer;
+    const { email } = state.loginReducer;
     WooCommerceAPI.get("customers", { email })
       .then((response) => {
         dispatch(receiveProfile(response));
@@ -51,3 +69,11 @@ export const getUserProfile = () => {
   };
 };
 
+//wc_order_59087bd37fb76
+// https://www.prioritywinepass.com/?download_file=8
+// &order=wc_order_59175c4e7c316&email=nplant%40sproutloud.com
+// &key=woo_vou_pdf_1&item_id=23341
+
+// https://www.prioritywinepass.com/?download_file=8
+// &order=wc_order_59087bd37fb76
+// &email=morgantheplant%40gmail.com&key=woo_vou_pdf_1&item_id=22865

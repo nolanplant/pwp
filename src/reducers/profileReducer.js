@@ -37,6 +37,8 @@ const translateLineItemResponse = raw => raw.map((item) => ({
 const translateOrderResponse = raw => raw.map(item => ({
   lineItems: translateLineItemResponse(item.line_items),
   orderNumber: item.number,
+  orderKey: item.order_key,
+  // note: this wont handle trans
   orderDate:moment(item.date_completed, "YYYY-MM-DD").format("MMMM Do, YYYY")
 }))
 

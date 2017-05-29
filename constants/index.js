@@ -9,6 +9,8 @@ export const LOST_PASSWORD_ROUTE = "https://www.prioritywinepass.com/my-account/
 export const CONCIERGE_ROUTE = "https://www.prioritywinepass.com/concierge-and-trips/";
 export const BLOG_ROUTE = "https://www.prioritywinepass.com/blog/";
 export const BUY_RENEW_ROUTE = "https://www.prioritywinepass.com/shop/";
+export const FAQ_ROUTE = "https://www.prioritywinepass.com/faq/";
+
 export const FIXTURES = {
   IMAGE_URL: "https://i0.wp.com/www.prioritywinepass.com/wp-content/uploads/2017/03/durantandbooth-tastingsalonempty.jpg"
 };
@@ -20,10 +22,10 @@ export const menuItems = [
     icon: "tablet",
     screen: "HowItWorks"
   },
-  {
-    title: Strings.MY_ACCOUNT,
-    icon: "cog"
-  },
+  // {
+  //   title: Strings.MY_ACCOUNT,
+  //   icon: "cog"
+  // },
   {
     title: Strings.CONCIERGE,
     icon: "glass",
@@ -36,7 +38,8 @@ export const menuItems = [
   },
   {
     title: Strings.FAQ,
-    icon: "info-circle"
+    icon: "info-circle",
+    link: FAQ_ROUTE
   },
   {
     title: Strings.BUY_RENEW,
