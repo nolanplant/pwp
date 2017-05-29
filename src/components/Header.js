@@ -11,15 +11,15 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-let { width, height } = Dimensions.get("window");
+// let { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   header: {
-    width,
     height: 60,
     position: "absolute",
     zIndex: 1,
     top: 0,
+    right:0,
     left: 0,
     opacity: 1,
     justifyContent: "space-between",
