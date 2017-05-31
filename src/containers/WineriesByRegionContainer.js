@@ -4,7 +4,6 @@ import {View, Text, Image, TouchableOpacity, Dimensions, StyleSheet } from 'reac
 import WineriesByRegionSkeleton from '../components/WineriesByRegionSkeleton';
 import WineriesByRegion from '../components/WineriesByRegion';
 import {fetchWineries, setWineRegionDetails, fetchMoreWineryDetails} from '../actions/wineriesActions';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   backArrow: {

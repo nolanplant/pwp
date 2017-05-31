@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position:'relative'
   },
-  backArrow: {
-    flex: 1,
-    justifyContent:'center',
-    alignItems:'center',
-    marginLeft:10
-  },
   address:{
     margin:10,
     color:'#cccccc'

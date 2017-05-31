@@ -12,8 +12,8 @@ const TabNavigatorConfig = {
     swipeEnabled: true,
     // animationEnabled: true,
     lazyLoad: true,
+    showLabel: false,
     // tabBarOptions: {
-    //   showLabel: false,
     //   style: {
     //     backgroundColor: "white"
     //   }
@@ -38,7 +38,7 @@ export default AppTabs = TabNavigator({
   WineMap: {
     screen: WineMapContainer,
     path: "wine_map",
-    navigatorOptions: {
+    navigationOptions: {
       showLabel: false,
       tabBarIcon: ({ focused }) => (
         <Icon

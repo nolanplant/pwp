@@ -5,7 +5,17 @@ import WineriesByRegionContainer from "./WineriesByRegionContainer";
 import MenuItemStaticPage from "./MenuItemStaticPage";
 import { StackNavigator } from "react-navigation";
 import React, { Component } from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const styles = StyleSheet.create({
+ backArrow: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft:10
+  }
+});
 
 export default AppBase = StackNavigator({
   Home: {
@@ -19,7 +29,6 @@ export default AppBase = StackNavigator({
     screen: WineriesByRegionContainer,
     navigationOptions: ({navigation}) => ({
     title: `${navigation.state.params.title}`,
-   
       //titleColor: 'rgb(184, 141, 44)',
     headerTitleStyle: {
       color: 'white'
@@ -51,9 +60,9 @@ export default AppBase = StackNavigator({
       headerStyle: {
         backgroundColor: '#b88d2c'
       },
-      headerLeft: ()=> (
+      headerLeft: (
         <TouchableOpacity 
-          onPress={ ()=>{ navigation.goBack() } }
+          onPress={ ()=> navigation.goBack() }
           style={styles.backArrow}
           >
           <Icon
@@ -75,9 +84,9 @@ export default AppBase = StackNavigator({
       headerTitleStyle: {
         color: 'white',
       },
-      headerLeft: ()=> (
+      headerLeft: (
         <TouchableOpacity 
-          onPress={ ()=>{ navigation.goBack() } }
+          onPress={ ()=> navigation.goBack() }
           style={styles.backArrow}
           >
           <Icon
@@ -86,7 +95,7 @@ export default AppBase = StackNavigator({
             size={18}
           />
         </TouchableOpacity>)
-    }),
+    })  
   }
 }, {
   headerMode: "screen"  
