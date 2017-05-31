@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
   wineryDetail:{
     position:'absolute',
     bottom: 30,
-    width:375
+    left: 0,
+    right: 0,
+    zIndex:5
   },
   map:{
     flex: 1

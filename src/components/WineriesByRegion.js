@@ -11,7 +11,8 @@ import {
   View,
   TouchableHighlight,
   ListView,
-  Text
+  Text,
+  Platform
 } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 const imageSize = 88;
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1
   },
-  wineryThumb: { width: imageSize, height: imageSize, borderRadius: imageSize / 2, backgroundColor: "#acabab" },
+  wineryThumb: { width: imageSize, height: imageSize, borderRadius: imageSize / 2, backgroundColor:  (Platform.OS === 'ios') ? "#acabab" : "white" },
   textRow: { flex: 1, flexDirection: "column", marginLeft: 10 },
   title: { fontWeight: "bold", color: "#b88d2c", fontSize: 18 },
   address: { color: "#acabab" },

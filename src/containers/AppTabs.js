@@ -5,10 +5,12 @@ import WineMapContainer from "./WineMapContainer";
 import UserPageContainer from "./UserPageContainer";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+
+console.log(TabBarBottom)
 const TabNavigatorConfig = {
+  tabBarPosition: 'bottom',
+  tabBarComponent: TabBarBottom,
   tabBarOptions: {
-    tabBarPosition: "bottom",
-    tabBarComponent: TabBarBottom,
     swipeEnabled: true,
     // animationEnabled: true,
     lazyLoad: true,
