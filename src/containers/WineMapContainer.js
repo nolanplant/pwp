@@ -55,6 +55,7 @@ class WineMapContainer extends Component {
     const { screenProps, fetchMoreWineryDetails } = this.props;
     screenProps.stackNav.navigate("WineryDetail", { title, details });
     if(!this.props.currentWinery || this.props.currentWinery.id !== id){
+      //todo: remove this
       fetchMoreWineryDetails(id)
     }
   }

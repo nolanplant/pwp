@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 200,
     height: 40,
-    color: "white",
+    color: "white"
     // backgroundColor: 'red'
   },
   centering: {
@@ -106,6 +106,7 @@ export default class Login extends Component {
         <View>
           <View style={styles.inputBg}>
             <TextInput
+              underlineColorAndroid="transparent"
               style={styles.input}
               placeholder={Strings.USERNAME}
               onChangeText={(username) => this.setState({ username })}
@@ -117,6 +118,7 @@ export default class Login extends Component {
           </View>
           <View style={styles.inputBg}>
           <TextInput
+            underlineColorAndroid="transparent"
             style={styles.input}
             placeholder={Strings.PASSWORD}
             onChangeText={(password) => this.setState({ password })}
