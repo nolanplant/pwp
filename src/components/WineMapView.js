@@ -35,7 +35,9 @@ class WineMapMarker extends Component {
   componentWillUnmount() {
     clearTimeout(this.timer);
   }
-  handlePress() {
+  handlePress(e) {
+    e.stopPropagation();
+    console.log('i am here')
     const { handlePress, wineryData } = this.props;
     this.setState({ pressed: true });
     this.timer = setTimeout(() => {
@@ -45,14 +47,13 @@ class WineMapMarker extends Component {
   }
   render() {
     return (
-      <TouchableWithoutFeedback
-        onPress={this.handlePress}
-      >
-        <Image source={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
-          require("../../images/pin.png")}
-          style={styles.imageView}
+       <MapView.Marker
+          coordinate={this.props.wineryData.latlng}
+          key={this.props.wineryData.id}
+          onPress={this.handlePress}
+          image={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
+            require("../../images/pin.png")}
         />
-      </TouchableWithoutFeedback>
     );
   }
 }
@@ -71,12 +72,15 @@ export default class WineMapView extends Component {
       latitudeDelta,
       longitudeDelta
     }, 300);
+    console.log('i am here!!!____>>>>>>>>>', wineryData)
     this.props.selectWinery(wineryData);
   }
   stopPropagation(e) {
-    e.stopPropagation();
+    
+    //e.stopPropagation();
   }
   render() {
+    console.log('rendering map')
     return (
       <MapView
         onPress={this.props.onMapPress}
@@ -89,17 +93,11 @@ export default class WineMapView extends Component {
       >
       { this.props.locations.map((marker, index) => {
         return (
-            <MapView.Marker
-              coordinate={marker.latlng}
-              key={marker.id}
-              onPress={this.stopPropagation}
-            >
              <WineMapMarker
                wineryData={marker}
                handlePress={this.moveToWinery}
                isSelected={marker.isSelected}
              />
-            </MapView.Marker>
           ); })}
       </MapView>
     );
