@@ -14,12 +14,21 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const styles = StyleSheet.create({
   base:{
     flex:1,
-    backgroundColor:'#eeeeee'
+    backgroundColor:'#eeeeee',
   },
   carouselWrap:{
-    width: 375,
-    flex: 1,
-    position:'relative'
+    height:200,
+    left:0,
+    right:0,
+    top:0,
+    position:'absolute'
+  },
+  carousel:{
+    position:"absolute",
+    top:0,
+    left:0,
+    right:0,
+    bottom:0
   },
   address:{
     margin:10,
@@ -29,29 +38,13 @@ const styles = StyleSheet.create({
     margin:10,
     color:'#a2a2a2'
   },
-  image:{
-    position:"absolute",
-    top:0,
-    left:0,
-    right:0,
-    bottom:0,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  imageContain:{
-    position:"relative",
-    flex:1,
-    width:375,
-    height:200,
-  },
   descriptionArea: {
     flex: 1,
     alignItems:'center',
     // justifyContent:'center',
     padding:10,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginTop:200
   },
   centerText:{
     textAlign:'center',
@@ -89,7 +82,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop:15,
-    paddingBottom:10,
+    paddingBottom:90,
     color:'#999c9e',
     fontWeight:'bold',
     fontSize:14
@@ -121,12 +114,6 @@ class WineryDetail extends Component {
     this.getDirections = this.getDirections.bind(this);
     this.callNumber = this.callNumber.bind(this);
   }
-  addWineryImage(source, i){
-    return (
-      <View  style={styles.imageContain} key={i}>
-        <Image source={{uri:source}} style={styles.image} />
-      </View>);
-  }
   getDirections(){
     const {navigation, usersLocation, getDirectionsToWinery } = this.props;
     // todo: clean this up possibly use current winery here
@@ -146,11 +133,9 @@ class WineryDetail extends Component {
     const wineryData = this.props.navigation.state.params.details
     return (
       <ScrollView style={styles.base}>
-
         <View style={styles.carouselWrap} >
-
           <Carousel 
-            width={375}
+            style={styles.carousel}
             hideIndicators={false} 
             indicatorColor={"#ffffff"} 
             indicatorSize={25} 
@@ -163,7 +148,9 @@ class WineryDetail extends Component {
             loop={false}
             >
            {
-            wineryData.images.map(this.addWineryImage)
+            wineryData.images.map((source, i)=>(
+                <Image key={i} source={{uri:source}} style={styles.base} />
+              ))
            }
           </Carousel>
           <Text style={styles.value}>{`$${Math.round(+wineryData.maplist_val)} VALUE`}</Text>

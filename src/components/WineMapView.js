@@ -15,9 +15,9 @@ import {
 
 const styles = StyleSheet.create({
   imageView: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // flex: 1,
     height: 40,
     width: 30
   },
@@ -37,7 +37,6 @@ class WineMapMarker extends Component {
   }
   handlePress(e) {
     e.stopPropagation();
-    console.log('i am here')
     const { handlePress, wineryData } = this.props;
     this.setState({ pressed: true });
     this.timer = setTimeout(() => {
@@ -49,11 +48,12 @@ class WineMapMarker extends Component {
     return (
        <MapView.Marker
           coordinate={this.props.wineryData.latlng}
-          key={this.props.wineryData.id}
           onPress={this.handlePress}
-          image={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
-            require("../../images/pin.png")}
-        />
+          style={styles.imageView}
+        >
+        <Image source={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
+            require("../../images/pin.png")} style={styles.imageView} />
+        </MapView.Marker>
     );
   }
 }
@@ -72,7 +72,6 @@ export default class WineMapView extends Component {
       latitudeDelta,
       longitudeDelta
     }, 300);
-    console.log('i am here!!!____>>>>>>>>>', wineryData)
     this.props.selectWinery(wineryData);
   }
   stopPropagation(e) {
@@ -95,6 +94,7 @@ export default class WineMapView extends Component {
         return (
              <WineMapMarker
                wineryData={marker}
+               key={`${marker.id}${index}`}
                handlePress={this.moveToWinery}
                isSelected={marker.isSelected}
              />
