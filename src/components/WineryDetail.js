@@ -9,7 +9,7 @@ import Strings from '../../constants/Strings';
 import { getDirectionsToWinery } from '../actions/mapActions';
 import { callNumber } from '../../utils';
 import Icon from 'react-native-vector-icons/FontAwesome';
-// import getDirections from 'react-native-google-maps-directions'
+
 
 const styles = StyleSheet.create({
   base:{
@@ -21,7 +21,38 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     top:0,
-    position:'absolute'
+    
+    position:'absolute',
+     backgroundColor:"blue"
+  },
+   carouselWrap2:{
+    alignSelf: "stretch",
+    alignItems:'center',
+    justifyContent:'center',
+    flex: 1,
+    // width: null,
+    // height: null,
+    // resizeMode: 'contain',
+    // height:200,
+    // left:0,
+    // right:0,
+    // top:0,
+    
+    // position:'absolute',
+    // height:200,
+    // left:0,
+    // right:0,
+    // top:0,
+    // position:'absolute',
+    backgroundColor:"red"
+  },
+  carouselWrap3: {
+    height:200,
+    left:0,
+    right:0,
+    top:0,
+    
+    position:'absolute',
   },
   carousel:{
     position:"absolute",
@@ -29,6 +60,10 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     bottom:0
+    //  flex: 1,
+    // width: null,
+    // height: null,
+    // resizeMode: 'contain',
   },
   address:{
     margin:10,
@@ -108,6 +143,8 @@ const styles = StyleSheet.create({
   getDirections: {justifyContent:"center", alignItems: "center"} 
 });
 
+const {width} = Dimensions.get('window');
+
 class WineryDetail extends Component {
   constructor(props){
     super(props);
@@ -133,9 +170,20 @@ class WineryDetail extends Component {
     const wineryData = this.props.navigation.state.params.details
     return (
       <ScrollView style={styles.base}>
-        <View style={styles.carouselWrap} >
+        <View style={{height:200,
+          left:0,
+          right:0,
+          top:0,
+          position:'absolute',
+          }} >
           <Carousel 
-            style={styles.carousel}
+            style={{height:200,
+          left:0,
+          right:0,
+          top:0,
+          position:'absolute'
+          }}
+
             hideIndicators={false} 
             indicatorColor={"#ffffff"} 
             indicatorSize={25} 
@@ -149,7 +197,17 @@ class WineryDetail extends Component {
             >
            {
             wineryData.images.map((source, i)=>(
-                <Image key={i} source={{uri:source}} style={styles.base} />
+              <View  
+              key={i} 
+              style={{
+                width,
+                height:200
+              }} >
+                <Image  source={{uri:source}} style={{
+                width,
+                height:200
+          }} />
+              </View>
               ))
            }
           </Carousel>

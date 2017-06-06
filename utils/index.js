@@ -19,8 +19,9 @@ export const getWooRoute = (subroute, params) => `${WOO_ROUTE}/${subroute}${hash
 export const getWineryRoute = id => `${BASE_ROUTE}/maplists/${id}`;
 
 export const translateData = (data) => data.map((item) => {
-  const cleaned = item.maplist_description.replace(/<[^>]*>/g, "").trim();
+  const cleaned = item.maplist_description.replace(/(<([^>]+)>)/ig, "").trim();
   const images = getImagesSrcs(item.content.rendered, 10);
+  debugger
   return {
     ...item,
     title: item.title ? he.decode(item.title.rendered) : Strings.WINERY,

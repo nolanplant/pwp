@@ -49,11 +49,12 @@ class WineMapMarker extends Component {
        <MapView.Marker
           coordinate={this.props.wineryData.latlng}
           onPress={this.handlePress}
+          height={null}
+          width={null}
           style={styles.imageView}
-        >
-        <Image source={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
-            require("../../images/pin.png")} style={styles.imageView} />
-        </MapView.Marker>
+          image={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
+            require("../../images/pin.png")} //style={styles.imageView}
+        />
     );
   }
 }
@@ -96,6 +97,7 @@ export default class WineMapView extends Component {
                wineryData={marker}
                key={`${marker.id}${index}`}
                handlePress={this.moveToWinery}
+               style={styles.imageView}
                isSelected={marker.isSelected}
              />
           ); })}
