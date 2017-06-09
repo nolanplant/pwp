@@ -24,6 +24,13 @@ const styles = StyleSheet.create({
   map: { flex: 1 }
 });
 
+function getCenterOffsetForAnchor(anchor, markerWidth, markerHeight) {
+   return {
+     x: (markerWidth * 0.5) - (markerWidth * anchor.x),
+     y: (markerHeight * 0.5) - (markerHeight * anchor.y),
+   };
+ }
+
 class WineMapMarker extends Component {
   constructor(props) {
     super(props);
@@ -52,6 +59,8 @@ class WineMapMarker extends Component {
           height={null}
           width={null}
           style={styles.imageView}
+          anchor={{x: 0.5, y: 1}}
+          centerOffset={getCenterOffsetForAnchor({x: 0.5, y: 1}, 85,132)}
           image={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
             require("../../images/pin.png")} //style={styles.imageView}
         />
