@@ -150,27 +150,37 @@ class WineryDetail extends Component {
     super(props);
     this.getDirections = this.getDirections.bind(this);
     this.callNumber = this.callNumber.bind(this);
+    this._handleLayout = this._handleLayout.bind(this);
+    this.state = {
+      width
+    }
   }
   getDirections(){
     const {navigation, usersLocation, getDirectionsToWinery } = this.props;
-    // todo: clean this up possibly use current winery here
     const wineryData = navigation.state.params.details;
     getDirectionsToWinery(wineryData.latlng, usersLocation);
   }
   callNumber(){
     const {navigation } = this.props;
-    // current winery ?
     const wineryData = navigation.state.params.details;
     const { number } = wineryData;
     if(number){
       callNumber(number);
     }
   }
+  // hack to get carousel component to work with screen changes 
+  _handleLayout(event){
+    this.setState({
+        width: event.nativeEvent.layout.width
+    });
+  }
   render() {
     const wineryData = this.props.navigation.state.params.details
     return (
       <ScrollView style={styles.base}>
-        <View style={{height:200,
+        <View 
+          onLayout={this._handleLayout}
+          style={{height:200,
           left:0,
           right:0,
           top:0,
@@ -200,11 +210,11 @@ class WineryDetail extends Component {
               <View  
               key={i} 
               style={{
-                width,
+                width: this.state.width, // note: could not get absolute or flex sizing to work with component on ios and Android
                 height:200
               }} >
                 <Image  source={{uri:source}} style={{
-                width,
+                width: this.state.width,
                 height:200
           }} />
               </View>
@@ -241,6 +251,7 @@ class WineryDetail extends Component {
         </View>
         <Text style={styles.title} >{wineryData.title}</Text>
         <Text style={styles.aboutUs} >{wineryData.maplist_aboutUs}</Text>
+        
       </ScrollView>
     );
   }
