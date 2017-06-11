@@ -40,8 +40,8 @@ class WineMapContainer extends Component {
     setMapLocation({ 
       latitude, 
       longitude, 
-      latitudeDelta: 0.2,
-      longitudeDelta: 0.2 
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.1 
     });
   }
   clearSelectedWinery(){
