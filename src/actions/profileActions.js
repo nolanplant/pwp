@@ -11,7 +11,6 @@ const requestProfile = () => ({
 });
 
 const receiveProfile = (profileRaw) => {
-  debugger
   return ({
   type: RECEIVE_PROFILE,
   profileRaw

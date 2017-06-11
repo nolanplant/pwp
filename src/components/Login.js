@@ -3,6 +3,7 @@ import Strings from "../../constants/Strings";
 import { BASE_ROUTE } from "../../constants";
 import { getAuthRoute, getSubRoute, getWooRoute } from "../../utils";
 import Spinner from "react-native-loading-spinner-overlay";
+import { LOST_PASSWORD_ROUTE } from '../../constants';
 
 import {
   AppRegistry,
@@ -10,6 +11,7 @@ import {
   Image,
   View,
   Text,
+  Linking,
   TextInput,
   TouchableHighlight,
   ActivityIndicator
@@ -29,6 +31,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   },
+  topMargin:{
+    marginTop:20
+  },
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
@@ -43,15 +48,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
   },
+  forgotPassword: {
+    color: 'white'
+  },
   inputBg: {
-    // width:200,
-    // height:40,
-    // marginBottom:10,
-    // borderBottomColor: "#ffffff",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    // borderWidth: ,
     borderColor: "white",
-    // backgroundColor: 'blue'\\
     marginBottom: 10,
   },
   input: {
@@ -92,17 +94,15 @@ export default class Login extends Component {
       !isLoggingIn && loginUser({ username, password });
     }
   }
+  handlePasswordReset(){
+    Linking.openURL(LOST_PASSWORD_ROUTE);
+  }
   render() {
     return (
       <View style={styles.base}>
         <View style={styles.background} >
           <Image source={require("../../images/background-image.png")} style={styles.backgroundImage} />
         </View>
-        <ActivityIndicator
-          animating={this.props.isLoggingIn}
-          style={[styles.centering, styles.spinner]}
-          size="large"
-        />
         <View>
           <View style={styles.inputBg}>
             <TextInput
@@ -138,7 +138,14 @@ export default class Login extends Component {
         <TouchableHighlight style={styles.loginButton} onPress={this.sendLogin}>
           <Text style={styles.loginText}>{ Strings.LOGIN }</Text>
         </TouchableHighlight>
-
+         <TouchableHighlight style={styles.topMargin} onPress={this.handlePasswordReset}>
+            <Text style={styles.forgotPassword}>{Strings.FORGOT_PASSWORD}</Text>
+         </TouchableHighlight>
+         <ActivityIndicator
+          animating={this.props.isLoggingIn}
+          style={[styles.centering, styles.spinner]}
+          size="large"
+          />
       </View>
     );
   }

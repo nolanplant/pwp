@@ -28,7 +28,7 @@ const defaultData = {
   page: 1,
   currPageLen: null,
   selectedWinery: null,
-  usersLocation: NAPA_COORDS,
+  usersLocation:null, // NAPA_COORDS,
   region: NAPA_COORDS
 };
 

@@ -50,6 +50,7 @@ export default Strings = {
   MY_ACCOUNT: "My Account",
   ORDER_NUMBER: "Order Number",
   ORDER_DATE: "Order Date",
+  FORGOT_PASSWORD: "Forgot Password?",
   ABOUT_PRIORITY_WINEPASS_MESSAGE: "Priority Wine Pass is a membership program that gets you discounts and elevated experiences at some of the best wineries in California. Learn more at:",
   GET_USER_WELCOME_MESSAGE(username) {
     return username ? `Welcome back ${username}!` : "Welcome back!";

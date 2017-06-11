@@ -87,7 +87,6 @@ export default class WineMapView extends Component {
     //e.stopPropagation();
   }
   render() {
-    console.log('rendering map', this.props.usersLocation, this.props.region)
     return (
       <MapView
         onPress={this.props.onMapPress}
