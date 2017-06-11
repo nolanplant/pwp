@@ -5,7 +5,6 @@ import getStore from "./store";
 import { fetchWineLocations } from "./actions/mapActions";
 
 const store = getStore();
-// possibly dispach actions here
 store.dispatch(fetchWineLocations());
 
 export default PriorityWinePass = () => (

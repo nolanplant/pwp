@@ -17,8 +17,8 @@ import { boundsContains, getBounds } from "../../utils";
 const NAPA_COORDS = {  // napa default
   latitude: 38.299061,
   longitude: -122.285738,
-  latitudeDelta: 0.8,
-  longitudeDelta: 0.8
+  latitudeDelta: 0.1,
+  longitudeDelta: 0.1
 };
 
 const defaultData = {
@@ -28,9 +28,8 @@ const defaultData = {
   page: 1,
   currPageLen: null,
   selectedWinery: null,
-  usersLocation: null,
-  region: NAPA_COORDS,
-  initialPosition: NAPA_COORDS
+  usersLocation: NAPA_COORDS,
+  region: NAPA_COORDS
 };
 
 export default function mapReducer(state = defaultData, action) {
@@ -63,9 +62,14 @@ export default function mapReducer(state = defaultData, action) {
       isRequesting: false
     };
   case SET_USERS_LOCATION:
+    console.log("does this already have long and lat delta? ", action.usersLocation)
     return {
       ...state,
-      usersLocation: action.usersLocation
+      usersLocation: {
+        ...action.usersLocation, 
+        latitudeDelta:0.1,
+        longitudeDelta:0.1
+      }
     };
   case SET_MAP_LOCATION:
     const { latitude, longitude } = action;

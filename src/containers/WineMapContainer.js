@@ -43,8 +43,8 @@ class WineMapContainer extends Component {
     setMapLocation({ 
       latitude, 
       longitude, 
-      latitudeDelta: 0.8,
-      longitudeDelta: 0.8 
+      latitudeDelta: 0.2,
+      longitudeDelta: 0.2 
     });
   }
   clearSelectedWinery(){
@@ -52,12 +52,12 @@ class WineMapContainer extends Component {
   }
   openWinery(details){
     const { title, id } = details;
-    const { screenProps, fetchMoreWineryDetails } = this.props;
+    const { screenProps } = this.props;
     screenProps.stackNav.navigate("WineryDetail", { title, details });
-    if(!this.props.currentWinery || this.props.currentWinery.id !== id){
-      //todo: remove this
-      fetchMoreWineryDetails(id)
-    }
+    // if(!this.props.currentWinery || this.props.currentWinery.id !== id){
+    //   //todo: remove this
+    //   fetchMoreWineryDetails(id)
+    // }
   }
   render(){
     const { selectedWinery } = this.props;
@@ -66,6 +66,7 @@ class WineMapContainer extends Component {
       <View style={styles.base}>
         <WineMapView style={styles.map}
           locations={this.props.locations}
+          usersLocation={this.props.usersLocation}
           region={this.props.region}
           setCurrentLocation={this.props.setMapLocation}
           onWineryPress={this.setWineryLocation}
@@ -89,14 +90,14 @@ class WineMapContainer extends Component {
 function mapStateToProps(state) {
   const {
     locations,
-    initialPosition,
+    usersLocation,
     selectedWinery,
     region
   } = state.mapReducer;
   
   return {
     locations,
-    initialPosition,
+    usersLocation,
     selectedWinery,
     region
   };

@@ -9,7 +9,9 @@ import Strings from '../../constants/Strings';
 import { getDirectionsToWinery } from '../actions/mapActions';
 import { callNumber } from '../../utils';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import TextSizeControls from '../components/TextSizeControls';
+import { setFontSizeToolBarState } from '../actions/textSizeControlsActions'
+import { SMALL_FONT, MEDIUM_FONT, LARGE_FONT } from '../constants';
 
 const styles = StyleSheet.create({
   base:{
@@ -30,20 +32,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     flex: 1,
-    // width: null,
-    // height: null,
-    // resizeMode: 'contain',
-    // height:200,
-    // left:0,
-    // right:0,
-    // top:0,
-    
-    // position:'absolute',
-    // height:200,
-    // left:0,
-    // right:0,
-    // top:0,
-    // position:'absolute',
     backgroundColor:"red"
   },
   carouselWrap3: {
@@ -60,10 +48,6 @@ const styles = StyleSheet.create({
     left:0,
     right:0,
     bottom:0
-    //  flex: 1,
-    // width: null,
-    // height: null,
-    // resizeMode: 'contain',
   },
   address:{
     margin:10,
@@ -76,7 +60,6 @@ const styles = StyleSheet.create({
   descriptionArea: {
     flex: 1,
     alignItems:'center',
-    // justifyContent:'center',
     padding:10,
     backgroundColor: 'white',
     marginTop:200
@@ -126,7 +109,6 @@ const styles = StyleSheet.create({
     flex:1,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop:30,
     fontSize:20,
     fontWeight:'bold',
     color:'#999c9e'
@@ -140,8 +122,26 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold'
   },
-  getDirections: {justifyContent:"center", alignItems: "center"} 
+  getDirections: {justifyContent:"center", alignItems: "center"},
+  textControlsStyles: {flexDirection:'row', justifyContent:'flex-end', flex:1, paddingTop:5, paddingRight:15} 
 });
+
+
+const getDisplaySize = (size, extra=0)=> {
+  switch (size){
+    case MEDIUM_FONT:
+      return 20 + extra;
+    case LARGE_FONT:
+      return 24 + extra;
+    case SMALL_FONT:
+      return 14 + extra;
+    default:
+      return Math.max(extra, 10); 
+  }
+}
+
+const getFontSize = (size, extra=0)=> ({ fontSize:getDisplaySize(size, extra) });
+
 
 const {width} = Dimensions.get('window');
 
@@ -151,16 +151,19 @@ class WineryDetail extends Component {
     this.getDirections = this.getDirections.bind(this);
     this.callNumber = this.callNumber.bind(this);
     this._handleLayout = this._handleLayout.bind(this);
+    this.closeToolBar = this.closeToolBar.bind(this);
     this.state = {
       width
     }
   }
   getDirections(){
+    this.closeToolBar();
     const {navigation, usersLocation, getDirectionsToWinery } = this.props;
     const wineryData = navigation.state.params.details;
     getDirectionsToWinery(wineryData.latlng, usersLocation);
   }
   callNumber(){
+    this.closeToolBar();
     const {navigation } = this.props;
     const wineryData = navigation.state.params.details;
     const { number } = wineryData;
@@ -174,10 +177,20 @@ class WineryDetail extends Component {
         width: event.nativeEvent.layout.width
     });
   }
+  closeToolBar(){
+    if(this.props.displaySizeToolbarIsShowing){
+      //hide toolbar if it's open on scroll
+      this.props.setFontSizeToolBarState(false);
+    }
+  }
   render() {
-    const wineryData = this.props.navigation.state.params.details
+    const {displayFontSize, navigation} = this.props;
+    const wineryData = navigation.state.params.details
+
     return (
-      <ScrollView style={styles.base}>
+      <ScrollView style={styles.base}
+        onScroll={this.closeToolBar}
+        >
         <View 
           onLayout={this._handleLayout}
           style={{height:200,
@@ -225,15 +238,15 @@ class WineryDetail extends Component {
         </View>
 
         <View style={styles.descriptionArea}>
-          <Text style={[styles.centerText, styles.address]} >{wineryData.address}</Text>
-          <Text style={[styles.centerText,styles.blurb]} >{wineryData.description}</Text>
+          <Text style={[styles.centerText, styles.address, getFontSize(displayFontSize)]} >{wineryData.address}</Text>
+          <Text style={[styles.centerText,styles.blurb, getFontSize(displayFontSize)]} >{wineryData.description}</Text>
           <View style={styles.rowArea}>
 
             <View style={styles.numberArea}>
             <TouchableOpacity onPress={this.callNumber}>
               <View style={styles.phoneArea}>
-                <Icon name="phone" size={16} color="#999c9e" />
-                <Text style={styles.centerText}>{wineryData.maplist_telephone}</Text>
+                <Icon name="phone" size={getDisplaySize(displayFontSize, 2)} color="#999c9e" />
+                <Text style={[styles.centerText, getFontSize(displayFontSize)]}>{wineryData.maplist_telephone}</Text>
               </View>
             </TouchableOpacity>
             </View>
@@ -241,38 +254,44 @@ class WineryDetail extends Component {
             <View style={styles.directionsArea}>
               <TouchableOpacity onPress={this.getDirections}>
                 <View style={styles.getDirections}>
-                  <Icon name="map-o" size={16} color="#999c9e" />
-                  <Text style={styles.centerText} >{Strings.DIRECTIONS}</Text>
+                  <Icon name="map-o" size={getDisplaySize(displayFontSize, 2)} color="#999c9e" />
+                  <Text style={[styles.centerText, getFontSize(displayFontSize)]} >{Strings.DIRECTIONS}</Text>
                 </View>  
               </TouchableOpacity>  
             </View>
 
           </View>
         </View>
-        <Text style={styles.title} >{wineryData.title}</Text>
-        <Text style={styles.aboutUs} >{wineryData.maplist_aboutUs}</Text>
-        
+        <TextSizeControls styles={styles.textControlsStyles} />
+        <Text style={[styles.title, getFontSize(displayFontSize, 10)]} >{wineryData.title}</Text>
+        <Text style={[styles.aboutUs, getFontSize(displayFontSize)]} >{wineryData.maplist_aboutUs}</Text>
       </ScrollView>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const {
-   currentWinery
-  } = state.wineriesReducer;
+  // const {
+  //  currentWinery
+  // } = state.wineriesReducer;
   const {
     usersLocation
   } = state.mapReducer;
-  //todo: add selector here
+  const {
+    displayFontSize,
+    displaySizeToolbarIsShowing,
+  } = state.textSizeControlsReducer;
   return {
-    currentWinery,
-    usersLocation
+    //currentWinery,
+    usersLocation,
+    displayFontSize,
+    displaySizeToolbarIsShowing
   };
 }
 
 const mapDispatchToProps = {
-  getDirectionsToWinery
+  getDirectionsToWinery,
+  setFontSizeToolBarState
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WineryDetail);

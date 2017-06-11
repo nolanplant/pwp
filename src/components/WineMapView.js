@@ -15,9 +15,6 @@ import {
 
 const styles = StyleSheet.create({
   imageView: {
-    // justifyContent: "center",
-    // alignItems: "center",
-    // flex: 1,
     height: 40,
     width: 30
   },
@@ -51,6 +48,7 @@ class WineMapMarker extends Component {
     }, 500);
     handlePress(wineryData);
   }
+
   render() {
     return (
        <MapView.Marker
@@ -60,7 +58,7 @@ class WineMapMarker extends Component {
           width={null}
           style={styles.imageView}
           anchor={{x: 0.5, y: 1}}
-          centerOffset={getCenterOffsetForAnchor({x: 0.5, y: 1}, 85,132)}
+          centerOffset={getCenterOffsetForAnchor({x: 0.5, y: 1}, 30, 40)}
           image={this.props.isSelected || this.state.pressed ? require("../../images/pin-highlight.png") :
             require("../../images/pin.png")} //style={styles.imageView}
         />
@@ -89,12 +87,12 @@ export default class WineMapView extends Component {
     //e.stopPropagation();
   }
   render() {
-    console.log('rendering map')
+    console.log('rendering map', this.props.usersLocation, this.props.region)
     return (
       <MapView
         onPress={this.props.onMapPress}
         region={this.props.region}
-        initialPosition={this.props.initialPosition}
+        initialPosition={this.props.usersLocation}
         style={styles.map}
         onRegionChangeComplete={this.props.setCurrentLocation}
         ref={mapNode => this.mapNode = mapNode}

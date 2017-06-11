@@ -74,6 +74,10 @@ export const setUsersLocation = (usersLocation) => ({
   usersLocation
 });
 
+export const userLocationFailed = () => ({
+  type: USER_LOCATION_FAILED
+})
+
 export const filterLocations = () => ({
   type: FILTER_LOCATIONS
 });
@@ -90,8 +94,8 @@ export function getUsersLocation(cb) {
 
         dispatch(setMapLocation({
           ...userLocation,
-          latitudeDelta: 0.8,
-          longitudeDelta: 0.8
+          latitudeDelta:0.1,
+          longitudeDelta:0.1
         })
         );
 
@@ -99,7 +103,7 @@ export function getUsersLocation(cb) {
         cb && cb(userLocation);
       },
       (error) => {
-        // console.error('error', error);
+        dispatch(userLocationFailed())
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );

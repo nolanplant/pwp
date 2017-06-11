@@ -10,10 +10,13 @@ const requestProfile = () => ({
   type: REQUEST_PROFILE
 });
 
-const receiveProfile = (profileRaw) => ({
+const receiveProfile = (profileRaw) => {
+  debugger
+  return ({
   type: RECEIVE_PROFILE,
   profileRaw
-});
+})
+};
 
 const getHeaders = (token) => ({
   headers: {
