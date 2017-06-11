@@ -115,7 +115,7 @@ const HowItWorks = () => (
         onPress={()=>{Linking.openURL('http://prioritywinepass.com')}}
         >
         <Text style={styles.text}>
-          prioritywinepass.com
+          {Strings.WEBSITE}
         </Text>
       </TouchableHighlight>
     </View>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, Image, ScrollView, ActivityIndicator } from "react-native";
+import { Text, View, StyleSheet, Image, ScrollView, ActivityIndicator, Linking, TouchableHighlight } from "react-native";
 import { connect } from "react-redux";
 import Login from "../components/Login";
 // import Profile from "../components/Profile";
@@ -7,12 +7,18 @@ import Avatar from "../components/Avatar";
 import { getUserProfile, getOrderByNumber } from "../actions/profileActions";
 import Strings from "../../constants/Strings";
 import Orders from "../components/Orders";
+import { EDIT_ACCOUNT_ROUTE } from '../../constants';
 
 const styles = StyleSheet.create({
-  profileBase: { flex: 1, padding: 20 },
+  profileBase: { 
+    flex: 1, 
+    padding: 20,
+    backgroundColor: "#eeeeee",
+    alignItems: "center"
+  },
   header: {
     marginTop: 60,
-    marginBottom: 20,
+    marginBottom: 10,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -25,13 +31,14 @@ const styles = StyleSheet.create({
   },
   profDetails: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: "center",
+    alignItems: "center",
   },
   subHeader: {
     color: "#bebebe",
     fontSize: 12,
-    marginTop: 2
+    marginTop: 2,
+    textAlign: 'center'
   },
   rowItem: {
     flex: 1
@@ -39,8 +46,7 @@ const styles = StyleSheet.create({
   rowItemText: {
     color: "grey",
     marginTop: 8,
-    marginBottom: 8,
-    fontWeight: "bold"
+    marginBottom: 8
   },
   spinner: {
     height: 80,
@@ -48,11 +54,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 8
   },
-  orderArea: {
-    flex: 1,
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
+  editAccountText:{
+    color: '#B98E1D',
+    fontSize: 12,
+    paddingTop: 20,
+    paddingBottom:20
   }
 });
 
@@ -60,14 +66,23 @@ class ProfileContainer extends Component {
   componentDidMount() {
     this.props.getUserProfile();
   }
+  handleEditAccount(){
+    Linking.openURL(EDIT_ACCOUNT_ROUTE);
+  }
   render() {
     return (
       <ScrollView >
         <View style={styles.profileBase}>
           <View style={styles.header}>
-            <Avatar size={70} avatarSrc={this.props.avatarSrc} />
+         <Avatar size={70} avatarSrc={this.props.avatarSrc} /> 
             <Text style={styles.heading} >{Strings.MY_ACCOUNT}</Text>
           </View>
+            { this.props.orders.length ? <Orders orders={this.props.orders} handleClick={this.props.getOrderByNumber} /> : <ActivityIndicator
+              animating
+              style={styles.spinner}
+              size="large"
+            />
+              }
           <View style={styles.profDetails}>
             <View style={styles.rowItem}>
               <Text style={styles.subHeader}>{Strings.FULL_NAME}</Text>
@@ -88,15 +103,12 @@ class ProfileContainer extends Component {
               <Text style={styles.rowItemText}>{this.props.address || "-"}</Text>
             </View>
           </View>
-          <View style={styles.orderArea}>
-            <Text style={styles.heading} >{Strings.ORDERS}</Text>
-          </View>
-             { this.props.orders.length ? <Orders orders={this.props.orders} handleClick={this.props.getOrderByNumber} /> : <ActivityIndicator
-              animating
-              style={styles.spinner}
-              size="large"
-            />
-              }
+          <TouchableHighlight underlayColor="#eeeeee" onPress={this.handleEditAccount} >
+             <Text style={styles.editAccountText}>
+                {Strings.EDIT_ACCOUNT_INFO}
+             </Text>
+          </TouchableHighlight>
+
         </View>
       </ScrollView>
     );
