@@ -12,7 +12,6 @@ export const hashToQueryString = (queryItems) => {
   return queryStr.length ? `?${queryStr}` : "";
 };
 
-
 export const getSubRoute = (subroute, params) => `${BASE_ROUTE}/${subroute}${hashToQueryString(params)}`;
 export const getAuthRoute = (params) => `${AUTH_ROUTE}${hashToQueryString(params)}`;
 export const getWooRoute = (subroute, params) => `${WOO_ROUTE}/${subroute}${hashToQueryString(params)}`;
@@ -21,13 +20,18 @@ export const getWineryRoute = id => `${BASE_ROUTE}/maplists/${id}`;
 export const translateData = (data) => data.map((item) => {
   const cleaned = item.maplist_description.replace(/(<([^>]+)>)/ig, "").trim();
   const images = getImagesSrcs(item.content.rendered, 10);
-
+  if( he.decode(item.title.rendered).trim() === "Vianasa"){
+    debugger
+  }
   return {
     ...item,
     title: item.title ? he.decode(item.title.rendered).trim() : Strings.WINERY,
     address: he.decode(item.maplist_address).trim(),
-    description: he.decode(cleaned).trim(),
+    description: he.decode(cleaned),
     thumb: images[0],
+    aboutUs: he.decode(item.maplist_aboutUs).trim(),
+    offerValue: Math.round(+item.maplist_val) || 0,
+    telephone: item.maplist_telephone,
     images,
     latlng: {
       latitude: +item.maplist_latitude,
@@ -36,13 +40,22 @@ export const translateData = (data) => data.map((item) => {
   };
 });
 
-const getImagesSrcs = (str, maxImages) => {
+const checkForImageType = (str, maxImages, imageType) => {
   const imagesSrcs = [];
-  const srcReg = /data-medium-file=\"(.*?)\"/g;
+  const srcReg = new RegExp(`${imageType}=\"(.*?)\"`,'g');
   for (let i = 0, match = srcReg.exec(str); i < maxImages && match !== null; i++) {
     imagesSrcs.push(match[1]);
     match = srcReg.exec(str);
   }
+  return imagesSrcs;
+}
+
+const getImagesSrcs = (str, maxImages) => {
+  // extract all image types
+  let imagesSrcs = checkForImageType(str, maxImages, 'data-large-file');
+  !imagesSrcs.length && checkForImageType(str, maxImages, 'data-medium-file');
+  !imagesSrcs.length && checkForImageType(str, maxImages, 'data-small-file');
+  !imagesSrcs.length && checkForImageType(str, maxImages, 'data-orig-file');
   if (!imagesSrcs.length) {
     // last result just pull first src
     const srcBare = /src=\"(.*?)\"/g;
