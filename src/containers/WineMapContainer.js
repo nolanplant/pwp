@@ -35,9 +35,6 @@ class WineMapContainer extends Component {
     this.clearSelectedWinery = this.clearSelectedWinery.bind(this);
     this.openWinery = this.openWinery.bind(this);
   }
-  componentDidMount(){
-    this.props.getUsersLocation();
-  }
   setWineryLocation({ latitude, longitude }){
     const { setMapLocation } = this.props;
     setMapLocation({ 

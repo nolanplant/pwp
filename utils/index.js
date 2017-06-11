@@ -21,12 +21,12 @@ export const getWineryRoute = id => `${BASE_ROUTE}/maplists/${id}`;
 export const translateData = (data) => data.map((item) => {
   const cleaned = item.maplist_description.replace(/(<([^>]+)>)/ig, "").trim();
   const images = getImagesSrcs(item.content.rendered, 10);
-  
+
   return {
     ...item,
-    title: item.title ? he.decode(item.title.rendered) : Strings.WINERY,
-    address: he.decode(item.maplist_address),
-    description: he.decode(cleaned),
+    title: item.title ? he.decode(item.title.rendered).trim() : Strings.WINERY,
+    address: he.decode(item.maplist_address).trim(),
+    description: he.decode(cleaned).trim(),
     thumb: images[0],
     images,
     latlng: {

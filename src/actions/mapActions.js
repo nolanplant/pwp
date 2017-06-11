@@ -140,6 +140,8 @@ export function fetchWineLocations() {
         } else {
           dispatch(doneReceivingLocations());
         }
+        // filter locations each time new data is received
+        dispatch(filterLocations());
       });
   };
 }

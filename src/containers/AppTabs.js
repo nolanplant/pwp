@@ -12,14 +12,8 @@ const TabNavigatorConfig = {
   tabBarComponent: TabBarBottom,
   tabBarOptions: {
     swipeEnabled: true,
-    // animationEnabled: true,
     lazyLoad: true,
     showLabel: false,
-    // tabBarOptions: {
-    //   style: {
-    //     backgroundColor: "white"
-    //   }
-    // }
   }
 };
 

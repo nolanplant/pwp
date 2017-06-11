@@ -62,7 +62,6 @@ export default function mapReducer(state = defaultData, action) {
       isRequesting: false
     };
   case SET_USERS_LOCATION:
-    console.log("does this already have long and lat delta? ", action.usersLocation)
     return {
       ...state,
       usersLocation: {

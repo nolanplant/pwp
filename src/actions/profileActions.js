@@ -53,7 +53,6 @@ export const getUserOrders = () => {
     WooCommerceAPI.get("orders", {
       customer: userId
     }).then((response) => {
-      debugger
       dispatch(receiveOrders(response));
     });
   };
